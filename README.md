@@ -116,6 +116,18 @@
             background-color: #60a5fa; /* blue-400 */
             border-radius: 50%;
         }
+
+        /* Skill Badge CSS */
+        .skill-badge {
+            display: inline-block;
+            background-color: #1e293b; /* slate-800 */
+            color: #94a3b8; /* slate-400 */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500; /* font-medium */
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            border-radius: 9999px; /* rounded-full */
+            border: 1px solid #334155; /* border-slate-700 */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -265,20 +277,6 @@
             </div>
         </section>
         
-        <!-- Skill Badge CSS (injected via <style> for brevity) -->
-        <style>
-            .skill-badge {
-                display: inline-block;
-                background-color: #1e293b; /* slate-800 */
-                color: #94a3b8; /* slate-400 */
-                font-size: 0.75rem; /* text-xs */
-                font-weight: 500; /* font-medium */
-                padding: 0.25rem 0.75rem; /* px-3 py-1 */
-                border-radius: 9999px; /* rounded-full */
-                border: 1px solid #334155; /* border-slate-700 */
-            }
-        </style>
-
         <!-- ====== Experience Section ====== -->
         <section id="experience" class="py-24 md:py-32 bg-slate-900">
             <div class="container mx-auto px-6">
@@ -440,9 +438,9 @@
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-5 gap-12 lg:gap-16 max-w-6xl mx-auto">
+                <div class="max-w-2xl mx-auto"> <!-- Changed grid to center the info box -->
                     <!-- Contact Info -->
-                    <div class="md:col-span-2 bg-slate-800/50 p-8 rounded-xl border border-slate-700 shadow-xl backdrop-blur-md">
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 shadow-xl backdrop-blur-md"> <!-- Removed column span -->
                         <h3 class="text-2xl font-bold text-white mb-8">Contact Information</h3>
                         <div class="space-y-8">
                             <div class="flex items-start gap-4 group">
@@ -476,8 +474,21 @@
                         </div>
                     </div>
 
-                    <!-- Contact Form -->
-                    <form id="contact-form" class="md:col-span-3 space-y-6">
+                    <!-- 
+                        *****************************************************************
+                        * ACTION REQUIRED!
+                        * 1. Go to https://formspree.io/ and create a new form.
+                        * 2. Copy your unique form URL.
+                        * 3. Paste it into the `action` attribute below to make your
+                        * contact form work!
+                        *****************************************************************
+                    -->
+                    <form 
+                      id="contact-form" 
+                      action="https://formspree.io/f/YOUR_UNIQUE_ID" 
+                      method="POST" 
+                      class="md:col-span-3 space-y-6"
+                    >
                         <h3 class="text-2xl font-bold text-white mb-2">Send Me a Message</h3>
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div>
@@ -590,44 +601,57 @@
                 });
             });
 
-            // --- Contact Form Logic (Simulation) ---
+            // --- Contact Form Logic (AJAX submission to Formspree) ---
             const contactForm = document.getElementById('contact-form');
             const successMessage = document.getElementById('form-success');
             const errorMessage = document.getElementById('form-error');
 
             if (contactForm) {
                 contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
+                    e.preventDefault(); // Stop the default form submission
+
                     // Clear previous messages
                     successMessage.classList.add('hidden');
                     errorMessage.classList.add('hidden');
 
-                    // Get form data
+                    // Get the form data
                     const formData = new FormData(contactForm);
-                    const name = formData.get('name');
-                    const email = formData.get('email');
-                    const message = formData.get('message');
-
-                    // Basic validation
-                    if (!name || !email || !message) {
-                        errorMessage.textContent = "Please fill out all required fields.";
+                    
+                    // --- Asynchronous submission with fetch ---
+                    fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // --- Success ---
+                            successMessage.classList.remove('hidden');
+                            contactForm.reset();
+                            // Hide success message after 5 seconds
+                            setTimeout(() => {
+                                successMessage.classList.add('hidden');
+                            }, 5000);
+                        } else {
+                            // --- Server-side error ---
+                            response.json().then(data => {
+                                if (Object.hasOwn(data, 'errors')) {
+                                    errorMessage.textContent = data["errors"].map(error => error["message"]).join(", ");
+                                } else {
+                                    errorMessage.textContent = "Submission Failed. Please try again.";
+                                }
+                                errorMessage.classList.remove('hidden');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        // --- Network error ---
+                        console.error('Form submission error:', error);
+                        errorMessage.textContent = "Submission Failed. Check your network connection.";
                         errorMessage.classList.remove('hidden');
-                        return;
-                    }
-
-                    // --- Simulation ---
-                    // In a real app, you'd send this data to a backend (e.g., Formspree, Netlify Forms, or a custom API)
-                    console.log('Form submitted (simulation):', { name, email, message });
-
-                    // Show success message
-                    successMessage.classList.remove('hidden');
-                    contactForm.reset();
-
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        successMessage.classList.add('hidden');
-                    }, 5000);
+                    });
                 });
             }
 
@@ -635,3 +659,4 @@
     </script>
 </body>
 </html>
+
