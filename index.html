@@ -56,14 +56,16 @@
             border-radius: 1px;
         }
         #menu-btn.open .hamburger-top {
-            transform: rotate(45deg) translate(5px, 6px);
+            /* transform: rotate(45deg) translate(5px, 6px); */
+            transform: translateY(8px) rotate(45deg);
         }
         #menu-btn.open .hamburger-middle {
             opacity: 0;
-            transform: translateX(-16px);
+            /* transform: translateX(-16px); */
         }
         #menu-btn.open .hamburger-bottom {
-            transform: rotate(-45deg) translate(5px, -6px);
+            /* transform: rotate(-45deg) translate(5px, -6px); */
+            transform: translateY(-8px) rotate(-45deg);
         }
         
         /* Timeline styles for experience */
@@ -134,8 +136,10 @@
             <div class="hidden md:flex space-x-7 items-center">
                 <a href="#home" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Home</a>
                 <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">About</a>
+                <a href="#philosophy" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Philosophy</a>
                 <a href="#experience" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Experience</a>
                 <a href="#projects" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Projects</a>
+                <a href="#recommendations" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Recommendations</a>
                 <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2.5 rounded-md text-sm transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                     Contact Me
                 </a>
@@ -153,8 +157,10 @@
         <div id="menu" class="hidden md:hidden flex-col absolute top-full left-0 w-full bg-slate-900 shadow-xl pb-4 border-t border-slate-700" aria-hidden="true">
             <a href="#home" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Home</a>
             <a href="#about" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">About</a>
+            <a href="#philosophy" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Philosophy</a>
             <a href="#experience" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Experience</a>
             <a href="#projects" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Projects</a>
+            <a href="#recommendations" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Recommendations</a>
             <a href="#contact" class="block text-center bg-sky-500 text-white font-bold px-6 py-3 mx-6 mt-3 rounded-md hover:bg-sky-600 transition-colors mobile-nav-link shadow-lg">
                 Contact Me
             </a>
@@ -171,7 +177,7 @@
             </div>
 
             <div class="container mx-auto px-6 text-center">
-                <span class="inline-block bg-sky-500/10 text-sky-400 text-xs font-bold px-4 py-1.5 rounded-full mb-5 border border-sky-400/30 uppercase tracking-wider">Certified Salesforce Administrator & Developer</span>
+                <span class="inline-block bg-sky-500/10 text-sky-400 text-xs font-bold px-4 py-1.5 rounded-full mb-5 border border-sky-400/30 uppercase tracking-wider">Salesforce Administrator & Automation Expert</span>
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6">
                     Alec Borman
                 </h1>
@@ -194,69 +200,104 @@
             <!-- Subtle Background Pattern -->
             <div class="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M0%200h20v20H0zM20%2020h20v20H20z%22%2F%3E%3C%2Fsvg%3E')]"></div>
             <div class="container mx-auto px-6 relative">
-                <div class="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
+                <div class="grid md:grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24 items-start">
                     <!-- About Me -->
-                    <div>
+                    <div class="lg:col-span-3">
                         <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">About Me</span>
-                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Professional Summary</h2>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Strategic Business Architect</h2>
                         <div class="space-y-6 text-slate-300 text-base leading-relaxed">
-                             <p>Certified Salesforce Administrator with a Computer Science background, offering a rare blend of deep technical skill and business-focused process automation.</p>
-                             <p>Proven ability to own and scale Salesforce instances for high-growth SaaS companies, supporting 150+ users. Expert in translating complex business needs into secure, scalable, and efficient solutions that drive user adoption, reduce manual work, and accelerate operational excellence.</p>
+                             <p>A Strategic Business Architect who specializes in building the operational backbone for companies that are ready to scale explosively.</p>
+                             <p>I translate complex GTM strategy into foundational, end-to-end technical solutions, building the core internal tooling and automation that accelerates sales velocity and operational excellence.</p>
+                        </div>
+                        
+                        <!-- Pillars of Expertise -->
+                        <div class="mt-12">
+                            <h3 class="text-2xl font-bold text-white mb-6">Pillars of Expertise</h3>
+                            <div class="space-y-6">
+                                <!-- Pillar 1 -->
+                                <div>
+                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
+                                        <i data-lucide="compass" class="w-5 h-5 text-indigo-400 shrink-0"></i>
+                                        Strategic Architecture & Solution Design
+                                    </h4>
+                                    <p class="text-slate-400 text-sm">Architecting GTM tech stacks and internal tooling ecosystems from the ground up. Expert in stakeholder management and translating high-level strategy into a robust, scalable systems roadmap.</p>
+                                </div>
+                                <!-- Pillar 2 -->
+                                <div>
+                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
+                                        <i data-lucide="code-2" class="w-5 h-5 text-indigo-400 shrink-0"></i>
+                                        Full-Stack Systems Development
+                                    </h4>
+                                    <p class="text-slate-400 text-sm">Building custom, end-to-end solutions within the Salesforce ecosystem (Apex, LWC, Visualforce) to overcome platform limitations and deliver highly tailored user workflows.</p>
+                                </div>
+                                <!-- Pillar 3 -->
+                                <div>
+                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
+                                        <i data-lucide="zap" class="w-5 h-5 text-indigo-400 shrink-0"></i>
+                                        Intelligent Automation & Integration
+                                    </h4>
+                                    <p class="text-slate-400 text-sm">Leveraging AI-driven tools for rapid prototyping and complex API integrations (Zapier) to automate critical workflows, synchronize enterprise data, and eliminate high-cost manual processes.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Core Competencies -->
-                    <div>
+                    <div class="lg:col-span-2">
                         <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Toolkit</span>
-                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Core Competencies</h2>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Core Technologies & Methodologies</h2>
                         
                         <div class="space-y-8">
-                            <!-- Salesforce Administration -->
+                            <!-- Platforms & Tools -->
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="shield-check" class="w-6 h-6 text-indigo-400"></i>
-                                    Salesforce Administration
+                                    <i data-lucide="database" class="w-6 h-6 text-indigo-400"></i>
+                                    Platforms & Tools
                                 </h3>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">User & Data Management</span>
-                                    <span class="skill-badge">Security (Profiles, Roles, Permission Sets)</span>
-                                    <span class="skill-badge">Process Automation (Flow, Process Builder)</span>
-                                    <span class="skill-badge">UI/UX (Lightning Pages, Layouts)</span>
-                                    <span class="skill-badge">Reports & Dashboards</span>
-                                    <span class="skill-badge">Data Loader</span>
-                                    <span class="skill-badge">Change Sets</span>
+                                    <span class="skill-badge">Salesforce Ecosystem</span>
+                                    <span class="skill-badge">Sales Cloud</span>
+                                    <span class="skill-badge">Salesforce Flow</span>
+                                    <span class="skill-badge">Apex</span>
+                                    <span class="skill-badge">LWC</span>
+                                    <span class="skill-badge">Visualforce</span>
+                                    <span class="skill-badge">Zapier</span>
+                                    <span class="skill-badge">Jira</span>
+                                    <span class="skill-badge">HubSpot</span>
+                                    <span class="skill-badge">Glovia OM ERP</span>
+                                    <span class="skill-badge">Asana</span>
                                 </div>
                             </div>
                             
-                            <!-- Salesforce Development -->
+                            <!-- Methodologies -->
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="code" class="w-6 h-6 text-indigo-400"></i>
-                                    Salesforce Development
+                                    <i data-lucide="clipboard-check" class="w-6 h-6 text-indigo-400"></i>
+                                    Methodologies
                                 </h3>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">Apex Programming</span>
-                                    <span class="skill-badge">Lightning Web Components (LWC)</span>
-                                    <span class="skill-badge">Visualforce</span>
-                                    <span class="skill-badge">SOQL</span>
-                                    <span class="skill-badge">Custom Buttons</span>
+                                    <span class="skill-badge">Agile/Kanban</span>
+                                    <span class="skill-badge">GTM Strategy</span>
+                                    <span class="skill-badge">Sales Operations</span>
+                                    <span class="skill-badge">Presales Engineering</span>
+                                    <span class="skill-badge">Business Process Re-engineering</span>
+                                    <span class="skill-badge">Gap Analysis</span>
+                                    <span class="skill-badge">Requirements Gathering</span>
                                 </div>
                             </div>
 
-                            <!-- Platforms & Integrations -->
+                            <!-- Concepts -->
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="zap" class="w-6 h-6 text-indigo-400"></i>
-                                    Platforms & Integrations
+                                    <i data-lucide="server" class="w-6 h-6 text-indigo-400"></i>
+                                    Concepts
                                 </h3>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">Salesforce Sales Cloud</span>
-                                    <span class="skill-badge">Zapier</span>
                                     <span class="skill-badge">API Integration</span>
-                                    <span class="skill-badge">HubSpot</span>
-                                    <span class="skill-badge">Jira</span>
-                                    <span class="skill-badge">Asana</span>
-                                    <span class="skill-badge">Glovia OM ERP</span>
+                                    <span class="skill-badge">Data Synchronization</span>
+                                    <span class="skill-badge">Order Management</span>
+                                    <span class="skill-badge">Business Requirements Documents (BRDs)</span>
+                                    <span class="skill-badge">User Story & Acceptance Criteria</span>
                                 </div>
                             </div>
                         </div>
@@ -265,6 +306,36 @@
             </div>
         </section>
         
+        <!-- ====== Philosophy Section ====== -->
+        <section id="philosophy" class="py-24 md:py-32 bg-slate-900">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Approach</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-6">An AI-Assisted, First-Principles Approach</h2>
+                    <p class="text-lg text-slate-300 mb-12 leading-relaxed">
+                        To understand my work, you first have to understand how I think.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto grid md:grid-cols-5 gap-8">
+                    <div class="md:col-span-2 flex justify-center md:justify-start">
+                        <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl">
+                            <i data-lucide="brain-circuit" class="w-16 h-16 text-indigo-400 mx-auto mb-4"></i>
+                            <blockquote class="text-center italic text-slate-200">
+                                "Imagine an architect working inside a pitch-black box. Without sight, they have to learn everything by feel. They have to deeply, fundamentally understand every material and connection to know what they're building."
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="md:col-span-3 space-y-4 text-slate-300 text-base leading-relaxed">
+                        <p>That's how I operate. When I’m in a business meeting, my primary focus is to listen. I’m absorbing the complex systems, the processes, and most importantly, the pain points. My inner architect is quietly working in the background, building a complete model of the problem.</p>
+                        <p>Once I fully understand that problem at its root, I translate that fully-formed idea to an AI. I use it as a powerful tool to instantly flesh out my concepts, build documentation, create development guides, and turn those guides into user-friendly manuals.</p>
+                        <p>This approach gives me a level of presence and focus that is a strong asset. All my energy goes into modeling the problem, understanding the nuances, and picking up on the small, critical details that are often missed. It allows me to build solutions from a place of true understanding.</p>
+                        <p class="text-white font-semibold">Ultimately, I’m an insightful problem-solver and a positive presence, and I'm confident this unique approach makes me a valuable asset to any team.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Skill Badge CSS (injected via <style> for brevity) -->
         <style>
             .skill-badge {
@@ -280,7 +351,7 @@
         </style>
 
         <!-- ====== Experience Section ====== -->
-        <section id="experience" class="py-24 md:py-32 bg-slate-900">
+        <section id="experience" class="py-24 md:py-32 bg-slate-900/90">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
                     <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Journey</span>
@@ -292,52 +363,74 @@
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium text-sky-400 mb-1">Oct 2024 – Present</p>
-                        <h3 class="text-xl font-bold">Senior Salesforce Administrator</h3>
+                        <h3 class="text-xl font-bold">Business Systems Architect</h3>
                         <p class="company-name text-base font-medium mb-3">Hydrolix (Remote)</p>
-                        <ul>
-                            <li>Owned and scaled the Salesforce instance from its foundation, supporting 150+ users in a high-growth, usage-based SaaS environment.</li>
-                            <li>Served as the primary technical owner for 150+ users across Sales, CSE, and SRE teams, managing the full enhancement lifecycle.</li>
-                            <li>Optimized the lead-to-opportunity process using Flows and validation rules, achieving a 40% reduction in average lead response time.</li>
-                            <li>Engineered the end-to-end customer lifecycle in Salesforce, automating POC credit approvals, usage quota tracking, and critical customer communications.</li>
-                            <li>Automated system notifications using Zapier and HTML templates, saving over 15 hours of manual work monthly.</li>
-                            <li>Developed targeted Apex and LWC components to resolve technical debt.</li>
-                        </ul>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>I joined Hydrolix as the foundational systems administrator and grew into the role of strategic architect, tasked with building the company's operational backbone: Salesforce as the central financial tool and usage tracker for our SaaS deployments. My core challenge was to deliver immediate, tactical solutions to keep the business running while architecting a robust, long-term system.</p>
+                            <p><strong>Balanced Immediate Needs with Long-Term Vision:</strong> Designed and deployed a new lead-to-opportunity process that cut lead response time by 40%. This involved creating interim workflows to provide immediate relief to the sales team while the permanent, fully automated architecture was being built in the background.</p>
+                            <p><strong>Engineered End-to-End Automation:</strong> Managed deployments from initial POC to active contract. This included building systems for monthly POC credit approvals, tracking contract usage quotas (in TB/month), and orchestrating all automated customer communications. I personally designed and coded the HTML email templates and used Zapier to trigger critical notifications.</p>
+                            <p><strong>Served as the Cross-Functional Systems Hub:</strong> Acted as the technical bridge between Sales, CSE, and SRE teams, translating their immediate pain points into quick-win solutions while ensuring those fixes aligned with the larger, strategic systems roadmap.</p>
+                        </div>
                     </div>
                     
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Jun 2024 – Aug 2024</p>
-                        <h3 class="text-xl font-bold">Salesforce Consultant</h3>
-                        <p class="company-name text-base font-medium mb-3">Jaco Aerospace, Inc. (Remote)</p>
-                        <ul>
-                            <li>Retained as a consultant to streamline a complex Salesforce org with an integrated Glovia OM ERP.</li>
-                            <li>Developed custom Apex controllers, Visualforce pages, and LWC solutions to overcome managed package limitations, significantly reducing data entry time.</li>
-                            <li>Configured and integrated complex ERP features into Salesforce, including Work Orders and RMAs, to enhance operational efficiency.</li>
-                        </ul>
+                        <p class="text-sm font-medium text-sky-400 mb-1">Sep 2024 – Present</p>
+                        <h3 class="text-xl font-bold">Salesforce Consultant / Developer</h3>
+                        <p class="company-name text-base font-medium mb-3">GIVE US PAWS (Contract / Volunteer)</p>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>Provide expert consulting and development services to Give Us Paws, a 501c nonprofit requiring a new Salesforce system. This included managed package discovery, requirements gathering, design, license acquisition, configuration, customization, data import, and continued support for their "Dog and Client Tracker" managed package.</p>
+                        </div>
                     </div>
 
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Sep 2022 – Present</p>
-                        <h3 class="text-xl font-bold">Salesforce Administrator (Volunteer Consultant)</h3>
-                        <p class="company-name text-base font-medium mb-3">GIVE US PAWS (Remote)</p>
-                        <ul>
-                            <li>Led a pro-bono, end-to-end Salesforce implementation for a 501c nonprofit organization.</li>
-                            <li>Managed the project from initial requirements gathering and license acquisition to final configuration and user training.</li>
-                            <li>Customized the "Dog and Client Tracker" managed package to meet unique operational needs for tracking service dogs for disabled veterans.</li>
-                        </ul>
+                        <p class="text-sm font-medium text-sky-400 mb-1">Jun 2024 – Aug 2024</p>
+                        <h3 class="text-xl font-bold">Salesforce Architect / Consultant</h3>
+                        <p class="company-name text-base font-medium mb-3">Jaco Aerospace, Inc. (Contract)</p>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>Provided expertise in business processes, configuring and optimizing Salesforce Sales Cloud with Order Management and ERP features, specifically leveraging the managed package Glovia OM. Designed, developed, and tested custom logic to overcome managed package limitations. This included creating Apex controllers, custom buttons, and Visualforce pages to prepopulate fields for new records, significantly reducing data entry time and improving workflow efficiency.</p>
+                        </div>
                     </div>
 
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium text-sky-400 mb-1">Mar 2022 – Oct 2023</p>
-                        <h3 class="text-xl font-bold">Salesforce Support Specialist / Developer</h3>
+                        <h3 class="text-xl font-bold">Salesforce Developer</h3>
                         <p class="company-name text-base font-medium mb-3">Fujitsu (Contracted to Royal Canin) (Hybrid)</p>
-                        <ul>
-                            <li>Provided technical support and development for an enterprise-level Salesforce environment with a complex supply chain integration.</li>
-                            <li>Served as a primary support specialist for the Glovia OM managed package, expertly resolving user-submitted support tickets.</li>
-                            <li>Collaborated with a team of developers to design, implement, test, and document solutions within a large-scale Salesforce instance.</li>
-                        </ul>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>As a Salesforce Developer and Support Specialist for the Salesforce Sales Cloud managed package, Glovia OM, I provided expert advice and integrated its ERP and Order Management features. I addressed and resolved support queries, and after completing training, I applied my knowledge by resolving tickets and collaborating with a team of developers to design, implement, test, document, and refine solutions, ensuring supply chain reliability.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium text-sky-400 mb-1">Jan 2020 – Mar 2022</p>
+                        <h3 class="text-xl font-bold">Marketing Campaign Manager</h3>
+                        <p class="company-name text-base font-medium mb-3">GIVE US PAWS (Contract)</p>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>Designed, tested, and implemented Google ad campaigns for GiveUsPaws, a 501c Non-profit that focuses on training service dogs for disabled veterans.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium text-sky-400 mb-1">May 2019 – Aug 2019</p>
+                        <h3 class="text-xl font-bold">IT Intern</h3>
+                        <p class="company-name text-base font-medium mb-3">Austin Industrial, Inc.</p>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>Diagnosed issues, deployed devices, and tracked devices with inventory management software.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium text-sky-400 mb-1">May 2018 – Aug 2018</p>
+                        <h3 class="text-xl font-bold">Devops Intern</h3>
+                        <p class="company-name text-base font-medium mb-3">Austin Industrial, Inc.</p>
+                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                            <p>Researched intrinsically safe cases, software, and hardware for RFID site tracking. Deployed 400 iPad devices with custom software. Digitized Job Safety Analysis audits and maintained user guides.</p>
+                        </div>
                     </div>
                     <!-- Timeline End -->
                 </div>
@@ -353,8 +446,30 @@
                 </div>
 
                 <!-- Projects Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                     
+                    <!-- Project Card: Hydrolix Decommissioning -->
+                    <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
+                        <img src="https://placehold.co/600x400/1e293b/38bdf8?text=AI+Automation+Process&font=inter"
+                             alt="Hydrolix AI Automation Project"
+                             class="w-full h-48 object-cover"
+                             onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Image+Not+Available&font=inter'; this.onerror=null;">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <span class="text-xs font-medium text-indigo-400 mb-1 uppercase">AI-Driven System Architecture</span>
+                            <h3 class="text-xl font-semibold text-white mb-3">Automated Tenant Decommissioning</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
+                                Architected a fully automated decommissioning process for Hydrolix tenants. Leveraged Google Cloud's Vertex AI within a secure environment to partner with AI, rapidly modeling and building flawless, interconnected logic spanning Salesforce, Zapier, and Jira. This created a scalable, reliable, and predictable experience for teams and customers.
+                            </p>
+                            <div class="mt-auto pt-4">
+                                <span class="skill-badge">Vertex AI</span>
+                                <span class="skill-badge">System Architecture</span>
+                                <span class="skill-badge">Salesforce</span>
+                                <span class="skill-badge">Zapier</span>
+                                <span class="skill-badge">Jira</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Project Card: HSE Solutions -->
                     <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
                         <img src="https://placehold.co/600x400/1e293b/38bdf8?text=HSE+Solutions+Website&font=inter"
@@ -393,6 +508,7 @@
                                 <span class="skill-badge">NPSP</span>
                                 <span class="skill-badge">Flow Automation</span>
                                 <span class="skill-badge">Managed Packages</span>
+                                <span class="skill-badge">Requirements Gathering</span>
                             </div>
                         </div>
                     </div>
@@ -414,10 +530,51 @@
                                 <span class="skill-badge">LWC</span>
                                 <span class="skill-badge">Visualforce</span>
                                 <span class="skill-badge">ERP Integration</span>
+                                <span class="skill-badge">Glovia OM</span>
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== Recommendations Section ====== -->
+        <section id="recommendations" class="py-24 md:py-32 bg-slate-900/70">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">Testimonials</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-16">What My Colleagues Say</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Recommendation 1: Meg Blanchette -->
+                    <div class="gradient-border-card rounded-2xl p-8">
+                        <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/100x100/38bdf8/0F172A?text=MB&font=inter" alt="Meg Blanchette" class="w-16 h-16 rounded-full border-2 border-slate-700">
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white">Meg Blanchette</h4>
+                                <p class="text-sm text-slate-400">Messaging & Product Marketing @ Hydrolix.io</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-slate-300 italic leading-relaxed">
+                            "Alec was lovely to work with! He was helpful and kind, I highly recommend adding him to your team."
+                        </blockquote>
+                    </div>
+
+                    <!-- Recommendation 2: Berel Schusterman -->
+                    <div class="gradient-border-card rounded-2xl p-8">
+                        <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/100x100/818cf8/0F172A?text=BS&font=inter" alt="Berel Schusterman" class="w-16 h-16 rounded-full border-2 border-slate-700">
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white">Berel Schusterman</h4>
+                                <p class="text-sm text-slate-400">Innovative Aerospace & Defense Procurement Expert</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-slate-300 italic leading-relaxed">
+                            "Alec's deep expertise with Fujitsu Glovia Software within Salesforce has been invaluable. His ability to navigate and optimize the system has significantly streamlined our processes... His technical knowledge, combined with his proactive approach, made him a crucial resource in our operations."
+                        </blockquote>
+                    </div>
                 </div>
             </div>
         </section>
@@ -562,7 +719,7 @@
                 document.body.style.overflow = isOpened ? 'hidden' : '';
             });
 
-            // Close menu when a nav link is clicked
+            <!-- Close menu when a nav link is clicked -->
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     if (link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
@@ -576,7 +733,9 @@
                 });
             });
             
-            // --- Smooth scrolling for all anchor links ---
+            /* // Removed redundant smooth-scrolling JavaScript.
+            // The 'scroll-smooth' class on the <html> tag already handles this natively.
+            
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -589,6 +748,7 @@
                     }
                 });
             });
+            */
 
             // --- Contact Form Logic (Simulation) ---
             const contactForm = document.getElementById('contact-form');
@@ -635,3 +795,5 @@
     </script>
 </body>
 </html>
+
+
