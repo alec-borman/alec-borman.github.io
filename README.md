@@ -56,14 +56,16 @@
             border-radius: 1px;
         }
         #menu-btn.open .hamburger-top {
-            transform: rotate(45deg) translate(5px, 6px);
+            /* transform: rotate(45deg) translate(5px, 6px); */
+            transform: translateY(8px) rotate(45deg);
         }
         #menu-btn.open .hamburger-middle {
             opacity: 0;
-            transform: translateX(-16px);
+            /* transform: translateX(-16px); */
         }
         #menu-btn.open .hamburger-bottom {
-            transform: rotate(-45deg) translate(5px, -6px);
+            /* transform: rotate(-45deg) translate(5px, -6px); */
+            transform: translateY(-8px) rotate(-45deg);
         }
         
         /* Timeline styles for experience */
@@ -731,7 +733,9 @@
                 });
             });
             
-            // --- Smooth scrolling for all anchor links ---
+            /* // Removed redundant smooth-scrolling JavaScript.
+            // The 'scroll-smooth' class on the <html> tag already handles this natively.
+            
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -744,6 +748,7 @@
                     }
                 });
             });
+            */
 
             // --- Contact Form Logic (Simulation) ---
             const contactForm = document.getElementById('contact-form');
@@ -790,4 +795,5 @@
     </script>
 </body>
 </html>
+
 
