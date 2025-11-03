@@ -593,13 +593,14 @@
                     <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">Get In Touch</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-6">Let's Build Something Together</h2>
                     <p class="text-lg text-slate-300 mb-16 leading-relaxed">
-                        Have a project in mind or just want to connect? Feel free to send me a message or reach out through email or LinkedIn.
+                        Have a project in mind or just want to connect? Feel free to reach out through email or LinkedIn.
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-5 gap-12 lg:gap-16 max-w-6xl mx-auto">
-                    <!-- Contact Info -->
-                    <div class="md:col-span-2 bg-slate-800/50 p-8 rounded-xl border border-slate-700 shadow-xl backdrop-blur-md">
+                <!-- Centered Contact Info -->
+                <div class="max-w-md mx-auto">
+                    <!-- Contact Info Card -->
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 shadow-xl backdrop-blur-md">
                         <h3 class="text-2xl font-bold text-white mb-8">Contact Information</h3>
                         <div class="space-y-8">
                             <div class="flex items-start gap-4 group">
@@ -632,41 +633,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Contact Form -->
-                    <form id="contact-form" class="md:col-span-3 space-y-6">
-                        <h3 class="text-2xl font-bold text-white mb-2">Send Me a Message</h3>
-                        <div class="grid sm:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-slate-200 mb-2">Full Name*</label>
-                                <input type="text" id="name" name="name" placeholder="e.g. Jane Doe" required autocomplete="name"
-                                    class="w-full px-4 py-3 rounded-md bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors placeholder-slate-500">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-slate-200 mb-2">Email Address*</label>
-                                <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email"
-                                    class="w-full px-4 py-3 rounded-md bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors placeholder-slate-500">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-slate-200 mb-2">Your Message*</label>
-                            <textarea id="message" name="message" rows="6" placeholder="Please describe your project or inquiry..." required
-                                class="w-full px-4 py-3 rounded-md bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors placeholder-slate-500"></textarea>
-                        </div>
-                        <div class="pt-2">
-                            <button type="submit"
-                                class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3.5 rounded-md text-base transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-sky-500/40 flex items-center justify-center gap-2">
-                                <i data-lucide="send" class="w-5 h-5" aria-hidden="true"></i>
-                                Send Message
-                            </button>
-                        </div>
-                        <div id="form-success" class="!mt-4 hidden text-center text-green-400 font-semibold p-4 bg-green-900/50 rounded-lg border border-green-700 text-sm" aria-live="polite">
-                            Message Sent Successfully! I'll be in touch shortly.
-                        </div>
-                         <div id="form-error" class="!mt-4 hidden text-center text-red-400 font-semibold p-4 bg-red-900/50 rounded-lg border border-red-700 text-sm" aria-live="polite">
-                            Submission Failed. Please try again or contact me directly.
-                        </div>
-                    </form>
+                    <!-- Form Removed -->
                 </div>
             </div>
         </section>
@@ -751,6 +718,7 @@
             */
 
             // --- Contact Form Logic (Simulation) ---
+            /* REMOVED
             const contactForm = document.getElementById('contact-form');
             const successMessage = document.getElementById('form-success');
             const errorMessage = document.getElementById('form-error');
@@ -790,10 +758,10 @@
                     }, 5000);
                 });
             }
+            */
 
         });
     </script>
 </body>
 </html>
-
 
