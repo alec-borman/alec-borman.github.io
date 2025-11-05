@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alec Borman | Business Systems Architect</title>
     
-    <!-- SEO Meta Tags -->
     <meta name="description" content="Portfolio for Alec Borman, a Business Systems Architect, Salesforce Administrator, and Developer based in Texas.">
     <meta name="keywords" content="Alec Borman, Salesforce, Architect, Administrator, Developer, LWC, Apex, Flow, API, Integration, Houston, League City, Friendswood, TX">
     <meta name="author" content="Alec Borman">
     <meta name="robots" content="index, follow">
 
-    <!-- Favicon (Generative SVG) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -30,24 +26,14 @@
         }
     </script>
     
-    <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide-icons" defer></script>
     
-    <!-- Three.js CDN for 3D Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
-    <!-- 
-      =================================
-      CRITICAL: CUSTOM CSS STYLES
-      This is now a standard <style> tag, not <style type/tailwindcss>.
-      This was the primary rendering bug.
-      =================================
-    -->
     <style>
         body {
             font-family: 'Inter', sans-serif; /* Fallback */
@@ -66,8 +52,8 @@
 
         /* --- Dark/Light Mode Base --- */
         .dark body {
-            background-color: #0F172A;
-            color: #CBD5E1;
+            background-color: #0F172A; /* slate-900 */
+            color: #CBD5E1; /* slate-300 */
         }
         .light body {
             background-color: #F1F5F9; /* slate-100 */
@@ -423,19 +409,15 @@
         }
     </style>
 </head>
-<body class="antialiased dark"> <!-- Default to dark mode -->
-
-    <!-- All new interactive elements -->
-    <div id="scroll-progress"></div>
+<body class="antialiased dark"> <div id="scroll-progress"></div>
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
     <canvas id="bg-canvas"></canvas>
     
-    <!-- Command Palette HTML -->
     <div id="command-palette-overlay" aria-hidden="true"></div>
     <div id="command-palette" role="dialog" aria-modal="true" aria-labelledby="command-palette-label">
         <div class="cmd-palette-content">
-            <input type="text" id="command-palette-input" placeholder="Jump to..." autocomplete="off">
+            <input type="text" id="command-palette-input" placeholder="Jump to... (Ctrl+K)" autocomplete="off">
             <div id="command-palette-list">
                 <a href="#home" class="command-item" data-action="jump">
                     <i data-lucide="home" class="w-4 h-4"></i>Home
@@ -460,22 +442,13 @@
             </div>
         </div>
     </div>
-    <!-- End new interactive elements -->
-
-    <!-- 
-      =================================
-      HEADER / NAVIGATION
-      =================================
-    -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
             <a href="#home" class="text-2xl font-bold transition-colors dark:text-white light:text-slate-900 accent-text-hover flex items-center gap-2" data-magnetic>
                 <i data-lucide="code-2" class="accent-color"></i>
                 <span>Alec <span class="accent-color">Borman</span></span>
             </a>
 
-            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#home" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Home</a>
                 <a href="#about" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">About</a>
@@ -483,14 +456,12 @@
                 <a href="#projects" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Projects</a>
                 <a href="#contact" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Contact</a>
                 
-                <!-- Dark/Light Mode Toggle -->
                 <button id="theme-toggle" class="p-2 rounded-full transition-colors light:text-slate-700 light:hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-700" aria-label="Toggle theme" data-magnetic>
                     <svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 12a5 5 0 100-10 5 5 0 000 10z" /></svg>
                     <svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                 </button>
             </div>
 
-            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="p-2 rounded-md light:text-slate-700 light:hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-700" aria-label="Open menu">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -501,7 +472,6 @@
             </div>
         </nav>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 light:bg-white dark:bg-slate-800 shadow-lg -translate-x-full">
             <div class="flex flex-col space-y-4 p-6">
                 <a href="#home" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Home</a>
@@ -518,14 +488,7 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-6 relative z-10"> <!-- Main content needs z-index to be above bg-canvas -->
-
-        <!-- 
-          =================================
-          SECTION: HOME (HERO)
-          =================================
-        -->
-        <section id="home" data-section-id="home" class="min-h-screen flex items-center pt-20 md:pt-0">
+    <main class="container mx-auto px-6 relative z-10"> <section id="home" data-section-id="home" class="min-h-screen flex items-center pt-20 md:pt-0">
             <div data-stagger-container>
                 <span data-stagger-reveal class="inline-block bg-sky-500/10 text-sky-400 text-xs font-bold px-4 py-1.5 rounded-full mb-5 border border-sky-400/30 uppercase tracking-wider">
                     Certified Salesforce Administrator & Developer
@@ -547,14 +510,8 @@
             </div>
         </section>
 
-        <!-- 
-          =================================
-          SECTION: ABOUT
-          =================================
-        -->
         <section id="about" data-section-id="about" class="min-h-screen flex items-center py-24 md:py-32">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start" data-stagger-container>
-                <!-- Text Content -->
                 <div class="" data-stagger-reveal>
                     <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center">
                         <span class="accent-color text-4xl md:text-5xl font-mono mr-3">01.</span> About Me
@@ -569,13 +526,11 @@
                         <p>
                             Proven ability to engineer end-to-end customer lifecycles, drive user adoption, and accelerate operational excellence through deep technical skill and business-focused process automation.
                         </p>
-                        <!-- Note: This download link is a placeholder. You'll need to add your actual resume file. -->
                         <a href="#" download="Alec_Borman_Resume.pdf" class="inline-block mt-4 px-6 py-3 rounded-md text-md font-medium text-sky-400 border-2 accent-border hover:bg-sky-400/10 transition-all duration-300 transform hover:-translate-y-0.5" data-magnetic>
                             Download My CV
                         </a>
                     </div>
                 </div>
-                <!-- Core Competencies -->
                 <div class="space-y-8 mt-0 md:mt-20" data-stagger-reveal>
                      <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
                         Core Competencies
@@ -622,11 +577,6 @@
             </div>
         </section>
 
-        <!-- 
-          =================================
-          SECTION: EXPERIENCE
-          =================================
-        -->
         <section id="experience" data-section-id="experience" class="min-h-screen py-24 md:py-32">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
@@ -674,11 +624,6 @@
             </div>
         </section>
 
-        <!-- 
-          =================================
-          SECTION: PROJECTS
-          =================================
-        -->
         <section id="projects" data-section-id="projects" class="min-h-screen py-24 md:py-32">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
@@ -686,7 +631,6 @@
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-stagger-container>
-                    <!-- Project Card 1 -->
                     <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
                         <div class="overflow-hidden h-48">
                             <img src="https://placehold.co/600x400/1e293b/38bdf8?text=HSE+Solutions+Website&font=inter" 
@@ -711,7 +655,6 @@
                         </div>
                     </div>
 
-                    <!-- Project Card 2 -->
                     <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
                         <div class="overflow-hidden h-48">
                             <img src="https://placehold.co/600x400/1e293b/38bdf8?text=GIVE+US+PAWS+Salesforce&font=inter" 
@@ -733,7 +676,6 @@
                         </div>
                     </div>
 
-                    <!-- Project Card 3 -->
                     <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
                         <div class="overflow-hidden h-48">
                             <img src="https://placehold.co/600x400/1e293b/38bdf8?text=Jaco+Aerospace+Integration&font=inter" 
@@ -758,11 +700,6 @@
             </div>
         </section>
 
-        <!-- 
-          =================================
-          SECTION: CONTACT
-          =================================
-        -->
         <section id="contact" data-section-id="contact" class="py-24 md:py-32">
             <div class="max-w-2xl mx-auto" data-stagger-container>
                 <div class="text-center" data-stagger-reveal>
@@ -806,11 +743,6 @@
 
     </main>
 
-    <!-- 
-      =================================
-      FOOTER
-      =================================
-    -->
     <footer class="py-12 light:bg-slate-200 dark:bg-slate-800/50 relative z-10">
         <div class="container mx-auto px-6">
              <div class="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -850,11 +782,6 @@
     </footer>
 
 
-    <!-- 
-      =================================
-      ADVANCED JAVASCRIPT
-      =================================
-    -->
     <script>
         // --- Global Helpers ---
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
