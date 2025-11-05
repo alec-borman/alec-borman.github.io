@@ -732,7 +732,7 @@
                                 <i data-lucide="shield-check" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Axiom-Driven & Honest UX
                             </h4>
                             <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Follows a strict principle-driven design. All interactive elements are 100% functional. Non-functional placeholders (like "Download CV") were identified in a high-level audit and removed to ensure a completely honest, non-deceptive user experience.
+                                Follows a strict principle-driven design. All interactive elements are 100% functional.
                             </p>
                         </div>
                         <div>
