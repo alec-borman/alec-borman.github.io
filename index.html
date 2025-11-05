@@ -699,118 +699,102 @@
 
         <!-- 
           =================================
-          SECTION: EXPERIENCE (REBUILT FOR "TOP CANDIDATE")
+          SECTION: ABOUT (RE-ARCHITECTED) - RESTORED
           =================================
         -->
-        <section id="experience" data-section-id="experience" class="min-h-screen py-24 md:py-32">
-            <div>
-                <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
-                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">02.</span> Professional Experience
-                </h2>
+        <section id="about" data-section-id="about" class="min-h-screen flex items-center py-24 md:py-32">
+            <div class="max-w-4xl mx-auto" data-stagger-container>
+                
+                <div data-stagger-reveal>
+                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center">
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">01.</span> About Me
+                    </h2>
+                    <div class="space-y-6 text-lg light:text-slate-700 dark:text-slate-300">
+                        <p>
+                            I architect end-to-end business systems and optimize revenue operations. I specialize in translating complex business needs into secure and scalable solutions. Primarily leveraging the Salesforce platform and Zapier to drive user adoption, reduce manual work, and accelerate operational excellence.
+                        </p>
+                    </div>
+                    <a href="#projects" class="inline-block mt-8 px-6 py-3 rounded-md text-md font-medium text-sky-400 border-2 accent-border hover:bg-sky-400/10 transition-all duration-300 transform hover:-translate-y-0.5" data-magnetic>
+                        View My Projects
+                    </a>
+                </div>
 
-                <div class="max-w-3xl mx-auto" data-stagger-container>
-                    
-                    <!-- Hydrolix -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">Oct 2024 – Present</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Business Systems Architect</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Hydrolix (Remote)</p>
-                        <ul>
-                            <li>Grew from foundational admin to strategic architect, building the company's operational backbone on Salesforce for finance and SaaS deployment tracking.</li>
-                            <li>Balanced immediate tactical needs with long-term strategy, collaborating with Sales, CSE, and SRE teams to clear roadblocks and build a scalable customer lifecycle engine.</li>
-                            <li>Designed and deployed a new lead-to-opportunity process that cut lead response time by 40%.</li>
-                            <li>Engineered end-to-end automation for the deployment lifecycle (POC to contract), including credit approvals, usage quota tracking, and automated customer communications.</li>
-                            <li>Personally designed/coded HTML email templates and used Zapier to trigger critical notifications from the "TrafficPeak" system.</li>
-                            <li>Administered the Salesforce instance for 150+ users, leading custom Apex and LWC development to eliminate technical debt.</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Jaco Aerospace, Inc. -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">Jun 2024 – Aug 2024</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Architect / Salesforce Consultant</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Jaco Aerospace, Inc. (Contract, Remote)</p>
-                        <ul>
-                            <li>Provided expertise in business process configuration and optimization for Salesforce Sales Cloud with an integrated Glovia OM ERP.</li>
-                            <li>Designed, developed, and tested custom logic (Apex, Visualforce) to overcome managed package limitations and streamline business processes.</li>
-                            <li>Created custom buttons and Visualforce pages to prepopulate fields, significantly reducing data entry time.</li>
-                            <li>Configured and integrated Glovia features including Work Orders, RMAs, Return to Suppliers, and Reorder Point Planning.</li>
-                            <li>Collaborated with stakeholders to design, implement, test, and refine solutions, enhancing Order Management and ERP system functionality.</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- GIVE US PAWS -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">Sep 2022 – Present</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Consultant / Developer</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Contract, Remote)</p>
-                        <ul>
-                            <li>Provide expert consulting and development for a 501c nonprofit, implementing a new Salesforce system from the ground up.</li>
-                            <li>Utilized a managed package ("Dog and Client Tracker") to track the training of service dogs for disabled veterans.</li>
-                            <li>Led the full project lifecycle: managed package discovery, requirements gathering, solution design, license acquisition, configuration, and customization.</li>
-                            <li>Managed all data import/entry and created critical reports and dashboards, providing continued system support.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Fujitsu (From LinkedIn Data) -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">Mar 2022 – Oct 2023</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Developer</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Fujitsu (Contracted to Royal Canin)</p>
-                        <ul>
-                            <li>Served as a Developer and Support Specialist for the Salesforce Sales Cloud managed package, Glovia OM.</li>
-                            <li>Provided expert advice, integrated ERP/Order Management features, and resolved all support queries related to the managed package.</li>
-                            <li>Collaborated with a team of developers to design, implement, test, document, and refine solutions, ensuring supply chain reliability.</li>
-                        </ul>
-                    </div>
-
-                    <!-- GIVE US PAWS (Marketing) (From LinkedIn Data) -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">Jan 2020 – Mar 2022</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Marketing Campaign Manager</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Contract, Remote)</p>
-                        <ul>
-                            <li>Designed, tested, and implemented Google Ad campaigns for the 501c nonprofit.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Austin Industrial (From LinkedIn Data) -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">May 2019 – Aug 2019</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">IT Intern</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Austin Industrial, Inc.</p>
-                        <ul>
-                            <li>Diagnosed issues, deployed devices, and tracked assets with inventory management software.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Austin Industrial (From LinkedIn Data) -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">May 2018 – Aug 2018</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">DevOps Intern</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Austin Industrial, Inc.</p>
-                        <ul>
-                            <li>Researched intrinsically safe cases, software, and hardware for RFID site tracking.</li>
-                            <li>Deployed 400 iPad devices with custom Austin INDL software.</li>
-                            <li>Digitized Job Safety Analysis (JSA) audits and maintained user guides.</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Education -->
-                    <div class="timeline-item" data-stagger-reveal>
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium accent-color mb-1">2016 – 2021</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Bachelor of Science in Computer Science</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">University of Texas at Dallas (Richardson, TX)</p>
+                <div class="mt-20" data-stagger-reveal>
+                     <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
+                        Pillars of Expertise
+                    </h3>
+                    <div class="space-y-10">
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="network" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Strategic Architecture & Solution Design
+                            </h4>
+                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
+                                Architecting GTM tech stacks and internal tooling ecosystems from the ground up to transform core business processes. Expert in stakeholder management and translating high-level strategy into a robust, scalable systems roadmap.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="layers" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Full-Stack Systems Development
+                            </h4>
+                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
+                                Building custom, end-to-end solutions within the Salesforce ecosystem (Apex, LWC, Visualforce) to overcome platform limitations and deliver highly tailored user workflows. Proficient in the full development lifecycle, from back-end logic to front-end interface.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="zap" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Intelligent Automation & Integration
+                            </h4>
+                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
+                                Leveraging AI-driven tools for rapid prototyping and complex API integrations (Zapier) to automate critical workflows, synchronize enterprise data, and eliminate high-cost manual processes.
+                            </p>
+                        </div>
                     </div>
                 </div>
+
+                <div class="mt-20" data-stagger-reveal>
+                     <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
+                        Core Technologies & Methodologies
+                    </h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Platforms & Tools</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Salesforce Ecosystem</span>
+                                <span class="skill-badge">Sales Cloud</span>
+                                <span class="skill-badge">Apex</span>
+                                <span class="skill-badge">LWC</span>
+                                <span class="skill-badge">Visualforce</span>
+                                <span class="skill-badge">Zapier</span>
+                                <span class="skill-badge">Jira</span>
+                                <span class="skill-badge">Asana</span>
+                                <span class="skill-badge">Glovia OM ERP</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Methodologies</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Agile/Kanban</span>
+                                <span class="skill-badge">GTM Strategy</span>
+                                <span class="skill-badge">Sales Operations</span>
+                                <span class="skill-badge">Presales Engineering</span>
+                                <span class="skill-badge">Business Process Re-engineering</span>
+                                <span class="skill-badge">Gap Analysis</span>
+                                <span class="skill-badge">Requirements Gathering</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Concepts</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">API Integration</span>
+                                <span class="skill-badge">Data Synchronization</span>
+                                <span class="skill-badge">Order Management</span>
+                                <span class="skill-badge">Business Requirements Documents (BRDs)</span>
+                                <span class="skill-badge">User Story & Acceptance Criteria Creation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
