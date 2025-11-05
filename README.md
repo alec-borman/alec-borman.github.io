@@ -699,75 +699,7 @@
 
         <!-- 
           =================================
-          SECTION: ABOUT THIS SITE (RE-ARCHITECTED)
-          This section has been updated to replace the skill-badge list
-          with a descriptive methodology section, matching the "Pillars"
-          layout for design consistency.
-          =================================
-        -->
-        <section id="about-site" data-section-id="about-site" class="py-24 md:py-32">
-            <div class="max-w-4xl mx-auto" data-stagger-container>
-                <div data-stagger-reveal>
-                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-8 flex items-center">
-                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">04.</span> About This Site
-                    </h2>
-                    <h3 class="text-2xl font-bold light:text-slate-800 dark:text-slate-100 mb-4">A "Project 0" Showcase</h3>
-                    <div class="space-y-6 text-lg light:text-slate-700 dark:text-slate-300">
-                        <p>
-                            This portfolio is more than just a resume; it's a living project. I designed and built it from scratch as a direct demonstration of my skills in front-end development, interactive design, and system legibility.
-                        </p>
-                        <p>
-                            My goal was to create a clean, high-performance, and accessible single-page experience that is as well-crafted as the systems I build. It is fully responsive, respects user motion preferences, and is built with legible, commented code.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="mt-20" data-stagger-reveal>
-                    <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
-                       Design & Development Methodology
-                    </h3>
-                    <div class="space-y-10">
-                        <div>
-                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="shield-check" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Axiom-Driven & Honest UX
-                            </h4>
-                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Follows a strict principle-driven design. All interactive elements are 100% functional.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="book-open" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Total System Legibility
-                            </h4>
-                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Built on the principle that the codebase itself must be as legible as the UI. This file contains extensive comments explaining the "why" behind all CSS and JavaScript logic, ensuring the system is auditable and maintainable.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="fast-forward" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Performance & Accessibility First
-                            </h4>
-                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Engineered for performance with deferred scripts, lazy-loaded images, and an inline SVG favicon. Accessibility is paramount, with full support for `prefers-reduced-motion` and `aria-` attributes for all interactive elements.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="layers" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Progressive Enhancement
-                            </h4>
-                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                The site functions perfectly as a static HTML/CSS page. JavaScript is used to progressively *enhance* the experience with features like the 3D particle background, custom cursor, and command palette, which degrade gracefully if disabled.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 
-          =================================
-          SECTION: EXPERIENCE
+          SECTION: EXPERIENCE (REBUILT FOR "TOP CANDIDATE")
           =================================
         -->
         <section id="experience" data-section-id="experience" class="min-h-screen py-24 md:py-32">
@@ -777,37 +709,101 @@
                 </h2>
 
                 <div class="max-w-3xl mx-auto" data-stagger-container>
-                    <!-- Timeline items are revealed one by one -->
+                    
+                    <!-- Hydrolix -->
                     <div class="timeline-item" data-stagger-reveal>
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium accent-color mb-1">Oct 2024 – Present</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Senior Salesforce Administrator</h3>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Business Systems Architect</h3>
                         <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Hydrolix (Remote)</p>
                         <ul>
-                            <li>Owned and scaled the Salesforce instance from its foundation, supporting 150+ users.</li>
-                            <li>Served as the primary technical owner for 150+ users, managing the full enhancement lifecycle.</li>
-                            <li>Optimized the lead-to-opportunity process using Flows, achieving a 40% reduction in lead response time.</li>
+                            <li>Grew from foundational admin to strategic architect, building the company's operational backbone on Salesforce for finance and SaaS deployment tracking.</li>
+                            <li>Balanced immediate tactical needs with long-term strategy, collaborating with Sales, CSE, and SRE teams to clear roadblocks and build a scalable customer lifecycle engine.</li>
+                            <li>Designed and deployed a new lead-to-opportunity process that cut lead response time by 40%.</li>
+                            <li>Engineered end-to-end automation for the deployment lifecycle (POC to contract), including credit approvals, usage quota tracking, and automated customer communications.</li>
+                            <li>Personally designed/coded HTML email templates and used Zapier to trigger critical notifications from the "TrafficPeak" system.</li>
+                            <li>Administered the Salesforce instance for 150+ users, leading custom Apex and LWC development to eliminate technical debt.</li>
                         </ul>
                     </div>
+                    
+                    <!-- Jaco Aerospace, Inc. -->
                     <div class="timeline-item" data-stagger-reveal>
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium accent-color mb-1">Jun 2024 – Aug 2024</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Consultant</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Jaco Aerospace, Inc. (Remote)</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Architect / Salesforce Consultant</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Jaco Aerospace, Inc. (Contract, Remote)</p>
                         <ul>
-                            <li>Retained to streamline a complex Salesforce org with an integrated Glovia OM ERP.</li>
-                            <li>Developed custom Apex, Visualforce, and LWC solutions to overcome managed package limitations.</li>
+                            <li>Provided expertise in business process configuration and optimization for Salesforce Sales Cloud with an integrated Glovia OM ERP.</li>
+                            <li>Designed, developed, and tested custom logic (Apex, Visualforce) to overcome managed package limitations and streamline business processes.</li>
+                            <li>Created custom buttons and Visualforce pages to prepopulate fields, significantly reducing data entry time.</li>
+                            <li>Configured and integrated Glovia features including Work Orders, RMAs, Return to Suppliers, and Reorder Point Planning.</li>
+                            <li>Collaborated with stakeholders to design, implement, test, and refine solutions, enhancing Order Management and ERP system functionality.</li>
                         </ul>
                     </div>
+                    
+                    <!-- GIVE US PAWS -->
                     <div class="timeline-item" data-stagger-reveal>
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium accent-color mb-1">Sep 2022 – Present</p>
-                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Administrator (Volunteer)</h3>
-                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Remote)</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Consultant / Developer</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Contract, Remote)</p>
                         <ul>
-                            <li>Led a pro-bono, end-to-end Salesforce NPSP implementation for a 501c nonprofit.</li>
+                            <li>Provide expert consulting and development for a 501c nonprofit, implementing a new Salesforce system from the ground up.</li>
+                            <li>Utilized a managed package ("Dog and Client Tracker") to track the training of service dogs for disabled veterans.</li>
+                            <li>Led the full project lifecycle: managed package discovery, requirements gathering, solution design, license acquisition, configuration, and customization.</li>
+                            <li>Managed all data import/entry and created critical reports and dashboards, providing continued system support.</li>
                         </ul>
                     </div>
+
+                    <!-- Fujitsu (From LinkedIn Data) -->
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">Mar 2022 – Oct 2023</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Developer</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Fujitsu (Contracted to Royal Canin)</p>
+                        <ul>
+                            <li>Served as a Developer and Support Specialist for the Salesforce Sales Cloud managed package, Glovia OM.</li>
+                            <li>Provided expert advice, integrated ERP/Order Management features, and resolved all support queries related to the managed package.</li>
+                            <li>Collaborated with a team of developers to design, implement, test, document, and refine solutions, ensuring supply chain reliability.</li>
+                        </ul>
+                    </div>
+
+                    <!-- GIVE US PAWS (Marketing) (From LinkedIn Data) -->
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">Jan 2020 – Mar 2022</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Marketing Campaign Manager</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Contract, Remote)</p>
+                        <ul>
+                            <li>Designed, tested, and implemented Google Ad campaigns for the 501c nonprofit.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Austin Industrial (From LinkedIn Data) -->
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">May 2019 – Aug 2019</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">IT Intern</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Austin Industrial, Inc.</p>
+                        <ul>
+                            <li>Diagnosed issues, deployed devices, and tracked assets with inventory management software.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Austin Industrial (From LinkedIn Data) -->
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">May 2018 – Aug 2018</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">DevOps Intern</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Austin Industrial, Inc.</p>
+                        <ul>
+                            <li>Researched intrinsically safe cases, software, and hardware for RFID site tracking.</li>
+                            <li>Deployed 400 iPad devices with custom Austin INDL software.</li>
+                            <li>Digitized Job Safety Analysis (JSA) audits and maintained user guides.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Education -->
                     <div class="timeline-item" data-stagger-reveal>
                         <div class="timeline-dot"></div>
                         <p class="text-sm font-medium accent-color mb-1">2016 – 2021</p>
