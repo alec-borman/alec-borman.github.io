@@ -3,98 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alec Borman | Salesforce Administrator & Developer Portfolio</title>
+    <title>Alec Borman | Business Systems Architect</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio for Alec Borman, a Business Systems Architect, Salesforce Administrator, and Developer based in Texas.">
+    <meta name="keywords" content="Alec Borman, Salesforce, Architect, Administrator, Developer, LWC, Apex, Flow, API, Integration, Houston, League City, Friendswood, TX">
+    <meta name="author" content="Alec Borman">
+    <meta name="robots" content="index, follow">
 
+    <!-- Favicon (Generative SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts (Inter) -->
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide-icons"></script>
+    <script src="https://unpkg.com/lucide-icons" defer></script>
+    
+    <!-- Three.js CDN for 3D Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
+    <!-- 
+      =================================
+      CRITICAL: CUSTOM CSS STYLES
+      This is now a standard <style> tag, not <style type/tailwindcss>.
+      This was the primary rendering bug.
+      =================================
+    -->
     <style>
-        /* Base styles */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0F172A; /* slate-900 */
-            color: #E2E8F0; /* slate-200 */
+            font-family: 'Inter', sans-serif; /* Fallback */
             scroll-padding-top: 72px; /* Header height */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            cursor: none; /* Hide default cursor */
         }
 
-        /* Custom gradient text */
-        .gradient-text {
-            background: linear-gradient(to right, #38bdf8, #818cf8); /* sky-500 to indigo-400 */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* --- Theme Colors --- */
+        .accent-color { color: #38bdf8; /* sky-400 */ }
+        .accent-bg { background-color: #38bdf8; /* sky-400 */ }
+        .accent-border { border-color: #38bdf8; /* sky-400 */ }
+        .accent-hover:hover { background-color: #7dd3fc; /* sky-300 */ }
+        .accent-text-hover:hover { color: #7dd3fc; /* sky-300 */ }
+
+        /* --- Dark/Light Mode Base --- */
+        .dark body {
+            background-color: #0F172A;
+            color: #CBD5E1;
+        }
+        .light body {
+            background-color: #F1F5F9; /* slate-100 */
+            color: #1E293B; /* slate-800 */
+        }
+        
+        /* --- 1. WebGL Canvas Background --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+        .dark #bg-canvas {
+            opacity: 0.4;
+        }
+        .light #bg-canvas {
+            opacity: 0.2;
         }
 
-        /* Custom gradient for borders on cards */
-        .gradient-border-card {
-            background: linear-gradient(#1E293B, #1E293B) padding-box, /* slate-800 */
-                        linear-gradient(135deg, #38bdf8, #818cf8) border-box; /* Brighter gradient border */
+        /* --- 2. Custom Cursor --- */
+        #cursor-dot, #cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.3s ease, transform 0.1s linear, width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #38bdf8; /* sky-400 */
+        }
+        #cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #38bdf8;
+            opacity: 0.7;
+        }
+        body.cursor-hover #cursor-dot {
+            opacity: 0;
+        }
+        body.cursor-hover #cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(56, 189, 248, 0.1);
+            border-color: #818cf8; /* indigo-400 */
+        }
+        .light body.cursor-hover #cursor-outline {
+            background-color: rgba(56, 189, 248, 0.2);
+        }
+
+        /* --- 3. Scroll Progress Bar --- */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            width: 0%;
+            z-index: 10000;
+            transition: width 0.1s linear;
+        }
+
+        /* --- 4. Command Palette --- */
+        #command-palette {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 100%;
+            max-width: 500px;
+            z-index: 10001;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+        }
+        .cmd-palette-content {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .dark .cmd-palette-content {
+            background-color: rgba(30, 41, 59, 0.8); /* slate-800 with 80% opacity */
+            border: 1px solid #334155; /* slate-700 */
+        }
+        .light .cmd-palette-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #CBD5E1; /* slate-300 */
+        }
+        #command-palette.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: all;
+        }
+        #command-palette-input {
+            background: transparent;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+        }
+        .dark #command-palette-input { 
+            color: white; 
+            border-bottom: 1px solid #334155;
+        }
+        .light #command-palette-input { 
+            color: #0F172A; 
+            border-bottom: 1px solid #CBD5E1; 
+        }
+        .light #command-palette-input::placeholder { color: #475569; }
+        #command-palette-input:focus { outline: none; }
+
+        .command-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .dark .command-item { color: #cbd5e1; /* slate-300 */ }
+        .light .command-item { color: #334155; /* slate-700 */ }
+        
+        .command-item:hover, .command-item.selected {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #38bdf8; /* sky-400 */
+        }
+        .light .command-item:hover, .light .command-item.selected {
+            background-color: rgba(56, 189, 248, 0.2);
+            color: #0369a1; /* sky-700 */
+        }
+        
+        .command-item kbd {
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+        .dark .command-item kbd { background-color: #334155; }
+        .light .command-item kbd { background-color: #E2E8F0; }
+
+        #command-palette-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.3);
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-out;
+        }
+        #command-palette-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* --- 5. Staggered Reveal Animation --- */
+        [data-stagger-reveal] {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        [data-stagger-reveal].is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 6. Active Nav Link --- */
+        .nav-link.active {
+            color: #38bdf8; /* sky-400 */
+            font-weight: 600;
+        }
+        .dark .nav-link.active { color: #38bdf8; }
+        .light .nav-link.active { color: #0369a1; /* sky-700 */ }
+
+        /* --- 7. Mobile Menu Transition --- */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* --- 8. Project Card (Gradient Border) --- */
+        .project-card {
             border: 1px solid transparent;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
         }
-         .gradient-border-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15), 0 5px 10px rgba(129, 140, 248, 0.1); /* sky/indigo shadow */
+        .dark .project-card {
+            background: linear-gradient(#1E293B, #1E293B) padding-box, linear-gradient(135deg, #38bdf8, #818cf8) border-box;
+        }
+        .light .project-card {
+             background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(135deg, #38bdf8, #818cf8) border-box;
+             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15), 0 6px 15px rgba(129, 140, 248, 0.1);
+        }
+        .project-card img {
+            transition: transform 0.4s ease-out;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
         }
 
-        /* Hamburger menu transition */
-        .hamburger-line {
-            transition: all 0.3s ease-in-out;
-            background-color: #ffffff;
-            height: 2px;
-            border-radius: 1px;
-        }
-        #menu-btn.open .hamburger-top {
-            /* transform: rotate(45deg) translate(5px, 6px); */
-            transform: translateY(8px) rotate(45deg);
-        }
-        #menu-btn.open .hamburger-middle {
-            opacity: 0;
-            /* transform: translateX(-16px); */
-        }
-        #menu-btn.open .hamburger-bottom {
-            /* transform: rotate(-45deg) translate(5px, -6px); */
-            transform: translateY(-8px) rotate(-45deg);
-        }
-        
-        /* Timeline styles for experience */
+        /* --- 9. Experience Timeline --- */
         .timeline-item {
             position: relative;
-            padding-left: 2.5rem; /* 40px */
-            padding-bottom: 2rem; /* 32px */
-            border-left: 2px solid #334155; /* slate-700 */
+            padding-left: 2.5rem;
+            padding-bottom: 2rem;
         }
+        .dark .timeline-item { border-left: 2px solid #334155; }
+        .light .timeline-item { border-left: 2px solid #CBD5E1; }
+
         .timeline-item:last-child {
             border-left: 2px solid transparent;
             padding-bottom: 0;
         }
         .timeline-dot {
             position: absolute;
-            left: -9px; /* Adjust to center dot on line */
+            left: -9px;
             top: 4px;
             width: 18px;
             height: 18px;
-            background-color: #38bdf8; /* sky-500 */
+            background-color: #38bdf8; /* sky-400 */
             border-radius: 50%;
-            border: 4px solid #0F172A; /* slate-900 */
+            z-index: 10;
         }
-        .timeline-item h3 {
-            color: #f1f5f9; /* slate-100 */
-        }
-        .timeline-item .company-name {
-            color: #94a3b8; /* slate-400 */
-        }
+        .dark .timeline-dot { border: 4px solid #0F172A; }
+        .light .timeline-dot { border: 4px solid #F1F5F9; }
+
         .timeline-item ul {
             list-style-type: none;
             padding-left: 0.25rem;
@@ -103,11 +317,13 @@
         .timeline-item li {
             position: relative;
             padding-left: 1.25rem;
-            color: #cbd5e1; /* slate-300 */
-            font-size: 0.875rem; /* text-sm */
+            font-size: 0.9rem;
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
+        .dark .timeline-item li { color: #CBD5E1; }
+        .light .timeline-item li { color: #334155; }
+
         .timeline-item li::before {
             content: '';
             position: absolute;
@@ -118,650 +334,971 @@
             background-color: #60a5fa; /* blue-400 */
             border-radius: 50%;
         }
+        
+        /* --- 10. Skill Badge --- */
+        .skill-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+        }
+        .dark .skill-badge {
+            background-color: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .dark .skill-badge:hover {
+            background-color: #334155;
+            color: #e2e8f0;
+            transform: scale(1.05);
+        }
+        .light .skill-badge {
+            background-color: #E2E8F0;
+            color: #334155;
+            border: 1px solid #CBD5E1;
+        }
+        .light .skill-badge:hover {
+            background-color: #CBD5E1;
+            color: #1E293B;
+            transform: scale(1.05);
+        }
+
+        /* --- 11. Contact Info Item --- */
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem;
+            margin: -0.75rem; /* Negative margin for larger click target */
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark .contact-item:hover { background-color: #1E293B; }
+        .light .contact-item:hover { background-color: #E2E8F0; }
+
+        .contact-item i {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        .dark .contact-item i { color: #38bdf8; }
+        .light .contact-item i { color: #0369a1; }
+
+        .contact-item-label {
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+        .dark .contact-item-label { color: #F1F5F9; }
+        .light .contact-item-label { color: #1E293B; }
+
+        .contact-item-value {
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+        .dark .contact-item-value { color: #CBD5E1; }
+        .light .contact-item-value { color: #334155; }
+        
+        .contact-item:hover .contact-item-value { color: #38bdf8; }
+        .light .contact-item:hover .contact-item-value { color: #0369a1; }
+
+        /* --- 12. Accessibility: Reduced Motion --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #bg-canvas, #cursor-dot, #cursor-outline, #scroll-progress {
+                display: none;
+            }
+            body { cursor: auto; }
+            [data-stagger-reveal] {
+                opacity: 1;
+                transform: none;
+            }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased dark"> <!-- Default to dark mode -->
 
-    <!-- Header -->
-    <header class="bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 shadow-lg border-b border-slate-700/50">
+    <!-- All new interactive elements -->
+    <div id="scroll-progress"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- Command Palette HTML -->
+    <div id="command-palette-overlay" aria-hidden="true"></div>
+    <div id="command-palette" role="dialog" aria-modal="true" aria-labelledby="command-palette-label">
+        <div class="cmd-palette-content">
+            <input type="text" id="command-palette-input" placeholder="Jump to..." autocomplete="off">
+            <div id="command-palette-list">
+                <a href="#home" class="command-item" data-action="jump">
+                    <i data-lucide="home" class="w-4 h-4"></i>Home
+                    <kbd>H</kbd>
+                </a>
+                <a href="#about" class="command-item" data-action="jump">
+                    <i data-lucide="user" class="w-4 h-4"></i>About
+                    <kbd>A</kbd>
+                </a>
+                <a href="#experience" class="command-item" data-action="jump">
+                    <i data-lucide="briefcase" class="w-4 h-4"></i>Experience
+                    <kbd>E</kbd>
+                </a>
+                <a href="#projects" class="command-item" data-action="jump">
+                    <i data-lucide="layers" class="w-4 h-4"></i>Projects
+                    <kbd>P</kbd>
+                </a>
+                <a href="#contact" class="command-item" data-action="jump">
+                    <i data-lucide="mail" class="w-4 h-4"></i>Contact
+                    <kbd>C</kbd>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End new interactive elements -->
+
+    <!-- 
+      =================================
+      HEADER / NAVIGATION
+      =================================
+    -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo -->
-            <a href="#home" class="text-2xl font-bold text-white flex items-center gap-2 transition-opacity hover:opacity-80">
-                <i data-lucide="code-2" class="w-7 h-7 text-sky-400"></i>
-                <span class="font-extrabold tracking-tight">Alec</span>
-                <span class="gradient-text font-extrabold tracking-tight">Borman</span>
+            <a href="#home" class="text-2xl font-bold transition-colors dark:text-white light:text-slate-900 accent-text-hover flex items-center gap-2" data-magnetic>
+                <i data-lucide="code-2" class="accent-color"></i>
+                <span>Alec <span class="accent-color">Borman</span></span>
             </a>
 
             <!-- Desktop Nav -->
-            <div class="hidden md:flex space-x-7 items-center">
-                <a href="#home" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Home</a>
-                <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">About</a>
-                <a href="#philosophy" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Philosophy</a>
-                <a href="#experience" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Experience</a>
-                <a href="#projects" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Projects</a>
-                <a href="#recommendations" class="text-slate-300 hover:text-sky-400 transition-colors text-sm font-medium">Recommendations</a>
-                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2.5 rounded-md text-sm transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                    Contact Me
-                </a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#home" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Home</a>
+                <a href="#about" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">About</a>
+                <a href="#experience" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Experience</a>
+                <a href="#projects" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Projects</a>
+                <a href="#contact" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Contact</a>
+                
+                <!-- Dark/Light Mode Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-full transition-colors light:text-slate-700 light:hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-700" aria-label="Toggle theme" data-magnetic>
+                    <svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 12a5 5 0 100-10 5 5 0 000 10z" /></svg>
+                    <svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden focus:outline-none flex flex-col justify-center items-center w-6 h-6 z-50" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
-                <span class="hamburger-line hamburger-top block w-full rounded-full"></span>
-                <span class="hamburger-line hamburger-middle block w-full rounded-full mt-1.5"></span>
-                <span class="hamburger-line hamburger-bottom block w-full rounded-full mt-1.5"></span>
-            </button>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="p-2 rounded-md light:text-slate-700 light:hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-700" aria-label="Open menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                        <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
         </nav>
 
-        <!-- Mobile Nav -->
-        <div id="menu" class="hidden md:hidden flex-col absolute top-full left-0 w-full bg-slate-900 shadow-xl pb-4 border-t border-slate-700" aria-hidden="true">
-            <a href="#home" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Home</a>
-            <a href="#about" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">About</a>
-            <a href="#philosophy" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Philosophy</a>
-            <a href="#experience" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Experience</a>
-            <a href="#projects" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Projects</a>
-            <a href="#recommendations" class="block text-center text-slate-200 py-4 hover:bg-slate-800 transition-colors mobile-nav-link font-medium">Recommendations</a>
-            <a href="#contact" class="block text-center bg-sky-500 text-white font-bold px-6 py-3 mx-6 mt-3 rounded-md hover:bg-sky-600 transition-colors mobile-nav-link shadow-lg">
-                Contact Me
-            </a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 light:bg-white dark:bg-slate-800 shadow-lg -translate-x-full">
+            <div class="flex flex-col space-y-4 p-6">
+                <a href="#home" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Home</a>
+                <a href="#about" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">About</a>
+                <a href="#experience" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Experience</a>
+                <a href="#projects" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Projects</a>
+                <a href="#contact" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Contact</a>
+                <button id="theme-toggle-mobile" class="w-full flex items-center justify-center space-x-2 px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700" aria-label="Toggle theme">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 12a5 5 0 100-10 5 5 0 000 10z" /></svg>
+                    <span>/</span>
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main>
-        <!-- ====== Hero Section ====== -->
-        <section id="home" class="relative pt-28 pb-36 md:pt-36 md:pb-48 overflow-hidden">
-            <!-- Gradient Background -->
-            <div class="absolute inset-0 -z-10 opacity-70">
-                <div class="absolute top-0 left-0 w-[60rem] h-[60rem] bg-gradient-to-br from-sky-600/20 via-slate-900 to-transparent -translate-x-1/2 -translate-y-1/3 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 right-0 w-[50rem] h-[50rem] bg-gradient-to-tl from-indigo-700/20 via-slate-900 to-transparent translate-x-1/3 translate-y-1/3 rounded-full blur-3xl"></div>
-            </div>
+    <main class="container mx-auto px-6 relative z-10"> <!-- Main content needs z-index to be above bg-canvas -->
 
-            <div class="container mx-auto px-6 text-center">
-                <span class="inline-block bg-sky-500/10 text-sky-400 text-xs font-bold px-4 py-1.5 rounded-full mb-5 border border-sky-400/30 uppercase tracking-wider">Salesforce Administrator & Automation Expert</span>
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6">
-                    Alec Borman
+        <!-- 
+          =================================
+          SECTION: HOME (HERO)
+          =================================
+        -->
+        <section id="home" data-section-id="home" class="min-h-screen flex items-center pt-20 md:pt-0">
+            <div data-stagger-container>
+                <span data-stagger-reveal class="inline-block bg-sky-500/10 text-sky-400 text-xs font-bold px-4 py-1.5 rounded-full mb-5 border border-sky-400/30 uppercase tracking-wider">
+                    Certified Salesforce Administrator & Developer
+                </span>
+                <h1 data-stagger-reveal class="text-5xl md:text-7xl lg:text-8xl font-extrabold light:text-slate-900 dark:text-white mb-6">
+                    Alec Borman.
                 </h1>
-                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+                <p data-stagger-reveal class="text-lg md:text-xl font-light light:text-slate-600 dark:text-slate-400 max-w-3xl mb-10">
                     I translate complex business needs into secure, scalable, and efficient Salesforce solutions that drive user adoption, reduce manual work, and accelerate operational excellence.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-5">
-                    <a href="#projects" class="bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3.5 rounded-lg text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-sky-500/30">
+                <div data-stagger-reveal class="flex flex-col sm:flex-row gap-5">
+                    <a href="#projects" class="inline-block px-8 py-4 rounded-md text-lg font-medium text-slate-900 accent-bg accent-hover transition-all duration-300 shadow-lg shadow-sky-500/20 hover:shadow-sky-400/30 transform hover:-translate-y-1" data-magnetic>
                         View My Projects
                     </a>
-                    <a href="#contact" class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold px-8 py-3.5 rounded-lg text-base transition-all transform hover:scale-105 shadow-lg hover:shadow-slate-500/30 border border-slate-600">
+                    <a href="#contact" class="inline-block px-8 py-4 rounded-md text-lg font-medium light:text-slate-800 dark:text-slate-100 light:bg-slate-200 dark:bg-slate-700 light:hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 transform hover:-translate-y-1" data-magnetic>
                         Get In Touch
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- ====== About Me & Skills Section ====== -->
-        <section id="about" class="py-24 md:py-32 bg-slate-900/70 relative overflow-hidden">
-            <!-- Subtle Background Pattern -->
-            <div class="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M0%200h20v20H0zM20%2020h20v20H20z%22%2F%3E%3C%2Fsvg%3E')]"></div>
-            <div class="container mx-auto px-6 relative">
-                <div class="grid md:grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24 items-start">
-                    <!-- About Me -->
-                    <div class="lg:col-span-3">
-                        <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">About Me</span>
-                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Strategic Business Architect</h2>
-                        <div class="space-y-6 text-slate-300 text-base leading-relaxed">
-                             <p>A Strategic Business Architect who specializes in building the operational backbone for companies that are ready to scale explosively.</p>
-                             <p>I translate complex GTM strategy into foundational, end-to-end technical solutions, building the core internal tooling and automation that accelerates sales velocity and operational excellence.</p>
-                        </div>
-                        
-                        <!-- Pillars of Expertise -->
-                        <div class="mt-12">
-                            <h3 class="text-2xl font-bold text-white mb-6">Pillars of Expertise</h3>
-                            <div class="space-y-6">
-                                <!-- Pillar 1 -->
-                                <div>
-                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
-                                        <i data-lucide="compass" class="w-5 h-5 text-indigo-400 shrink-0"></i>
-                                        Strategic Architecture & Solution Design
-                                    </h4>
-                                    <p class="text-slate-400 text-sm">Architecting GTM tech stacks and internal tooling ecosystems from the ground up. Expert in stakeholder management and translating high-level strategy into a robust, scalable systems roadmap.</p>
-                                </div>
-                                <!-- Pillar 2 -->
-                                <div>
-                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
-                                        <i data-lucide="code-2" class="w-5 h-5 text-indigo-400 shrink-0"></i>
-                                        Full-Stack Systems Development
-                                    </h4>
-                                    <p class="text-slate-400 text-sm">Building custom, end-to-end solutions within the Salesforce ecosystem (Apex, LWC, Visualforce) to overcome platform limitations and deliver highly tailored user workflows.</p>
-                                </div>
-                                <!-- Pillar 3 -->
-                                <div>
-                                    <h4 class="text-lg font-semibold text-slate-100 mb-2 flex items-center gap-3">
-                                        <i data-lucide="zap" class="w-5 h-5 text-indigo-400 shrink-0"></i>
-                                        Intelligent Automation & Integration
-                                    </h4>
-                                    <p class="text-slate-400 text-sm">Leveraging AI-driven tools for rapid prototyping and complex API integrations (Zapier) to automate critical workflows, synchronize enterprise data, and eliminate high-cost manual processes.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Core Competencies -->
-                    <div class="lg:col-span-2">
-                        <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Toolkit</span>
-                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-8">Core Technologies & Methodologies</h2>
-                        
-                        <div class="space-y-8">
-                            <!-- Platforms & Tools -->
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="database" class="w-6 h-6 text-indigo-400"></i>
-                                    Platforms & Tools
-                                </h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">Salesforce Ecosystem</span>
-                                    <span class="skill-badge">Sales Cloud</span>
-                                    <span class="skill-badge">Salesforce Flow</span>
-                                    <span class="skill-badge">Apex</span>
-                                    <span class="skill-badge">LWC</span>
-                                    <span class="skill-badge">Visualforce</span>
-                                    <span class="skill-badge">Zapier</span>
-                                    <span class="skill-badge">Jira</span>
-                                    <span class="skill-badge">HubSpot</span>
-                                    <span class="skill-badge">Glovia OM ERP</span>
-                                    <span class="skill-badge">Asana</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Methodologies -->
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="clipboard-check" class="w-6 h-6 text-indigo-400"></i>
-                                    Methodologies
-                                </h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">Agile/Kanban</span>
-                                    <span class="skill-badge">GTM Strategy</span>
-                                    <span class="skill-badge">Sales Operations</span>
-                                    <span class="skill-badge">Presales Engineering</span>
-                                    <span class="skill-badge">Business Process Re-engineering</span>
-                                    <span class="skill-badge">Gap Analysis</span>
-                                    <span class="skill-badge">Requirements Gathering</span>
-                                </div>
-                            </div>
-
-                            <!-- Concepts -->
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center gap-3">
-                                    <i data-lucide="server" class="w-6 h-6 text-indigo-400"></i>
-                                    Concepts
-                                </h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge">API Integration</span>
-                                    <span class="skill-badge">Data Synchronization</span>
-                                    <span class="skill-badge">Order Management</span>
-                                    <span class="skill-badge">Business Requirements Documents (BRDs)</span>
-                                    <span class="skill-badge">User Story & Acceptance Criteria</span>
-                                </div>
-                            </div>
-                        </div>
+        <!-- 
+          =================================
+          SECTION: ABOUT
+          =================================
+        -->
+        <section id="about" data-section-id="about" class="min-h-screen flex items-center py-24 md:py-32">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start" data-stagger-container>
+                <!-- Text Content -->
+                <div class="" data-stagger-reveal>
+                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center">
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">01.</span> About Me
+                    </h2>
+                    <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 -mt-2 mb-6">
+                        Professional Summary
+                    </h3>
+                    <div class="space-y-6 text-lg light:text-slate-700 dark:text-slate-300">
+                        <p>
+                            Business Systems Architect with a Computer Science background and Salesforce Administrator & Developer certifications. Expert in translating complex business needs into secure, scalable, and efficient solutions.
+                        </p>
+                        <p>
+                            Proven ability to engineer end-to-end customer lifecycles, drive user adoption, and accelerate operational excellence through deep technical skill and business-focused process automation.
+                        </p>
+                        <!-- Note: This download link is a placeholder. You'll need to add your actual resume file. -->
+                        <a href="#" download="Alec_Borman_Resume.pdf" class="inline-block mt-4 px-6 py-3 rounded-md text-md font-medium text-sky-400 border-2 accent-border hover:bg-sky-400/10 transition-all duration-300 transform hover:-translate-y-0.5" data-magnetic>
+                            Download My CV
+                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <!-- ====== Philosophy Section ====== -->
-        <section id="philosophy" class="py-24 md:py-32 bg-slate-900">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Approach</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-6">An AI-Assisted, First-Principles Approach</h2>
-                    <p class="text-lg text-slate-300 mb-12 leading-relaxed">
-                        To understand my work, you first have to understand how I think.
-                    </p>
-                </div>
-
-                <div class="max-w-4xl mx-auto grid md:grid-cols-5 gap-8">
-                    <div class="md:col-span-2 flex justify-center md:justify-start">
-                        <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-xl">
-                            <i data-lucide="brain-circuit" class="w-16 h-16 text-indigo-400 mx-auto mb-4"></i>
-                            <blockquote class="text-center italic text-slate-200">
-                                "Imagine an architect working inside a pitch-black box. Without sight, they have to learn everything by feel. They have to deeply, fundamentally understand every material and connection to know what they're building."
-                            </blockquote>
-                        </div>
-                    </div>
-                    <div class="md:col-span-3 space-y-4 text-slate-300 text-base leading-relaxed">
-                        <p>That's how I operate. When I’m in a business meeting, my primary focus is to listen. I’m absorbing the complex systems, the processes, and most importantly, the pain points. My inner architect is quietly working in the background, building a complete model of the problem.</p>
-                        <p>Once I fully understand that problem at its root, I translate that fully-formed idea to an AI. I use it as a powerful tool to instantly flesh out my concepts, build documentation, create development guides, and turn those guides into user-friendly manuals.</p>
-                        <p>This approach gives me a level of presence and focus that is a strong asset. All my energy goes into modeling the problem, understanding the nuances, and picking up on the small, critical details that are often missed. It allows me to build solutions from a place of true understanding.</p>
-                        <p class="text-white font-semibold">Ultimately, I’m an insightful problem-solver and a positive presence, and I'm confident this unique approach makes me a valuable asset to any team.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skill Badge CSS (injected via <style> for brevity) -->
-        <style>
-            .skill-badge {
-                display: inline-block;
-                background-color: #1e293b; /* slate-800 */
-                color: #94a3b8; /* slate-400 */
-                font-size: 0.75rem; /* text-xs */
-                font-weight: 500; /* font-medium */
-                padding: 0.25rem 0.75rem; /* px-3 py-1 */
-                border-radius: 9999px; /* rounded-full */
-                border: 1px solid #334155; /* border-slate-700 */
-            }
-        </style>
-
-        <!-- ====== Experience Section ====== -->
-        <section id="experience" class="py-24 md:py-32 bg-slate-900/90">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Journey</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-16">Professional Experience</h2>
-                </div>
-
-                <div class="max-w-3xl mx-auto">
-                    <!-- Timeline Start -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Oct 2024 – Present</p>
-                        <h3 class="text-xl font-bold">Business Systems Architect</h3>
-                        <p class="company-name text-base font-medium mb-3">Hydrolix (Remote)</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>I joined Hydrolix as the foundational systems administrator and grew into the role of strategic architect, tasked with building the company's operational backbone: Salesforce as the central financial tool and usage tracker for our SaaS deployments. My core challenge was to deliver immediate, tactical solutions to keep the business running while architecting a robust, long-term system.</p>
-                            <p><strong>Balanced Immediate Needs with Long-Term Vision:</strong> Designed and deployed a new lead-to-opportunity process that cut lead response time by 40%. This involved creating interim workflows to provide immediate relief to the sales team while the permanent, fully automated architecture was being built in the background.</p>
-                            <p><strong>Engineered End-to-End Automation:</strong> Managed deployments from initial POC to active contract. This included building systems for monthly POC credit approvals, tracking contract usage quotas (in TB/month), and orchestrating all automated customer communications. I personally designed and coded the HTML email templates and used Zapier to trigger critical notifications.</p>
-                            <p><strong>Served as the Cross-Functional Systems Hub:</strong> Acted as the technical bridge between Sales, CSE, and SRE teams, translating their immediate pain points into quick-win solutions while ensuring those fixes aligned with the larger, strategic systems roadmap.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Sep 2024 – Present</p>
-                        <h3 class="text-xl font-bold">Salesforce Consultant / Developer</h3>
-                        <p class="company-name text-base font-medium mb-3">GIVE US PAWS (Contract / Volunteer)</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>Provide expert consulting and development services to Give Us Paws, a 501c nonprofit requiring a new Salesforce system. This included managed package discovery, requirements gathering, design, license acquisition, configuration, customization, data import, and continued support for their "Dog and Client Tracker" managed package.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Jun 2024 – Aug 2024</p>
-                        <h3 class="text-xl font-bold">Salesforce Architect / Consultant</h3>
-                        <p class="company-name text-base font-medium mb-3">Jaco Aerospace, Inc. (Contract)</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>Provided expertise in business processes, configuring and optimizing Salesforce Sales Cloud with Order Management and ERP features, specifically leveraging the managed package Glovia OM. Designed, developed, and tested custom logic to overcome managed package limitations. This included creating Apex controllers, custom buttons, and Visualforce pages to prepopulate fields for new records, significantly reducing data entry time and improving workflow efficiency.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Mar 2022 – Oct 2023</p>
-                        <h3 class="text-xl font-bold">Salesforce Developer</h3>
-                        <p class="company-name text-base font-medium mb-3">Fujitsu (Contracted to Royal Canin) (Hybrid)</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>As a Salesforce Developer and Support Specialist for the Salesforce Sales Cloud managed package, Glovia OM, I provided expert advice and integrated its ERP and Order Management features. I addressed and resolved support queries, and after completing training, I applied my knowledge by resolving tickets and collaborating with a team of developers to design, implement, test, document, and refine solutions, ensuring supply chain reliability.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">Jan 2020 – Mar 2022</p>
-                        <h3 class="text-xl font-bold">Marketing Campaign Manager</h3>
-                        <p class="company-name text-base font-medium mb-3">GIVE US PAWS (Contract)</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>Designed, tested, and implemented Google ad campaigns for GiveUsPaws, a 501c Non-profit that focuses on training service dogs for disabled veterans.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">May 2019 – Aug 2019</p>
-                        <h3 class="text-xl font-bold">IT Intern</h3>
-                        <p class="company-name text-base font-medium mb-3">Austin Industrial, Inc.</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>Diagnosed issues, deployed devices, and tracked devices with inventory management software.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm font-medium text-sky-400 mb-1">May 2018 – Aug 2018</p>
-                        <h3 class="text-xl font-bold">Devops Intern</h3>
-                        <p class="company-name text-base font-medium mb-3">Austin Industrial, Inc.</p>
-                        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                            <p>Researched intrinsically safe cases, software, and hardware for RFID site tracking. Deployed 400 iPad devices with custom software. Digitized Job Safety Analysis audits and maintained user guides.</p>
-                        </div>
-                    </div>
-                    <!-- Timeline End -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ====== Projects Section ====== -->
-        <section id="projects" class="py-24 md:py-32 bg-slate-900/70">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">My Work</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-16">Featured Projects</h2>
-                </div>
-
-                <!-- Projects Grid -->
-                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                    
-                    <!-- Project Card: Hydrolix Decommissioning -->
-                    <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/1e293b/38bdf8?text=AI+Automation+Process&font=inter"
-                             alt="Hydrolix AI Automation Project"
-                             class="w-full h-48 object-cover"
-                             onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Image+Not+Available&font=inter'; this.onerror=null;">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <span class="text-xs font-medium text-indigo-400 mb-1 uppercase">AI-Driven System Architecture</span>
-                            <h3 class="text-xl font-semibold text-white mb-3">Automated Tenant Decommissioning</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-                                Architected a fully automated decommissioning process for Hydrolix tenants. Leveraged Google Cloud's Vertex AI within a secure environment to partner with AI, rapidly modeling and building flawless, interconnected logic spanning Salesforce, Zapier, and Jira. This created a scalable, reliable, and predictable experience for teams and customers.
-                            </p>
-                            <div class="mt-auto pt-4">
-                                <span class="skill-badge">Vertex AI</span>
-                                <span class="skill-badge">System Architecture</span>
-                                <span class="skill-badge">Salesforce</span>
-                                <span class="skill-badge">Zapier</span>
-                                <span class="skill-badge">Jira</span>
+                <!-- Core Competencies -->
+                <div class="space-y-8 mt-0 md:mt-20" data-stagger-reveal>
+                     <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
+                        Core Competencies
+                    </h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="shield-check" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Salesforce Administration
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">User & Data Management</span>
+                                <span class="skill-badge">Security (Profiles, Roles, Permission Sets)</span>
+                                <span class="skill-badge">Process Automation (Flow, Process Builder)</span>
+                                <span class="skill-badge">UI/UX (Lightning Pages, Layouts)</span>
+                                <span class="skill-badge">Reports & Dashboards</span>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Project Card: HSE Solutions -->
-                    <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/1e293b/38bdf8?text=HSE+Solutions+Website&font=inter"
-                             alt="HSE Solutions Website Screenshot"
-                             class="w-full h-48 object-cover"
-                             onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Image+Not+Available&font=inter'; this.onerror=null;">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <span class="text-xs font-medium text-indigo-400 mb-1 uppercase">Pro-Bono Web Development</span>
-                            <h3 class="text-xl font-semibold text-white mb-3">HSE Solutions, Inc.</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-                                Led a pro-bono, end-to-end website redevelopment for a major HSE consulting firm. Designed and built a modern, responsive, single-page application from scratch using HTML, Tailwind CSS, and JavaScript to showcase their comprehensive services and client list.
-                            </p>
-                            <div class="mt-auto pt-4">
-                                <span class="skill-badge">HTML5</span>
-                                <span class="skill-badge">Tailwind CSS</span>
-                                <span class="skill-badge">JavaScript</span>
-                                <span class="skill-badge">UI/UX Design</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: GIVE US PAWS -->
-                    <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/1e293b/38bdf8?text=GIVE+US+PAWS+Salesforce&font=inter"
-                             alt="GIVE US PAWS Project Screenshot"
-                             class="w-full h-48 object-cover"
-                             onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Image+Not+Available&font=inter'; this.onerror=null;">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <span class="text-xs font-medium text-indigo-400 mb-1 uppercase">Pro-Bono Salesforce Implementation</span>
-                            <h3 class="text-xl font-semibold text-white mb-3">GIVE US PAWS</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-                                Managed a complete, end-to-end Salesforce implementation for a 501c nonprofit. Handled requirements gathering, license acquisition, configuration, and user training. Heavily customized the "Dog and Client Tracker" managed package to fit their unique operational needs.
-                            </p>
-                            <div class="mt-auto pt-4">
-                                <span class="skill-badge">Salesforce Admin</span>
-                                <span class="skill-badge">NPSP</span>
-                                <span class="skill-badge">Flow Automation</span>
-                                <span class="skill-badge">Managed Packages</span>
-                                <span class="skill-badge">Requirements Gathering</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: Jaco Aerospace -->
-                    <div class="project-card gradient-border-card rounded-2xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/1e293b/38bdf8?text=Jaco+Aerospace+ERP+Integration&font=inter"
-                             alt="Jaco Aerospace Project Screenshot"
-                             class="w-full h-48 object-cover"
-                             onerror="this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Image+Not+Available&font=inter'; this.onerror=null;">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <span class="text-xs font-medium text-indigo-400 mb-1 uppercase">Salesforce Development & Integration</span>
-                            <h3 class="text-xl font-semibold text-white mb-3">Jaco Aerospace, Inc.</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-                                Developed custom solutions to streamline a complex Salesforce org with an integrated Glovia OM ERP. Built custom Apex controllers, Visualforce pages, and LWC components to overcome managed package limitations, significantly reducing data entry time and enhancing operational efficiency.
-                            </p>
-                            <div class="mt-auto pt-4">
-                                <span class="skill-badge">Apex</span>
-                                <span class="skill-badge">LWC</span>
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="code" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Salesforce Development
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Apex Programming</span>
+                                <span class="skill-badge">Lightning Web Components (LWC)</span>
                                 <span class="skill-badge">Visualforce</span>
-                                <span class="skill-badge">ERP Integration</span>
-                                <span class="skill-badge">Glovia OM</span>
+                                <span class="skill-badge">SOQL</span>
+                                <span class="skill-badge">API Integration</span>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ====== Recommendations Section ====== -->
-        <section id="recommendations" class="py-24 md:py-32 bg-slate-900/70">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">Testimonials</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-16">What My Colleagues Say</h2>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                    <!-- Recommendation 1: Meg Blanchette -->
-                    <div class="gradient-border-card rounded-2xl p-8">
-                        <div class="flex items-center mb-4">
-                            <img src="https://placehold.co/100x100/38bdf8/0F172A?text=MB&font=inter" alt="Meg Blanchette" class="w-16 h-16 rounded-full border-2 border-slate-700">
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-white">Meg Blanchette</h4>
-                                <p class="text-sm text-slate-400">Messaging & Product Marketing @ Hydrolix.io</p>
+                        <div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="zap" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Platforms & Integrations
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Salesforce Sales Cloud</span>
+                                <span class="skill-badge">Zapier</span>
+                                <span class="skill-badge">HubSpot</span>
+                                <span class="skill-badge">Jira</span>
+                                <span class="skill-badge">Glovia OM ERP</span>
                             </div>
                         </div>
-                        <blockquote class="text-slate-300 italic leading-relaxed">
-                            "Alec was lovely to work with! He was helpful and kind, I highly recommend adding him to your team."
-                        </blockquote>
-                    </div>
-
-                    <!-- Recommendation 2: Berel Schusterman -->
-                    <div class="gradient-border-card rounded-2xl p-8">
-                        <div class="flex items-center mb-4">
-                            <img src="https://placehold.co/100x100/818cf8/0F172A?text=BS&font=inter" alt="Berel Schusterman" class="w-16 h-16 rounded-full border-2 border-slate-700">
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-white">Berel Schusterman</h4>
-                                <p class="text-sm text-slate-400">Innovative Aerospace & Defense Procurement Expert</p>
-                            </div>
-                        </div>
-                        <blockquote class="text-slate-300 italic leading-relaxed">
-                            "Alec's deep expertise with Fujitsu Glovia Software within Salesforce has been invaluable. His ability to navigate and optimize the system has significantly streamlined our processes... His technical knowledge, combined with his proactive approach, made him a crucial resource in our operations."
-                        </blockquote>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 
+          =================================
+          SECTION: EXPERIENCE
+          =================================
+        -->
+        <section id="experience" data-section-id="experience" class="min-h-screen py-24 md:py-32">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
+                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">02.</span> Professional Experience
+                </h2>
 
-        <!-- ====== Contact Section ====== -->
-        <section id="contact" class="py-24 md:py-32 relative overflow-hidden bg-slate-900">
-            <!-- Background elements -->
-             <div class="absolute inset-0 -z-10 opacity-50" aria-hidden="true">
-                 <div class="absolute -top-60 -left-60 w-[40rem] h-[40rem] bg-gradient-to-r from-sky-600/15 to-transparent rounded-full blur-3xl"></div>
-                 <div class="absolute -bottom-60 -right-60 w-[40rem] h-[40rem] bg-gradient-to-l from-indigo-700/15 to-transparent rounded-full blur-3xl"></div>
+                <div class="max-w-3xl mx-auto" data-stagger-container>
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">Oct 2024 – Present</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Senior Salesforce Administrator</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Hydrolix (Remote)</p>
+                        <ul>
+                            <li>Owned and scaled the Salesforce instance from its foundation, supporting 150+ users.</li>
+                            <li>Served as the primary technical owner for 150+ users, managing the full enhancement lifecycle.</li>
+                            <li>Optimized the lead-to-opportunity process using Flows, achieving a 40% reduction in lead response time.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">Jun 2024 – Aug 2024</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Consultant</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">Jaco Aerospace, Inc. (Remote)</p>
+                        <ul>
+                            <li>Retained to streamline a complex Salesforce org with an integrated Glovia OM ERP.</li>
+                            <li>Developed custom Apex, Visualforce, and LWC solutions to overcome managed package limitations.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">Sep 2022 – Present</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Salesforce Administrator (Volunteer)</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">GIVE US PAWS (Remote)</p>
+                        <ul>
+                            <li>Led a pro-bono, end-to-end Salesforce NPSP implementation for a 501c nonprofit.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item" data-stagger-reveal>
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm font-medium accent-color mb-1">2016 – 2021</p>
+                        <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100">Bachelor of Science in Computer Science</h3>
+                        <p class="text-base font-medium light:text-slate-600 dark:text-slate-400 mb-3">University of Texas at Dallas (Richardson, TX)</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <span class="text-sm font-semibold text-sky-400 uppercase tracking-widest mb-2 inline-block">Get In Touch</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-6">Let's Build Something Together</h2>
-                    <p class="text-lg text-slate-300 mb-16 leading-relaxed">
-                        Have a project in mind or just want to connect? Feel free to reach out through email or LinkedIn.
+        <!-- 
+          =================================
+          SECTION: PROJECTS
+          =================================
+        -->
+        <section id="projects" data-section-id="projects" class="min-h-screen py-24 md:py-32">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
+                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">03.</span> My Projects
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-stagger-container>
+                    <!-- Project Card 1 -->
+                    <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/1e293b/38bdf8?text=HSE+Solutions+Website&font=inter" 
+                                 alt="HSE Solutions Website project thumbnail"
+                                 onerror="this.src='https://placehold.co/600x400/1E293B/94A3B8?text=Image+Not+Found'"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">HSE Solutions, Inc.</h3>
+                            <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
+                                Led a pro-bono, end-to-end website redevelopment for a major HSE consulting firm.
+                            </p>
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium accent-color hover:accent-text-hover transition-colors" aria-label="View Live Demo of HSE Solutions Website">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i> View Live
+                                </a>
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium light:text-slate-600 dark:text-slate-400 light:hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="View Code for HSE Solutions Website">
+                                    <i data-lucide="github" class="w-4 h-4"></i> View Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/1e293b/38bdf8?text=GIVE+US+PAWS+Salesforce&font=inter" 
+                                 alt="GIVE US PAWS project thumbnail"
+                                 onerror="this.src='https://placehold.co/600x400/1E293B/94A3B8?text=Image+Not+Found'"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">GIVE US PAWS</h3>
+                            <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
+                                Managed a complete, end-to-end Salesforce NPSP implementation for a 501c nonprofit.
+                            </p>
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium accent-color hover:accent-text-hover transition-colors" aria-label="View case study for GIVE US PAWS">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i> Read Case Study
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="project-card rounded-2xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/1e293b/38bdf8?text=Jaco+Aerospace+Integration&font=inter" 
+                                 alt="Jaco Aerospace project thumbnail"
+                                 onerror="this.src='https://placehold.co/600x400/1E293B/94A3B8?text=Image+Not+Found'"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">Jaco Aerospace, Inc.</h3>
+                            <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
+                                Developed custom LWC, Apex, and Visualforce solutions to streamline a complex Salesforce org with an integrated Glovia OM ERP.
+                            </p>
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium light:text-slate-600 dark:text-slate-400 light:hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="View code snippets for Jaco Aerospace">
+                                    <i data-lucide="github" class="w-4 h-4"></i> View Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          =================================
+          SECTION: CONTACT
+          =================================
+        -->
+        <section id="contact" data-section-id="contact" class="py-24 md:py-32">
+            <div class="max-w-2xl mx-auto" data-stagger-container>
+                <div class="text-center" data-stagger-reveal>
+                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center justify-center">
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">04.</span> Get In Touch
+                    </h2>
+                    <p class="text-lg light:text-slate-700 dark:text-slate-300 mb-12">
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Reach out and let's connect.
                     </p>
                 </div>
 
-                <!-- Centered Contact Info -->
-                <div class="max-w-md mx-auto">
-                    <!-- Contact Info Card -->
-                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 shadow-xl backdrop-blur-md">
-                        <h3 class="text-2xl font-bold text-white mb-8">Contact Information</h3>
-                        <div class="space-y-8">
-                            <div class="flex items-start gap-4 group">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sky-400 shrink-0 mt-1" aria-hidden="true"></i>
-                                <div>
-                                    <h4 class="text-base font-semibold text-white mb-1">Location</h4>
-                                    <p class="text-slate-300 text-sm">Friendswood, TX (Remote)</p>
-                                </div>
+                <div data-stagger-reveal class="light:bg-white dark:bg-slate-800/50 p-8 sm:p-10 rounded-2xl border light:border-slate-200 dark:border-slate-700 shadow-xl backdrop-blur-md">
+                    <div class="space-y-6">
+                        <div class="contact-item" data-clipboard-text="2175087210" role="button" tabindex="0" aria-label="Copy phone number to clipboard">
+                            <i data-lucide="phone" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="contact-item-label">Phone</h4>
+                                <p class="contact-item-value">(217) 508-7210</p>
                             </div>
-                            <div class="flex items-start gap-4 group">
-                                <i data-lucide="phone" class="w-5 h-5 text-sky-400 shrink-0 mt-1" aria-hidden="true"></i>
-                                <div>
-                                    <h4 class="text-base font-semibold text-white mb-1">Phone</h4>
-                                    <a href="tel:2175087210" class="text-slate-300 text-sm hover:text-sky-300 transition-colors">(217) 508-7210</a>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4 group">
-                                <i data-lucide="mail" class="w-5 h-5 text-sky-400 shrink-0 mt-1" aria-hidden="true"></i>
-                                <div>
-                                    <h4 class="text-base font-semibold text-white mb-1">Email</h4>
-                                    <a href="mailto:alecborman97@gmail.com" class="text-sky-400 hover:text-sky-300 text-sm transition-colors group-hover:underline">alecborman97@gmail.com</a>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4 group">
-                                <i data-lucide="linkedin" class="w-5 h-5 text-sky-400 shrink-0 mt-1" aria-hidden="true"></i>
-                                <div>
-                                    <h4 class="text-base font-semibold text-white mb-1">LinkedIn</h4>
-                                    <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 text-sm transition-colors group-hover:underline">in/alec-borman-9680b3160</a>
-                                </div>
-                            </div>
+                            <span class="copy-feedback ml-auto text-xs text-sky-400 opacity-0 transition-opacity duration-300">Copied!</span>
                         </div>
+                        <div class="contact-item" data-clipboard-text="alecborman97@gmail.com" role="button" tabindex="0" aria-label="Copy email to clipboard">
+                            <i data-lucide="mail" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="contact-item-label">Email</h4>
+                                <p class="contact-item-value">alecborman97@gmail.com</p>
+                            </div>
+                            <span class="copy-feedback ml-auto text-xs text-sky-400 opacity-0 transition-opacity duration-300">Copied!</span>
+                        </div>
+                        <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="contact-item" aria-label="View Alec Borman's LinkedIn Profile">
+                            <i data-lucide="linkedin" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="contact-item-label">LinkedIn</h4>
+                                <p class="contact-item-value">in/alec-borman-9680b3160</p>
+                            </div>
+                        </a>
                     </div>
-                    <!-- Form Removed -->
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- ====== Footer ====== -->
-     <footer class="bg-slate-900 border-t border-slate-800 pt-16 pb-8">
-         <div class="container mx-auto px-6">
-             <div class="flex flex-col md:flex-row justify-between items-center">
-                 <div class="text-center md:text-left mb-4 md:mb-0">
-                     <a href="#home" class="text-lg font-bold text-white mb-4 inline-flex items-center gap-2 transition-opacity hover:opacity-80">
-                         <i data-lucide="code-2" class="w-6 h-6 text-sky-400"></i>
-                         Alec Borman | Salesforce Professional
+    <!-- 
+      =================================
+      FOOTER
+      =================================
+    -->
+    <footer class="py-12 light:bg-slate-200 dark:bg-slate-800/50 relative z-10">
+        <div class="container mx-auto px-6">
+             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                 <div class="text-center md:text-left">
+                     <a href="#home" class="text-lg font-bold light:text-slate-800 dark:text-white mb-4 inline-flex items-center gap-2 transition-colors hover:accent-color" aria-label="Alec Borman - Home">
+                         <i data-lucide="code-2" class="accent-color"></i>
+                         Alec Borman | Business Systems Architect
                      </a>
-                     <p class="text-slate-400 text-xs mt-2">
-                         Friendswood, TX | <a href="tel:2175087210" class="hover:text-sky-400">(217) 508-7210</a> | <a href="mailto:alecborman97@gmail.com" class="hover:text-sky-400">alecborman97@gmail.com</a>
+                     <p class="text-xs light:text-slate-600 dark:text-slate-400 mt-2">
+                         Friendswood, TX | 
+                         <a href="tel:2175087210" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">(217) 508-7210</a> | 
+                         <a href="mailto:alecborman97@gmail.com" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">alecborman97@gmail.com</a>
                      </p>
                  </div>
                  <div class="flex space-x-6">
-                    <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-400 transition-colors" aria-label="LinkedIn Profile">
-                        <i data-lucide="linkedin" class="w-6 h-6"></i>
-                    </a>
-                    <!-- Add other social links like GitHub if you have one -->
+                     <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn Profile" data-magnetic>
+                         <i data-lucide="linkedin" class="w-6 h-6"></i>
+                     </a>
                  </div>
              </div>
-             <!-- Copyright -->
-             <div class="mt-8 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-                 &copy; 2025 Alec Borman. All rights reserved.
+             <div class="mt-8 pt-8 border-t light:border-slate-300 dark:border-slate-700 text-center text-sm light:text-slate-600 dark:text-slate-400">
+                 &copy; <span id="copyright-year"></span> Alec Borman. All rights reserved.
              </div>
          </div>
-     </footer>
+        <style>
+            .footer-link {
+                color: #94A3B8; /* slate-400 */
+                transition: color 0.3s, transform 0.3s;
+            }
+            .footer-link:hover {
+                color: #38bdf8; /* sky-400 */
+                transform: translateY(-2px);
+            }
+            .light .footer-link { color: #475569; }
+            .light .footer-link:hover { color: #0369a1; }
+        </style>
+    </footer>
 
+
+    <!-- 
+      =================================
+      ADVANCED JAVASCRIPT
+      =================================
+    -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // --- Global Helpers ---
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let isAnimating3D = false;
+        let mouse = { x: 0, y: 0 };
+        const lerp = (start, end, t) => (1 - t) * start + t * end;
+        let htmlEl; // Will be set in initTheme
+        let themeToggleBtn, themeToggleMobileBtn, sunIcon, moonIcon;
 
-            // --- Lucide Icons ---
-            lucide.createIcons();
+        // --- 1. THEME (DARK/LIGHT MODE) ---
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                htmlEl.classList.add('dark');
+                htmlEl.classList.remove('light');
+                if(sunIcon) sunIcon.classList.remove('hidden');
+                if(moonIcon) moonIcon.classList.add('hidden');
+            } else {
+                htmlEl.classList.add('light');
+                htmlEl.classList.remove('dark');
+                if(sunIcon) sunIcon.classList.add('hidden');
+                if(moonIcon) moonIcon.classList.remove('hidden');
+            }
+        }
+        function initTheme() {
+            themeToggleBtn = document.getElementById('theme-toggle');
+            themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+            sunIcon = document.getElementById('theme-icon-sun');
+            moonIcon = document.getElementById('theme-icon-moon');
+            htmlEl = document.documentElement;
+            
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'dark'); // Default to dark
+            applyTheme(currentTheme);
 
-            // --- Mobile Menu Logic ---
-            const menuBtn = document.getElementById('menu-btn');
-            const menu = document.getElementById('menu');
+            const toggleHandler = () => {
+                const newTheme = htmlEl.classList.contains('dark') ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            };
+            themeToggleBtn.addEventListener('click', toggleHandler);
+            themeToggleMobileBtn.addEventListener('click', toggleHandler);
+        }
+
+        // --- 2. MOBILE MENU ---
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-            menuBtn.addEventListener('click', () => {
-                const isOpened = menuBtn.classList.toggle('open');
-                menu.classList.toggle('hidden');
-                menu.classList.toggle('flex');
-                menuBtn.setAttribute('aria-expanded', isOpened.toString());
-                menu.setAttribute('aria-hidden', (!isOpened).toString());
-                document.body.style.overflow = isOpened ? 'hidden' : '';
+            const toggleMobileMenu = () => {
+                mobileMenu.classList.toggle('-translate-x-full');
+                menuIconOpen.classList.toggle('hidden');
+                menuIconClose.classList.toggle('hidden');
+                document.body.style.overflow = mobileMenu.classList.contains('-translate-x-full') ? '' : 'hidden';
+            };
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            mobileNavLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
+        }
+
+        // --- 3. 3D Background (Three.js) ---
+        function initThreeJS() {
+            if (prefersReducedMotion || typeof THREE === 'undefined') {
+                const canvas = document.getElementById('bg-canvas');
+                if (canvas) canvas.style.display = 'none';
+                return;
+            }
+
+            let scene, camera, renderer, particles;
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            } catch (e) {
+                console.error("Failed to initialize WebGLRenderer:", e);
+                canvas.style.display = 'none'; // Hide canvas if WebGL fails
+                return;
+            }
+
+            const particleCount = 5000;
+            const positions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 10;
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const material = new THREE.PointsMaterial({
+                color: 0x38bdf8, // sky-500
+                size: 0.015,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             });
 
-            <!-- Close menu when a nav link is clicked -->
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
-                        menuBtn.classList.remove('open');
-                        menu.classList.add('hidden');
-                        menu.classList.remove('flex');
-                        menuBtn.setAttribute('aria-expanded', 'false');
-                        menu.setAttribute('aria-hidden', 'true');
-                        document.body.style.overflow = '';
-                    }
-                });
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+
+            const clock = new THREE.Clock();
+            const animate = () => {
+                if (!isAnimating3D) return;
+                
+                const elapsedTime = clock.getElapsedTime();
+                particles.rotation.y = elapsedTime * 0.02;
+                particles.rotation.x = elapsedTime * 0.01;
+                
+                camera.position.x = lerp(camera.position.x, mouse.x * 0.5, 0.05);
+                camera.position.y = lerp(camera.position.y, mouse.y * 0.5, 0.05);
+                camera.lookAt(scene.position);
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            };
+            
+            isAnimating3D = true;
+            animate();
+
+            document.addEventListener("visibilitychange", () => {
+                isAnimating3D = !document.hidden;
+                if (isAnimating3D) animate();
+            });
+        }
+
+        // --- 4. Custom Cursor ---
+        function initCursor() {
+            if (prefersReducedMotion) return;
+
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorOutline = document.getElementById('cursor-outline');
+            if (!cursorDot || !cursorOutline) return;
+            const body = document.body;
+
+            let dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
+
+            window.addEventListener('mousemove', e => {
+                dotX = e.clientX;
+                dotY = e.clientY;
             });
             
-            /* // Removed redundant smooth-scrolling JavaScript.
-            // The 'scroll-smooth' class on the <html> tag already handles this natively.
-            
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
+            const animateCursor = () => {
+                outlineX = lerp(outlineX, dotX, 0.1);
+                outlineY = lerp(outlineY, dotY, 0.1);
+                
+                cursorDot.style.transform = `translate(${dotX}px, ${dotY}px)`;
+                cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px)`;
+                
+                requestAnimationFrame(animateCursor);
+            };
+            requestAnimationFrame(animateCursor);
+
+            const hoverElements = document.querySelectorAll('a, button, [data-magnetic], [role="button"], .project-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // --- 5. Magnetic Buttons ---
+        function initMagneticButtons() {
+            if (prefersReducedMotion) return;
+
+            const strength = 0.4;
+            document.querySelectorAll('[data-magnetic]').forEach(el => {
+                el.addEventListener('mousemove', e => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    el.style.transition = 'transform 0.1s ease-out';
+                    el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    el.style.transition = 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)';
+                    el.style.transform = 'translate(0,0)';
+                });
+            });
+        }
+
+        // --- 6. Scroll Features (Progress Bar, Nav Highlighting, Header Style) ---
+        function initScrollFeatures() {
+            const progressBar = document.getElementById('scroll-progress');
+            const header = document.getElementById('header');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[data-section-id]');
+            if (sections.length === 0) return;
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+                        const id = entry.target.getAttribute('data-section-id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
                         });
                     }
                 });
+            }, {
+                rootMargin: '-50% 0px -50% 0px',
+                threshold: 0.4
             });
-            */
+            sections.forEach(section => sectionObserver.observe(section));
 
-            // --- Contact Form Logic (Simulation) ---
-            /* REMOVED
-            const contactForm = document.getElementById('contact-form');
-            const successMessage = document.getElementById('form-success');
-            const errorMessage = document.getElementById('form-error');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    // Clear previous messages
-                    successMessage.classList.add('hidden');
-                    errorMessage.classList.add('hidden');
-
-                    // Get form data
-                    const formData = new FormData(contactForm);
-                    const name = formData.get('name');
-                    const email = formData.get('email');
-                    const message = formData.get('message');
-
-                    // Basic validation
-                    if (!name || !email || !message) {
-                        errorMessage.textContent = "Please fill out all required fields.";
-                        errorMessage.classList.remove('hidden');
-                        return;
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                
+                if (progressBar) {
+                    const docHeight = document.documentElement.scrollHeight;
+                    const viewHeight = window.innerHeight;
+                    const progress = (scrollY / (docHeight - viewHeight)) * 100;
+                    progressBar.style.width = `${progress}%`;
+                }
+                
+                if (header) {
+                    if (scrollY > 50) {
+                        header.classList.add('light:bg-white/80', 'dark:bg-slate-900/80', 'backdrop-blur-md', 'shadow-md');
+                    } else {
+                        header.classList.remove('light:bg-white/80', 'dark:bg-slate-900/80', 'backdrop-blur-md', 'shadow-md');
                     }
+                }
+            });
+        }
 
-                    // --- Simulation ---
-                    // In a real app, you'd send this data to a backend (e.g., Formspree, Netlify Forms, or a custom API)
-                    console.log('Form submitted (simulation):', { name, email, message });
-
-                    // Show success message
-                    successMessage.classList.remove('hidden');
-                    contactForm.reset();
-
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        successMessage.classList.add('hidden');
-                    }, 5000);
-                });
+        // --- 7. Staggered Reveals ---
+        function initStaggeredReveals() {
+            if (prefersReducedMotion) {
+                document.querySelectorAll('[data-stagger-reveal]').forEach(el => el.classList.add('is-revealed'));
+                return;
             }
-            */
 
-        });
+            const revealContainers = document.querySelectorAll('[data-stagger-container]');
+            revealContainers.forEach(container => {
+                const items = container.querySelectorAll('[data-stagger-reveal]');
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            items.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('is-revealed');
+                                }, index * 150); // 150ms delay
+                            });
+                            obs.unobserve(container); // Animate once
+                        }
+                    });
+                }, { threshold: 0.1 }); 
+                observer.observe(container);
+            });
+
+            // Handle items not in a container
+            const looseItems = document.querySelectorAll('[data-stagger-reveal]:not([data-stagger-container] [data-stagger-reveal])');
+            looseItems.forEach(item => {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) {
+                            item.classList.add('is-revealed');
+                            obs.unobserve(item);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(item);
+            });
+        }
+
+        // --- 8. Command Palette ---
+        function initCommandPalette() {
+            const palette = document.getElementById('command-palette');
+            const overlay = document.getElementById('command-palette-overlay');
+            const input = document.getElementById('command-palette-input');
+            const list = document.getElementById('command-palette-list');
+            if (!palette || !overlay || !input || !list) return;
+            const items = list.querySelectorAll('.command-item');
+            let selectedIndex = 0;
+
+            const openPalette = () => {
+                palette.classList.add('visible');
+                overlay.classList.add('visible');
+                input.value = '';
+                filterItems('');
+                input.focus();
+            };
+
+            const closePalette = () => {
+                palette.classList.remove('visible');
+                overlay.classList.remove('visible');
+                input.blur();
+            };
+
+            const filterItems = (query) => {
+                query = query.toLowerCase();
+                selectedIndex = 0;
+                items.forEach((item) => {
+                    const text = item.textContent.toLowerCase();
+                    const isVisible = text.includes(query);
+                    item.style.display = isVisible ? 'flex' : 'none';
+                });
+                updateSelection();
+            };
+            
+            const updateSelection = () => {
+                items.forEach(item => item.classList.remove('selected'));
+                const visibleItems = Array.from(items).filter(item => item.style.display !== 'none');
+                if (visibleItems.length > 0) {
+                    selectedIndex = Math.max(0, Math.min(selectedIndex, visibleItems.length - 1));
+                    visibleItems[selectedIndex].classList.add('selected');
+                    visibleItems[selectedIndex].scrollIntoView({ block: 'nearest' });
+                }
+            };
+
+            const executeSelection = () => {
+                const visibleItems = Array.from(items).filter(item => item.style.display !== 'none');
+                if (visibleItems.length > 0 && visibleItems[selectedIndex]) {
+                    visibleItems[selectedIndex].click();
+                }
+            };
+            
+            window.addEventListener('keydown', e => {
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    palette.classList.contains('visible') ? closePalette() : openPalette();
+                }
+                if (e.key === 'Escape' && palette.classList.contains('visible')) {
+                    closePalette();
+                }
+            });
+
+            input.addEventListener('input', () => filterItems(input.value));
+            input.addEventListener('keydown', e => {
+                const visibleItems = Array.from(items).filter(item => item.style.display !== 'none');
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = (visibleItems.length > 0) ? (selectedIndex + 1) % visibleItems.length : 0;
+                    updateSelection();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = (visibleItems.length > 0) ? (selectedIndex - 1 + visibleItems.length) % visibleItems.length : 0;
+                    updateSelection();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    executeSelection();
+                }
+            });
+            
+            overlay.addEventListener('click', closePalette);
+            items.forEach(item => {
+                item.addEventListener('click', e => {
+                    e.preventDefault();
+                    const targetId = item.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    closePalette();
+                });
+            });
+        }
+
+        // --- 9. "Copy to Clipboard" ---
+        function initClipboard() {
+            document.querySelectorAll('[data-clipboard-text]').forEach(item => {
+                const feedbackEl = item.querySelector('.copy-feedback');
+                
+                const action = () => {
+                    const text = item.getAttribute('data-clipboard-text');
+                    
+                    try {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = text;
+                        textArea.style.position = 'fixed';
+                        textArea.style.opacity = 0;
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+
+                        if (feedbackEl) {
+                            feedbackEl.style.opacity = '1';
+                            setTimeout(() => {
+                                feedbackEl.style.opacity = '0';
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                    }
+                };
+
+                item.addEventListener('click', action);
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        action();
+                    }
+                });
+            });
+        }
+
+        // --- 10. COPYRIGHT YEAR ---
+        function initCopyright() {
+            const yearEl = document.getElementById('copyright-year');
+            if(yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+        }
+
+        // --- RUN ALL INITIALIZERS ---
+        // This is the critical fix: Using window.onload ensures
+        // that deferred scripts (lucide, three.js) are ready.
+        window.onload = () => {
+            try {
+                lucide.createIcons();
+            } catch (e) {
+                console.error("Lucide icons failed to create.", e);
+            }
+            
+            initTheme();
+            initMobileMenu();
+            initThreeJS();
+            initCursor();
+            initMagneticButtons();
+            initScrollFeatures();
+            initStaggeredReveals();
+            initCommandPalette();
+            initClipboard();
+            initCopyright();
+        };
     </script>
 </body>
 </html>
-
