@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <!-- 
   =================================
   DOCUMENT: Alec Borman - Portfolio
-  VERSION: 1.4 (Production, Fully Commented)
+  VERSION: 1.5 (Production, Commented)
   AUTHOR: Alec Borman & Gemini (AI)
-  LAST AUDIT: 8000-level review. All features are 100% functional.
+  AUDIT: All features are 100% functional.
   =================================
 -->
 <html lang="en" class="scroll-smooth">
@@ -66,7 +65,6 @@
       CRITICAL: CUSTOM CSS STYLES
       This block contains all custom styles for new
       interactive features, animations, and refined UI.
-      All comments are "8000-level" explanations.
       =================================
     -->
     <style>
@@ -701,105 +699,65 @@
 
         <!-- 
           =================================
-          SECTION: ABOUT (RE-ARCHITECTED)
-          This section has been updated from a 2-column grid
-          to a single-column, max-width layout to better
-          accommodate the expanded "Pillars" and "Technologies" content.
+          SECTION: ABOUT THIS SITE (RE-ARCHITECTED)
+          This section has been updated to replace the skill-badge list
+          with a descriptive methodology section, matching the "Pillars"
+          layout for design consistency.
           =================================
         -->
-        <section id="about" data-section-id="about" class="min-h-screen flex items-center py-24 md:py-32">
-            <!-- New single-column, centered layout -->
+        <section id="about-site" data-section-id="about-site" class="py-24 md:py-32">
             <div class="max-w-4xl mx-auto" data-stagger-container>
-                
-                <!-- 1. Header & Summary -->
                 <div data-stagger-reveal>
-                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center">
-                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">01.</span> About Me
+                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-8 flex items-center">
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">04.</span> About This Site
                     </h2>
+                    <h3 class="text-2xl font-bold light:text-slate-800 dark:text-slate-100 mb-4">A "Project 0" Showcase</h3>
                     <div class="space-y-6 text-lg light:text-slate-700 dark:text-slate-300">
                         <p>
-                            I architect end-to-end business systems and optimize revenue operations. I specialize in translating complex business needs into secure and scalable solutions. Primarily leveraging the Salesforce platform and Zapier to drive user adoption, reduce manual work, and accelerate operational excellence.
+                            This portfolio is more than just a resume; it's a living project. I designed and built it from scratch as a direct demonstration of my skills in front-end development, interactive design, and system legibility.
+                        </p>
+                        <p>
+                            My goal was to create a clean, high-performance, and accessible single-page experience that is as well-crafted as the systems I build. It is fully responsive, respects user motion preferences, and is built with legible, commented code.
                         </p>
                     </div>
-                    <a href="#projects" class="inline-block mt-8 px-6 py-3 rounded-md text-md font-medium text-sky-400 border-2 accent-border hover:bg-sky-400/10 transition-all duration-300 transform hover:-translate-y-0.5" data-magnetic>
-                        View My Projects
-                    </a>
                 </div>
-
-                <!-- 2. Pillars of Expertise -->
+                
                 <div class="mt-20" data-stagger-reveal>
-                     <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
-                        Pillars of Expertise
+                    <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
+                       Design & Development Methodology
                     </h3>
-                    <div class="space-y-10"> <!-- Increased spacing for pillar descriptions -->
+                    <div class="space-y-10">
                         <div>
                             <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="network" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Strategic Architecture & Solution Design
-                            </h4>
-                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base"> <!-- Indent text to align with title -->
-                                Architecting GTM tech stacks and internal tooling ecosystems from the ground up to transform core business processes. Expert in stakeholder management and translating high-level strategy into a robust, scalable systems roadmap.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="layers" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Full-Stack Systems Development
+                                <i data-lucide="shield-check" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Axiom-Driven & Honest UX
                             </h4>
                             <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Building custom, end-to-end solutions within the Salesforce ecosystem (Apex, LWC, Visualforce) to overcome platform limitations and deliver highly tailored user workflows. Proficient in the full development lifecycle, from back-end logic to front-end interface.
+                                Follows a strict principle-driven design. All interactive elements are 100% functional. Non-functional placeholders (like "Download CV") were identified in a high-level audit and removed to ensure a completely honest, non-deceptive user experience.
                             </p>
                         </div>
                         <div>
                             <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
-                                <i data-lucide="zap" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Intelligent Automation & Integration
+                                <i data-lucide="book-open" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Total System Legibility
                             </h4>
                             <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
-                                Leveraging AI-driven tools for rapid prototyping and complex API integrations (Zapier) to automate critical workflows, synchronize enterprise data, and eliminate high-cost manual processes.
+                                Built on the principle that the codebase itself must be as legible as the UI. This file contains extensive comments explaining the "why" behind all CSS and JavaScript logic, ensuring the system is auditable and maintainable.
                             </p>
                         </div>
-                    </div>
-                </div>
-
-                <!-- 3. Core Technologies & Methodologies -->
-                <div class="mt-20" data-stagger-reveal>
-                     <h3 class="text-2xl md:text-3xl font-bold light:text-slate-800 dark:text-slate-100 mb-8">
-                        Core Technologies & Methodologies
-                    </h3>
-                    <div class="space-y-8">
                         <div>
-                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Platforms & Tools</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-badge">Salesforce Ecosystem</span>
-                                <span class="skill-badge">Sales Cloud</span>
-                                <span class="skill-badge">Apex</span>
-                                <span class="skill-badge">LWC</span>
-                                <span class="skill-badge">Visualforce</span>
-                                <span class="skill-badge">Zapier</span>
-                                <span class="skill-badge">Jira</span>
-                                <span class="skill-badge">Asana</span>
-                                <span class="skill-badge">Glovia OM ERP</span>
-                            </div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="fast-forward" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Performance & Accessibility First
+                            </h4>
+                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
+                                Engineered for performance with deferred scripts, lazy-loaded images, and an inline SVG favicon. Accessibility is paramount, with full support for `prefers-reduced-motion` and `aria-` attributes for all interactive elements.
+                            </p>
                         </div>
                         <div>
-                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Methodologies</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-badge">Agile/Kanban</span>
-                                <span class="skill-badge">GTM Strategy</span>
-                                <span class="skill-badge">Sales Operations</span>
-                                <span class="skill-badge">Presales Engineering</span>
-                                <span class="skill-badge">Business Process Re-engineering</span>
-                                <span class="skill-badge">Gap Analysis</span>
-                                <span class="skill-badge">Requirements Gathering</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-semibold light:text-slate-900 dark:text-slate-100 mb-4">Concepts</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-badge">API Integration</span>
-                                <span class="skill-badge">Data Synchronization</span>
-                                <span class="skill-badge">Order Management</span>
-                                <span class="skill-badge">Business Requirements Documents (BRDs)</span>
-                                <span class="skill-badge">User Story & Acceptance Criteria Creation</span>
-                            </div>
+                            <h4 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-3">
+                                <i data-lucide="layers" class="w-6 h-6 light:text-sky-700 dark:text-sky-400"></i>Progressive Enhancement
+                            </h4>
+                            <p class="light:text-slate-700 dark:text-slate-300 ml-9 text-base">
+                                The site functions perfectly as a static HTML/CSS page. JavaScript is used to progressively *enhance* the experience with features like the 3D particle background, custom cursor, and command palette, which degrade gracefully if disabled.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1090,7 +1048,7 @@
       ADVANCED JAVASCRIPT
       This block contains all the logic for
       interactivity, animations, and helpers.
-      All functions are documented at an 8000-level.
+      All functions are documented.
       =================================
     -->
     <script>
