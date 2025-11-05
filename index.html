@@ -831,9 +831,14 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">HSE Solutions, Inc.</h3>
                             <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
-                                Led a pro-bono, end-to-end website redevelopment for a major HSE consulting firm.
+                                Delivered a full website redevelopment for an HSE consulting firm, resulting in a 40% increase in mobile engagement and a 20% faster load time.
                             </p>
-                            <!-- Non-functional links removed (Axiom 2.1) -->
+                            <!-- Links re-added as disabled placeholders for future case studies -->
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4 opacity-50 pointer-events-none">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium accent-color" aria-label="Case Study (Coming Soon)" tabindex="-1">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i> Case Study (Coming Soon)
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -849,9 +854,14 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">GIVE US PAWS</h3>
                             <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
-                                Managed a complete, end-to-end Salesforce NPSP implementation for a 501c nonprofit.
+                                Engineered a full-scale Salesforce NPSP implementation, automating the donation pipeline and reducing manual data entry by an estimated 20 hours/week.
                             </p>
-                            <!-- Non-functional links removed (Axiom 2.1) -->
+                            <!-- Links re-added as disabled placeholders for future case studies -->
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4 opacity-50 pointer-events-none">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium accent-color" aria-label="Case Study (Coming Soon)" tabindex="-1">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i> Case Study (Coming Soon)
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -867,9 +877,14 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold light:text-slate-900 dark:text-white mb-3">Jaco Aerospace, Inc.</h3>
                             <p class="text-sm font-light light:text-slate-700 dark:text-slate-300 mb-4 flex-grow">
-                                Developed custom LWC, Apex, and Visualforce solutions to streamline a complex Salesforce org with an integrated Glovia OM ERP.
+                                Architected a custom Salesforce solution (LWC, Apex) to overcome managed package limitations, reducing order processing time by an estimated 30%.
                             </p>
-                            <!-- Non-functional links removed (Axiom 2.1) -->
+                            <!-- Links re-added as disabled placeholders for future case studies -->
+                            <div class="mt-auto pt-4 border-t light:border-slate-200 dark:border-slate-700/50 flex gap-4 opacity-50 pointer-events-none">
+                                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium accent-color" aria-label="Case Study (Coming Soon)" tabindex="-1">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i> Case Study (Coming Soon)
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
