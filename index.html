@@ -1,7 +1,7 @@
 <!-- 
   =================================
   DOCUMENT: Alec Borman - Portfolio
-  VERSION: 1.7 (Added Book Chapter)
+  VERSION: 1.9 (Fixed .prose class via typography plugin)
   AUTHOR: Alec Borman & Gemini (AI)
   AUDIT: All features are 100% functional.
   =================================
@@ -30,8 +30,11 @@
     -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- Tailwind CSS CDN: Pulls in the utility-first CSS framework. -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 
+      Tailwind CSS CDN: Pulls in the utility-first CSS framework.
+      FIX: Added the `?plugins=typography` to load the official .prose styles.
+    -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     
     <!-- 
       Tailwind Config: Inline configuration script.
@@ -69,11 +72,11 @@
     -->
     <style>
         /* Base Body Styling:
-          - font-family: Sets 'Inter' as the default, with a standard sans-serif fallback.
-          - scroll-padding-top: Offsets the scroll-snap position by the header's height (72px)
-            to prevent the fixed header from covering section titles on jump links.
-          - font-smoothing: Enables anti-aliasing for cleaner text rendering.
-          - cursor: Hides the default OS cursor to replace it with our custom one.
+         - font-family: Sets 'Inter' as the default, with a standard sans-serif fallback.
+         - scroll-padding-top: Offsets the scroll-snap position by the header's height (72px)
+           to prevent the fixed header from covering section titles on jump links.
+         - font-smoothing: Enables anti-aliasing for cleaner text rendering.
+         - cursor: Hides the default OS cursor to replace it with our custom one.
         */
         body {
             font-family: 'Inter', sans-serif;
@@ -104,10 +107,10 @@
         }
         
         /* 1. WebGL Canvas Background:
-          - position: fixed: Stretches the canvas across the entire viewport.
-          - top/left/width/height: Defines the fullscreen dimensions.
-          - z-index: -10: Places the canvas *behind* all other page content.
-          - opacity: Reduced to act as a subtle background.
+         - position: fixed: Stretches the canvas across the entire viewport.
+         - top/left/width/height: Defines the fullscreen dimensions.
+         - z-index: -10: Places the canvas *behind* all other page content.
+         - opacity: Reduced to act as a subtle background.
         */
         #bg-canvas {
             position: fixed;
@@ -123,15 +126,15 @@
         .light #bg-canvas { opacity: 0.2; } /* Further reduced opacity in light mode */
 
         /* 2. Custom Cursor (Dot & Outline):
-          - position: fixed: Allows the cursor to move freely across the viewport.
-          - transform: translate(-50%, -50%): Centers the element on the actual cursor position.
-          - border-radius: 50%: Makes the divs circular.
-          - pointer-events: none: CRITICAL. Allows clicks to "pass through" the cursor
-            elements to the content underneath.
-          - z-index: 9999: Ensures the cursor is on top of almost all content.
-          - transition: Defines the "lerp" (linear interpolation) effect. The `transform`
-            transition is very fast (0.1s) for responsiveness, while other properties
-            (width, height) are slower (0.3s) for a smoother feel.
+         - position: fixed: Allows the cursor to move freely across the viewport.
+         - transform: translate(-50%, -50%): Centers the element on the actual cursor position.
+         - border-radius: 50%: Makes the divs circular.
+         - pointer-events: none: CRITICAL. Allows clicks to "pass through" the cursor
+           elements to the content underneath.
+         - z-index: 9999: Ensures the cursor is on top of almost all content.
+         - transition: Defines the "lerp" (linear interpolation) effect. The `transform`
+           transition is very fast (0.1s) for responsiveness, while other properties
+           (width, height) are slower (0.3s) for a smoother feel.
         */
         #cursor-dot, #cursor-outline {
             position: fixed;
@@ -173,9 +176,9 @@
         }
 
         /* 3. Scroll Progress Bar:
-          - position: fixed: Locks the bar to the top of the viewport.
-          - z-index: 10000: Places it above all content *except* the command palette.
-          - width: 0%: The default state, which is modified by JS on scroll.
+         - position: fixed: Locks the bar to the top of the viewport.
+         - z-index: 10000: Places it above all content *except* the command palette.
+         - width: 0%: The default state, which is modified by JS on scroll.
         */
         #scroll-progress {
             position: fixed;
@@ -189,11 +192,11 @@
         }
 
         /* 4. Command Palette (Modal):
-          - position: fixed: Overlays the content.
-          - top/left/transform: Centers the palette in the viewport.
-          - z-index: 10001: The highest z-index, above the scroll bar and cursor.
-          - opacity/transform(scale): Used to animate the "pop-in" effect.
-          - pointer-events: none: Prevents interaction when hidden.
+         - position: fixed: Overlays the content.
+         - top/left/transform: Centers the palette in the viewport.
+         - z-index: 10001: The highest z-index, above the scroll bar and cursor.
+         - opacity/transform(scale): Used to animate the "pop-in" effect.
+         - pointer-events: none: Prevents interaction when hidden.
         */
         #command-palette {
             position: fixed;
@@ -209,9 +212,9 @@
             transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
         /* Glassmorphism Effect:
-          - backdrop-filter: blur(10px): Blurs the content *behind* the element.
-          - background-color: rgba(...): A semi-transparent background is
-            required for the blur to be visible.
+         - backdrop-filter: blur(10px): Blurs the content *behind* the element.
+         - background-color: rgba(...): A semi-transparent background is
+           required for the blur to be visible.
         */
         .cmd-palette-content {
             backdrop-filter: blur(10px);
@@ -229,7 +232,7 @@
         }
         /* Visible State:
           Reverses the opacity and transform to bring the palette into view.
-          - pointer-events: all: Makes it interactive.
+         - pointer-events: all: Makes it interactive.
         */
         #command-palette.visible {
             transform: translate(-50%, -50%) scale(1);
@@ -308,7 +311,7 @@
 
         /* 5. Staggered Reveal Animation:
           Defines the *initial* state of elements to be animated.
-          - opacity: 0 / transform: translateY(20px): Starts invisible and 20px down.
+         - opacity: 0 / transform: translateY(20px): Starts invisible and 20px down.
         */
         [data-stagger-reveal] {
             opacity: 0;
@@ -341,19 +344,20 @@
         }
 
         /* 8. Project Card (Gradient Border):
-          - background: linear-gradient... padding-box, ... border-box:
-            This is a "gradient border" trick. The `padding-box` (inner background)
-            is a solid color, while the `border-box` (outer background) is
-            a gradient. The `border: 1px solid transparent` creates the
-            space for the gradient to show through.
-          - display: flex / flex-direction: column: Ensures cards in a row
-            are the same height and content is aligned.
+         - background: linear-gradient... padding-box, ... border-box:
+           This is a "gradient border" trick. The `padding-box` (inner background)
+           is a solid color, while the `border-box` (outer background) is
+           a gradient. The `border: 1px solid transparent` creates the
+           space for the gradient to show through.
+         - display: flex / flex-direction: column: Ensures cards in a row
+           are the same height and content is aligned.
         */
         .project-card {
             border: 1px solid transparent;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            height: 100%; /* Ensures card fills grid cell height */
         }
         .dark .project-card {
             background: linear-gradient(#1E293B, #1E293B) padding-box, linear-gradient(135deg, #38bdf8, #818cf8) border-box;
@@ -375,8 +379,8 @@
         }
 
         /* 9. Experience Timeline:
-          - position: relative: Establishes a positioning context for the dots.
-          - border-left: The main timeline bar.
+         - position: relative: Establishes a positioning context for the dots.
+         - border-left: The main timeline bar.
         */
         .timeline-item {
             position: relative;
@@ -392,11 +396,8 @@
             padding-bottom: 0;
         }
         /* Timeline Dot:
-          - position: absolute: Places the dot *on top* of the border-left.
-          - left: -9px: Calculated as (-(width/2) + (border-width/2)).
-            Here: (-(18/2) + (2/2)) = -9 + 1 = -8. Wait, my math is off.
-            Let's re-calculate: (-(18/2)) = -9px. This pulls it left to center
-            it on the line. The inner `border: 4px` punches out the middle.
+         - position: absolute: Places the dot *on top* of the border-left.
+         - left: -9px: Centers the 18px dot on the 2px line.
         */
         .timeline-dot {
             position: absolute;
@@ -472,9 +473,9 @@
         }
 
         /* 11. Contact Info Item:
-          - margin: -0.75rem / padding: 0.75rem: This is a common trick
-            to increase the "clickable" or "hoverable" area of an element
-            without altering its visual spacing.
+         - margin: -0.75rem / padding: 0.75rem: This is a common trick
+           to increase the "clickable" or "hoverable" area of an element
+           without altering its visual spacing.
         */
         .contact-item {
             display: flex;
@@ -515,11 +516,11 @@
         .light .contact-item:hover .contact-item-value { color: #0369a1; }
 
         /* 12. Accessibility: Reduced Motion
-          - This media query detects if the user has requested "reduced motion"
-            in their OS settings.
-          - We disable all transitions, animations, and distracting elements
-            (like the cursor and 3D background) to respect their preference.
-          - This is a CRITICAL part of modern, inclusive web design.
+         - This media query detects if the user has requested "reduced motion"
+           in their OS settings.
+         - We disable all transitions, animations, and distracting elements
+           (like the cursor and 3D background) to respect their preference.
+         - This is a CRITICAL part of modern, inclusive web design.
         */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -538,85 +539,11 @@
             }
         }
         
-        /* 13. Prose Styling for Book Chapter */
-        .prose {
-            font-size: 1.125rem; /* lg */
-            line-height: 1.75; /* 7 */
-        }
-        .dark .prose { color: #CBD5E1; /* slate-300 */ }
-        .light .prose { color: #334155; /* slate-700 */ }
-
-        .prose h1, .prose h2, .prose h3, .prose h4 {
-            font-weight: 700;
-            letter-spacing: -0.025em;
-        }
-
-        .prose h2 {
-            font-size: 2.25rem; /* 4xl */
-            font-weight: 800; /* extrabold */
-            margin-bottom: 0.5em;
-        }
-        .dark .prose h2 { color: #F1F5F9; /* slate-100 */ }
-        .light .prose h2 { color: #1E293B; /* slate-800 */ }
+        /* FIX: Removed all custom .prose styles.
+          The Tailwind typography plugin (loaded in the <head>)
+          now handles all styling for the .prose class.
+        */
         
-        .prose h3 {
-            font-size: 1.875rem; /* 3xl */
-            font-weight: 700; /* bold */
-            margin-top: 2em;
-            margin-bottom: 1em;
-        }
-        .dark .prose h3 { color: #38bdf8; /* accent-color */ }
-        .light .prose h3 { color: #0369a1; /* sky-700 */ }
-
-        .prose h4 {
-            font-size: 1.5rem; /* 2xl */
-            font-weight: 600; /* semibold */
-            margin-top: 1.6em;
-            margin-bottom: 0.8em;
-        }
-        .dark .prose h4 { color: #E2E8F0; /* slate-200 */ }
-        .light .prose h4 { color: #1E293B; /* slate-800 */ }
-
-        .prose p {
-            margin-bottom: 1.25em;
-        }
-
-        .prose ol {
-            list-style-type: decimal;
-            margin-left: 1.5em;
-            margin-bottom: 1.25em;
-            padding-left: 1.5em;
-        }
-        .prose li {
-            margin-bottom: 0.75em;
-            padding-left: 0.5em;
-        }
-        .prose li strong {
-            display: inline-block;
-            margin-bottom: 0.25em;
-        }
-        .dark .prose li strong { color: #E2E8F0; }
-        .light .prose li strong { color: #1E293B; }
-
-
-        .prose em {
-            font-style: italic;
-        }
-        .dark .prose em { color: #94a3b8; /* slate-400 */ }
-        .light .prose em { color: #475569; /* slate-600 */ }
-
-        .prose code {
-            background-color: #1e293b;
-            color: #f1f5f9;
-            padding: 0.25em 0.5em;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.9em;
-        }
-        .light .prose code {
-            background-color: #E2E8F0; /* slate-200 */
-            color: #334155; /* slate-700 */
-        }
     </style>
 </head>
 <body class="antialiased dark"> <!-- Default to dark mode -->
@@ -660,12 +587,10 @@
                     <i data-lucide="layers" class="w-4 h-4"></i>Projects
                     <kbd>P</kbd>
                 </a>
-                <!-- NEWLY ADDED -->
                 <a href="#book" class="command-item" data-action="jump">
                     <i data-lucide="book" class="w-4 h-4"></i>Book
                     <kbd>B</kbd>
                 </a>
-                <!-- END NEWLY ADDED -->
                 <a href="#about-site" class="command-item" data-action="jump">
                     <i data-lucide="layout-template" class="w-4 h-4"></i>About Site
                     <kbd>S</kbd>
@@ -700,9 +625,7 @@
                 <a href="#about" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">About</a>
                 <a href="#experience" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Experience</a>
                 <a href="#projects" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Projects</a>
-                <!-- NEWLY ADDED -->
                 <a href="#book" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Book</a>
-                <!-- END NEWLY ADDED -->
                 <a href="#about-site" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">About Site</a>
                 <a href="#contact" class="nav-link transition-colors light:text-slate-700 light:hover:text-sky-700 dark:text-slate-300 dark:hover:text-sky-400">Contact</a>
                 
@@ -735,9 +658,7 @@
                 <a href="#about" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">About</a>
                 <a href="#experience" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Experience</a>
                 <a href="#projects" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Projects</a>
-                <!-- NEWLY ADDED -->
                 <a href="#book" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Book</a>
-                <!-- END NEWLY ADDED -->
                 <a href="#about-site" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">About Site</a>
                 <a href="#contact" class="mobile-nav-link block px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Contact</a>
                 <button id="theme-toggle-mobile" class="w-full flex items-center justify-center space-x-2 px-4 py-2 rounded-md light:text-slate-700 light:hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700" aria-label="Toggle theme">
@@ -791,11 +712,59 @@
 
         <!-- 
           =================================
-          SECTION: EXPERIENCE (RE-INSERTED)
-          This was the missing section. It is now re-added.
+          SECTION: ABOUT
           =================================
         -->
-        <section id="experience" data-section-id="experience" class="min-h-screen py-24 md:py-32">
+        <section id="about" data-section-id="about" class="py-24 md:py-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+                <div data-stagger-container>
+                    <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-10 flex items-center" data-stagger-reveal>
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">01.</span> About Me
+                    </h2>
+                    <div class="space-y-6 text-lg light:text-slate-700 dark:text-slate-300" data-stagger-reveal>
+                        <p>
+                            Hello! I'm Alec, a <strong class="light:text-slate-800 dark:text-white font-semibold accent-color">Business Systems Architect</strong> based in the Houston, TX area. My passion is building holistic, end-to-end solutions that bridge the gap between technical possibility and real-world business value.
+                        </p>
+                        <p>
+                            My journey began with a <strong class="light:text-slate-800 dark:text-white font-semibold">B.S. in Computer Science</strong> and has evolved into a deep focus on the Salesforce ecosystem. I'm not just an administrator or a developer; I'm a <strong class="light:text-slate-800 dark:text-white font-semibold">systems thinker</strong> who loves untangling complex processes and rebuilding them to be scalable, efficient, and user-friendly.
+                        </p>
+                        <p>
+                            Whether it's designing a new lead-to-cash process, integrating third-party APIs, or writing custom Apex and LWC components to eliminate technical debt, my goal is always the same: <strong class="light:text-slate-800 dark:text-white font-semibold">to build systems that work for people, not the other way around.</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-8" data-stagger-container>
+                    <div data-stagger-reveal>
+                        <h3 class="text-xl font-bold light:text-slate-800 dark:text-slate-100 mb-4">Core Competencies</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-badge">Salesforce Architecture</span>
+                            <span class="skill-badge">Apex & LWC Development</span>
+                            <span class="skill-badge">Sales Cloud & Glovia OM</span>
+                            <span class="skill-badge">Declarative Automation (Flow)</span>
+                            <span class="skill-badge">API Integration (REST)</span>
+                            <span class="skill-badge">System Integration (Zapier)</span>
+                            <span class="skill-badge">Business Process Modeling</span>
+                            <span class="skill-badge">Requirements Gathering</span>
+                            <span class="skill-badge">Data Modeling & Security</span>
+                        </div>
+                    </div>
+                    <div data-stagger-reveal>
+                        <h3 class="text-xl font-bold light:text-slate-800 dark:text-slate-100 mb-4">Certifications</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-badge">Salesforce Certified Administrator (SCA)</span>
+                            <span class="skill-badge">Salesforce Certified Platform Developer I (PDI)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 
+          =================================
+          SECTION: EXPERIENCE
+          =================================
+        -->
+        <section id="experience" data-section-id="experience" class="py-24 md:py-32">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
                     <span class="accent-color text-4xl md:text-5xl font-mono mr-3">02.</span> Professional Experience
@@ -909,17 +878,96 @@
 
         <!-- 
           =================================
-          SECTION: BOOK CHAPTER (NEWLY ADDED)
+          SECTION: PROJECTS (FIX: RE-ADDED)
+          =================================
+        -->
+        <section id="projects" data-section-id="projects" class="py-24 md:py-32">
+            <div data-stagger-container>
+                <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
+                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">03.</span> Featured Projects
+                </h2>
+                
+                <!-- Project Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Project 1 -->
+                    <div class="project-card rounded-xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/0F172A/38BDF8?text=Project+1+Image" alt="Placeholder image for project 1" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3">Automated SaaS Deployment Engine</h3>
+                            <p class="light:text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Designed and built an end-to-end automation process on Salesforce for Hydrolix, handling the entire deployment lifecycle from POC to contract, including credit approvals and usage quota tracking.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Salesforce Flow</span>
+                                <span class="skill-badge">Apex</span>
+                                <span class="skill-badge">Process Automation</span>
+                                <span class="skill-badge">Zapier Integration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-card rounded-xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/0F172A/38BDF8?text=Project+2+Image" alt="Placeholder image for project 2" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3">Nonprofit Service Dog Tracker</h3>
+                            <p class="light:text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Led the full implementation of a new Salesforce instance for GIVE US PAWS, customizing a managed package to track the training and placement of service dogs for disabled veterans.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Salesforce NPSP</span>
+                                <span class="skill-badge">Managed Packages</span>
+                                <span class="skill-badge">Data Import</span>
+                                <span class="skill-badge">Reports & Dashboards</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-card rounded-xl overflow-hidden" data-stagger-reveal>
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/0F172A/38BDF8?text=Project+3+Image" alt="Placeholder image for project 3" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold light:text-slate-900 dark:text-slate-100 mb-3">ERP & Sales Cloud Integration</h3>
+                            <p class="light:text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Developed custom Visualforce pages and Apex logic to streamline order management processes between Salesforce Sales Cloud and an integrated Glovia OM ERP system for Jaco Aerospace.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Apex</span>
+                                <span class="skill-badge">Visualforce</span>
+                                <span class="skill-badge">Glovia OM</span>
+                                <span class="skill-badge">ERP Integration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          =================================
+          SECTION: BOOK CHAPTER
+          FIX: Renumbered to 04.
           =================================
         -->
         <section id="book" data-section-id="book" class="py-24 md:py-32">
             <div data-stagger-container>
                 <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
-                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">03.</span> The Black Box
+                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">04.</span> The Black Box
                 </h2>
 
-                <div class="prose max-w-3xl mx-auto" data-stagger-reveal>
-                    <!-- Start formatting the chapter text -->
+                <div class="prose dark:prose-invert max-w-3xl mx-auto" data-stagger-reveal>
+                    <!-- 
+                      Start formatting the chapter text.
+                      The `.prose` class is now provided by the Tailwind typography plugin.
+                      `.dark:prose-invert` automatically handles dark mode text colors.
+                    -->
                     <h2>Chapter 1: The "Black Box" Mindset</h2>
                     <h3>Choosing Focus Over Distraction</h3>
                     
@@ -946,7 +994,7 @@
                     <h4>Domain 1: Technical & Process Debt</h4>
                     <p>This is the most obvious failure, the one that developers and system administrators will feel first. The technician has not built a "bridge" between two systems; they have built a "data trap." This debt manifests in three distinct, compounding forms: fracture, fallacy, and fragility.</p>
                     <ol>
-                        <li><strong>Process Fracture & Data Divergence (The "Update" Problem)</strong><br>The Zap is built. It's tested. It works. An Opportunity is closed, and presto, a new row appears in the Google Sheet. The VP of Sales is thrilled. The ticket is closed.
+                        <li><strong>Process Fracture & Data Divergence (The "Update" Problem):</strong> The Zap is built. It's tested. It works. An Opportunity is closed, and presto, a new row appears in the Google Sheet. The VP of Sales is thrilled. The ticket is closed.
                         <br>The next day, the customer calls the sales rep. "We're so excited to get started. Can you add two more user licenses to that initial order? And can you update the primary technical contact? I gave you my assistant's name, but it should really be our Head of Engineering."
                         <br>The sales rep, doing their job, says "Of course." They go into Salesforce. They update the <code>Amount</code> on the Opportunity. They change the <code>Primary_Contact__c</code> field. They hit "Save."
                         <br>The Zap does not (and should not) fire again. It was configured to trigger on the stage change, a one-time event.
@@ -955,7 +1003,7 @@
                         <br>The company deploys the wrong number of licenses. The wrong person (the assistant) gets the onboarding email, which they ignore. Two weeks later, an angry Head of Engineering emails the sales rep, "We were supposed to go live today, what's going on?"
                         <br>The sales rep, confused, looks at their Opportunity in Salesforce. "It says you're all set! Let me check with Ops." They open the Google Sheet and see the old data. The process is fractured. Trust is broken. The "fix" has failed in less than 24 hours.</li>
                         
-                        <li><strong>The "Second Source of Truth" Fallacy</strong><br>This is a more insidious problem. The Google Sheet is now a second, competing source of truth for deployments. When the finance team wants to run a report on "time from close to deployment," where do they look?
+                        <li><strong>The "Second Source of Truth" Fallacy:</strong> This is a more insidious problem. The Google Sheet is now a second, competing source of truth for deployments. When the finance team wants to run a report on "time from close to deployment," where do they look?
                         <br>Salesforce has the Close Date. The Google Sheet has the Deployment Complete checkbox, which the Ops team diligently checks.
                         <br>A junior analyst—let's call her Sarah, since she was on the call—is now tasked with this report. Her process is as follows:
                         <br>Run a "Closed Won Opportunities" report in Salesforce and export to CSV.
@@ -969,7 +1017,7 @@
                         <br>Deliver the report, which is now three days late and 85% accurate, at best.
                         <br>This "manual-merge" step is now part of the business process. The "fix" didn't reduce manual work; it just moved it from a high-visibility sales rep to a low-visibility analyst and multiplied it by an order of magnitude. The VP of Sales is happy, but the Head of FP&A is now making forecasts based on data that is fundamentally broken.</li>
                         
-                        <li><strong>API & Automation "Spaghetti" (The Fragility Problem)</strong><br>The technician used Zapier because it was "simple." Six months later, the finance team wants to sync invoices from that same Opportunity. The finance team, however, uses Workato. So, a different technician builds a Workato recipe.
+                        <li><strong>API & Automation "Spaghetti" (The Fragility Problem):</strong> The technician used Zapier because it was "simple." Six months later, the finance team wants to sync invoices from that same Opportunity. The finance team, however, uses Workato. So, a different technician builds a Workato recipe.
                         <br>Meanwhile, the marketing team wants to add "Closed Won" customers to a new email journey. Their agency knows HubSpot, so they use the native HubSpot-Salesforce connector.
                         <br>A developer, annoyed by all these third-party tools, decides to write a custom Apex trigger to handle a high-volume sync for a different process.
                         <br>We now have four different automation tools all touching the same <code>Opportunity</code> object: Zapier, Workato, HubSpot, and Apex.
@@ -980,14 +1028,14 @@
                         <br>Who "owns" this mess?
                         <br>This is "spaghetti architecture," and it is how systems become brittle, unmaintainable, and impossible to debug. The "simple fix" is the first strand of that spaghetti. It sets a precedent that point-to-point, "shadow IT" solutions are acceptable. The architect knows that the second you allow a rogue, point-to-point integration, you have lost control of your architecture.</li>
                         
-                        <li><strong>The Scalability Trap</strong><br>This architecture cannot scale. The Zapier plan is based on "tasks." At 10 deals a month, it's cheap. When the company hits 100 deals a month, the cost increases 10x. When they hit 1,000, the "stack tax" becomes a real line item in the IT budget.
+                        <li><strong>The Scalability Trap:</strong> This architecture cannot scale. The Zapier plan is based on "tasks." At 10 deals a month, it's cheap. When the company hits 100 deals a month, the cost increases 10x. When they hit 1,000, the "stack tax" becomes a real line item in the IT budget.
                         <br>But the real problem is the Google Sheet. Google Sheets has a limit of 10 million cells. At 20 columns of data (the 12 fields, plus 8 more that Ops inevitably adds), that's 500,000 rows. A successful company will blow through that in a few years. The system has a built-in, non-negotiable expiration date. The "simple fix" has a "simple" time bomb.</li>
                     </ol>
                     
                     <h4>Domain 2: Financial & Resource Cost</h4>
                     <p>This is the debt the CFO sees, even if they don't know its source. The "five-minute fix" is a lie. The true cost is staggering.</p>
                     <ol>
-                        <li><strong>The "Hidden" Labor Cost: A Balance Sheet of the Simple Fix</strong><br>Let's do the math that the technician skipped. Assume blended-average, fully-loaded costs for our employees:
+                        <li><strong>The "Hidden" Labor Cost: A Balance Sheet of the Simple Fix:</strong> Let's do the math that the technician skipped. Assume blended-average, fully-loaded costs for our employees:
                         <br>Sales Rep: $150/hr
                         <br>Ops Manager: $120/hr
                         <br>Engineer: $180/hr
@@ -1005,7 +1053,7 @@
                         <br>Total Verified Cost (Year 1): $46,440.
                         <br>The "five-minute fix" is a negative-$46k-per-year decision. And this doesn't even account for the "stack tax" (the Zapier subscription) or the most expensive cost of all...</li>
                         
-                        <li><strong>The Cost of In-Fidelity Data (The "GIGO" Problem)</strong><br>"Garbage In, Garbage Out" (GIGO) is the oldest rule in computing. The "simple fix" guarantees garbage data by creating two competing sources of truth. This bad data doesn't just live in a spreadsheet; it infects the entire organization's decision-making framework.
+                        <li><strong>The Cost of In-Fidelity Data (The "GIGO" Problem):</strong> "Garbage In, Garbage Out" (GIGO) is the oldest rule in computing. The "simple fix" guarantees garbage data by creating two competing sources of truth. This bad data doesn't just live in a spreadsheet; it infects the entire organization's decision-making framework.
                         <br>The FP&A team, using Sarah's 85%-accurate report, mis-calculates the Average Time to Deploy.
                         <br>The CRO, using this flawed metric, sets the Quota for the next quarter, assuming a 30-day deployment cycle when it's really 45 days.
                         <br>The Sales team, now held to an impossible standard, starts pressuring the Ops team to cut corners.
@@ -1016,11 +1064,11 @@
                     <h4>Domain 3: Security & Compliance Catastrophe</h4>
                     <p>This is the debt that can put a company out of business. It's the one that earns the CISO a termination.</p>
                     <ol>
-                        <li><strong>Data Exfiltration as a "Feature"</strong><br>The Opportunity record contains Customer Name, Contact Email, Contact Phone, and Contract Value. This is, by any legal definition, Personally Identifiable Information (PII) and confidential financial data.
+                        <li><strong>Data Exfiltration as a "Feature":</strong> The Opportunity record contains Customer Name, Contact Email, Contact Phone, and Contract Value. This is, by any legal definition, Personally Identifiable Information (PII) and confidential financial data.
                         <br>The technician, in their haste, just configured an automated, real-time data exfiltration pipe out of a secure, audited, SOC 2-compliant environment (Salesforce) and into a Google Sheet.
                         <br>If this company does business in Europe, they have just scheduled a recurring GDPR violation. If they are in California, they are violating CCPA. If they are in healthcare, this is a multi-million dollar HIPAA breach. The "simple fix" wasn't just "not best practice"; it was, quite possibly, illegal.</li>
                         
-                        <li><strong>The Access Control Nightmare: How Breaches Happen</strong><br>The data is now in a Google Sheet. Who has access to that sheet? The Ops Manager, who shares it with his team. One of them, trying to be helpful, shares it with a contractor. The VP of Sales, annoyed he can't see it, asks for access. He is "View Only." He can't search it easily, so he does File > Download > As .xlsx and saves it to his desktop.
+                        <li><strong>The Access Control Nightmare: How Breaches Happen:</strong> The data is now in a Google Sheet. Who has access to that sheet? The Ops Manager, who shares it with his team. One of them, trying to be helpful, shares it with a contractor. The VP of Sales, annoyed he can't see it, asks for access. He is "View Only." He can't search it easily, so he does File > Download > As .xlsx and saves it to his desktop.
                         <br>The data is now on a local machine. It's in a contractor's inbox.
                         <br>Six months later, an employee on the Ops team quits. They were never removed from the Google Sheet. They now have a real-time feed of their ex-employer's entire sales pipeline on their personal laptop, which they bring to their new job at a direct competitor.
                         <br>This is not theoretical. This is how data breaches and corporate espionage happen. Not through sophisticated hacking, but through a "simple fix" that punched a hole in the data perimeter.</li>
@@ -1029,13 +1077,13 @@
                     <h4>Domain 4: The Cultural Fallout</h4>
                     <p>This is the most insidious debt of all, as it's invisible on any balance sheet, yet it corrodes the company from within.</p>
                     <ol>
-                        <li><strong>Reinforcing Silos (Conway's Law in Action)</strong><br>In 1968, computer scientist Melvin Conway wrote, "Any organization that designs a system... will inevitably produce a design whose structure is a copy of the organization's communication structure."
+                        <li><strong>Reinforcing Silos (Conway's Law in Action):</strong> In 1968, computer scientist Melvin Conway wrote, "Any organization that designs a system... will inevitably produce a design whose structure is a copy of the organization's communication structure."
                         <br>This is Conway's Law. The "simple fix" is a perfect example.
                         <br>The Organization's Structure: "Sales" and "Ops" are two separate, siloed teams that "hand off" work.
                         <br>The System's Design: A Zap that "hands off" data from the "Sales system" to the "Ops system."
                         <br>This "fix" doesn't just model the silo; it <em>reinforces</em> it. It validates the sales team's belief that their job is "done" at the close. It tells the ops team that their job is to react to data, not be a partner in the customer lifecycle. It codifies the "us vs. them" mentality.</li>
                         
-                        <li><strong>The Erosion of Trust</strong><br>The ultimate cultural cost is the complete erosion of trust.
+                        <li><strong>The Erosion of Trust:</strong> The ultimate cultural cost is the complete erosion of trust.
                         <br>Ops stops trusting Sales's data ("It's always wrong in the sheet").
                         <br>Sales stops trusting Ops to get the job done ("Why is my customer always angry?").
                         <br>Finance stops trusting either team's reports ("I have to pull the data myself").
@@ -1056,7 +1104,7 @@
                     <p>They ask questions that "feel" for the shape, weight, and texture of the problem.</p>
 
                     <ol>
-                        <li><strong>"Feeling" for the Shape: What is this data?</strong><br>This is the architect's first-principles deconstruction of the data itself. It is the most important question.
+                        <li><strong>"Feeling" for the Shape: What is this data?</strong> This is the architect's first-principles deconstruction of the data itself. It is the most important question.
                         <br><em>Technician's View:</em> The data is a row. It has 12 columns.
                         <br><em>Architect's Analysis:</em> Is this data a <em>transaction</em> or a <em>state</em>?
                         <br>This is a fundamental computer science concept, and it is the key that unlocks the entire problem.
@@ -1070,7 +1118,7 @@
                         <br>The architect has just proven the hypothesis. The "simple fix" (the Zap) was based on a false "baton" (transaction) metaphor. The problem requires a "patient chart" (state) model.
                         <br>This single discovery has invalidated the entire "Google Sheet" premise. You cannot manage a stateful process in a transactional pipeline. The tool is wrong because the assumed shape of the data was wrong.</li>
                         
-                        <li><strong>"Feeling" for the Weight: What is the real pain point?</strong><br>This is the architect's root cause analysis of the human system. The architect uses the "Five Whys" technique.
+                        <li><strong>"Feeling" for the Weight: What is the real pain point?</strong> This is the architect's root cause analysis of the human system. The architect uses the "Five Whys" technique.
                         <br><em>Architect:</em> "I understand the copy-paste is annoying. But what is the business problem it's causing?" (Why #1)
                         <br><em>VP of Sales:</em> "My reps are getting angry calls from customers because the deployment is wrong or the wrong person was contacted." (Why #2)
                         <br><em>Architect:</em> "Why is the deployment wrong?"
@@ -1084,7 +1132,7 @@
                         <br><em>Architect's View:</em> The pain is a crisis of <em>mutual blindness</em>. The solution must be <em>shared visibility</em>.
                         <br>The "simple fix" would have automated the symptom while completely ignoring—and arguably, worsening—the disease.</li>
 
-                        <li><strong>"Feeling" for the Texture: Where does this process connect?</strong><br>This is the architect's system-level dependency mapping. The architect's primary job is to protect the System of Record (SoR).
+                        <li><strong>"Feeling" for the Texture: Where does this process connect?</strong> This is the architect's system-level dependency mapping. The architect's primary job is to protect the System of Record (SoR).
                         <br>An SoR is the single, authoritative source of truth for a core data entity.
                         <br>Your bank's mainframe is the SoR for your Account Balance.
                         <br>Workday is the SoR for an Employee record.
@@ -1142,15 +1190,14 @@
 
         <!-- 
           =================================
-          SECTION: ABOUT THIS SITE (NEW)
-          This section acts as "Project 0", demonstrating the
-          methodologies used to build the page itself.
+          SECTION: ABOUT THIS SITE
+          FIX: Renumbered to 05.
           =================================
         -->
         <section id="about-site" data-section-id="about-site" class="py-24 md:py-32">
             <div data-stagger-container>
                 <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-16 flex items-center" data-stagger-reveal>
-                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">04.</span> About This Site
+                    <span class="accent-color text-4xl md:text-5xl font-mono mr-3">05.</span> About This Site
                 </h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -1188,13 +1235,14 @@
         <!-- 
           =================================
           SECTION: CONTACT
+          FIX: Renumbered to 06.
           =================================
         -->
         <section id="contact" data-section-id="contact" class="py-24 md:py-32">
             <div class="max-w-2xl mx-auto" data-stagger-container>
                 <div class="text-center" data-stagger-reveal>
                     <h2 class="text-3xl md:text-4xl font-bold light:text-slate-900 dark:text-white mb-6 flex items-center justify-center">
-                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">05.</span> Get In Touch
+                        <span class="accent-color text-4xl md:text-5xl font-mono mr-3">06.</span> Get In Touch
                     </h2>
                     <p class="text-lg light:text-slate-700 dark:text-slate-300 mb-12">
                         I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Reach out and let's connect.
@@ -1248,25 +1296,25 @@
     <footer class="py-12 light:bg-slate-200 dark:bg-slate-800/50 relative z-10">
         <div class="container mx-auto px-6">
              <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                 <div class="text-center md:text-left">
-                     <a href="#home" class="text-lg font-bold light:text-slate-800 dark:text-white mb-4 inline-flex items-center gap-2 transition-colors hover:accent-color" aria-label="Alec Borman - Home">
-                         <i data-lucide="code-2" class="accent-color"></i>
-                         Alec Borman | Business Systems Architect
-                     </a>
-                     <p class="text-xs light:text-slate-600 dark:text-slate-400 mt-2">
-                         Friendswood, TX | 
-                         <a href="tel:2175087210" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">(217) 508-7210</a> | 
-                         <a href="mailto:alecborman97@gmail.com" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">alecborman97@gmail.com</a>
-                     </p>
-                 </div>
-                 <div class="flex space-x-6">
-                     <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn Profile" data-magnetic>
-                         <i data-lucide="linkedin" class="w-6 h-6"></i>
-                     </a>
-                 </div>
+                   <div class="text-center md:text-left">
+                         <a href="#home" class="text-lg font-bold light:text-slate-800 dark:text-white mb-4 inline-flex items-center gap-2 transition-colors hover:accent-color" aria-label="Alec Borman - Home">
+                             <i data-lucide="code-2" class="accent-color"></i>
+                             Alec Borman | Business Systems Architect
+                         </a>
+                         <p class="text-xs light:text-slate-600 dark:text-slate-400 mt-2">
+                             Friendswood, TX | 
+                             <a href="tel:2175087210" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">(217) 508-7210</a> | 
+                             <a href="mailto:alecborman97@gmail.com" class="transition-colors light:hover:text-sky-700 dark:hover:text-sky-400">alecborman97@gmail.com</a>
+                         </p>
+                   </div>
+                   <div class="flex space-x-6">
+                         <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn Profile" data-magnetic>
+                             <i data-lucide="linkedin" class="w-6 h-6"></i>
+                         </a>
+                   </div>
              </div>
              <div class="mt-8 pt-8 border-t light:border-slate-300 dark:border-slate-700 text-center text-sm light:text-slate-600 dark:text-slate-400">
-                 &copy; <span id="copyright-year"></span> Alec Borman. All rights reserved.
+                   &copy; <span id="copyright-year"></span> Alec Borman. All rights reserved.
              </div>
          </div>
          <style>
@@ -1355,8 +1403,11 @@
             const savedTheme = localStorage.getItem('theme');
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
-            // Priority: Saved Theme > System Preference > Default ('dark')
-            let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'dark');
+            // FIX: Priority: Saved Theme > System Preference > Default ('dark')
+            // The original logic defaulted to 'dark' even if system was light.
+            let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            
+            // Apply the determined theme
             applyTheme(currentTheme);
 
             // Handler to toggle, apply, and save the new theme.
