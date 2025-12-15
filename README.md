@@ -1,18 +1,21 @@
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alec Borman | The Black Box Architect</title>
     
-    <meta name="description" content="Alec Borman is a Senior Salesforce Architect specializing in the 'Black Box' methodology. He builds scalable revenue engines using Salesforce, Apex, and Zapier.">
-    <meta name="keywords" content="Alec Borman, Salesforce Architect, Black Box Architect, Apex, LWC, Hydrolix, RevOps, Zapier, Houston">
+    <meta name="description" content="Alec Borman is a Senior Salesforce Architect who builds scalable revenue engines using the 'Black Box' methodology. Expert in Apex, LWC, and Systems Design.">
+    <meta name="keywords" content="Alec Borman, Salesforce Architect, Black Box Architect, Apex, LWC, Hydrolix, RevOps, Zapier, Houston, Systems Thinking">
     <meta name="author" content="Alec Borman">
     <meta name="robots" content="index, follow">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script src="https://unpkg.com/lucide-icons" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -23,7 +26,13 @@
                         mono: ['Fira Code', 'monospace'],
                     },
                     colors: {
-                        slate: { 850: '#151e2e' }
+                        slate: { 
+                            850: '#151e2e', // Deep matte background
+                            950: '#020617'  // Void background
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 },
             },
@@ -34,76 +43,128 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
-    <script src="https://unpkg.com/lucide-icons" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-
     <style>
-        /* Base Styles */
-        body { font-family: 'Inter', sans-serif; scroll-padding-top: 80px; -webkit-font-smoothing: antialiased; }
-        :root { --accent: #38bdf8; }
-        
-        /* Themes */
+        /* --- CORE SYSTEM --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            scroll-padding-top: 80px; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- THEME VARIABLES --- */
+        :root { --accent: #38bdf8; } /* Sky-400 */
         .dark body { background-color: #0F172A; color: #CBD5E1; }
         .light body { background-color: #F8FAFC; color: #1E293B; }
         
-        /* Canvas & Cursor */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; opacity: 0.4; pointer-events: none; }
+        /* --- UI MODULE: BACKGROUND ENGINE --- */
+        #bg-canvas { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -10; opacity: 0.4; pointer-events: none; 
+            transition: opacity 0.5s ease;
+        }
         .light #bg-canvas { opacity: 0.2; }
-        
+
+        /* --- UI MODULE: CURSOR SYSTEM (Desktop Only) --- */
         body.custom-cursor-active { cursor: none; }
-        #cursor-dot, #cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: 9999; opacity: 0; }
-        body.custom-cursor-active #cursor-dot, body.custom-cursor-active #cursor-outline { opacity: 1; }
-        #cursor-dot { width: 8px; height: 8px; background-color: var(--accent); }
-        #cursor-outline { width: 40px; height: 40px; border: 2px solid var(--accent); opacity: 0.5; transition: transform 0.1s, width 0.3s, height 0.3s; }
-        body.cursor-hover #cursor-outline { width: 60px; height: 60px; background-color: rgba(56, 189, 248, 0.1); border-color: #818cf8; }
+        #cursor-dot, #cursor-outline { 
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); 
+            border-radius: 50%; pointer-events: none; z-index: 9999; opacity: 0; 
+        }
+        body.custom-cursor-active #cursor-dot, 
+        body.custom-cursor-active #cursor-outline { opacity: 1; }
+        
+        #cursor-dot { width: 8px; height: 8px; background-color: var(--accent); transition: opacity 0.3s; }
+        #cursor-outline { 
+            width: 40px; height: 40px; border: 2px solid var(--accent); opacity: 0.5; 
+            transition: transform 0.1s, width 0.3s, height 0.3s; 
+        }
+        body.cursor-hover #cursor-outline { 
+            width: 60px; height: 60px; background-color: rgba(56, 189, 248, 0.1); border-color: #818cf8; 
+        }
 
-        /* Scroll Progress */
-        #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #38bdf8, #818cf8); width: 0%; z-index: 10000; }
+        /* --- UI MODULE: SCROLL & NAV --- */
+        #scroll-progress { 
+            position: fixed; top: 0; left: 0; height: 3px; 
+            background: linear-gradient(90deg, #38bdf8, #818cf8); 
+            width: 0%; z-index: 10000; transition: width 0.1s linear; 
+        }
+        .nav-link { position: relative; font-weight: 500; transition: color 0.3s; }
+        .nav-link::after { 
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -4px; left: 0; background-color: var(--accent); 
+            transition: width 0.3s; 
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--accent); }
 
-        /* Command Palette */
-        #command-palette { position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%) scale(0.95); width: 90%; max-width: 500px; z-index: 10001; opacity: 0; pointer-events: none; transition: all 0.2s ease-out; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        /* --- UI MODULE: COMMAND PALETTE --- */
+        #command-palette { 
+            position: fixed; top: 20%; left: 50%; 
+            transform: translate(-50%, -50%) scale(0.95); 
+            width: 90%; max-width: 500px; z-index: 10001; 
+            opacity: 0; pointer-events: none; transition: all 0.2s ease-out; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+        }
         #command-palette.visible { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: all; }
         .cmd-palette-content { backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden; }
         .dark .cmd-palette-content { background-color: rgba(15, 23, 42, 0.95); border: 1px solid #334155; }
         .light .cmd-palette-content { background-color: rgba(255, 255, 255, 0.95); border: 1px solid #CBD5E1; }
-        #command-palette-input { background: transparent; border: none; padding: 1.25rem; width: 100%; outline: none; }
+        #command-palette-input { background: transparent; border: none; padding: 1.25rem; width: 100%; outline: none; font-size: 1.1rem; }
         .dark #command-palette-input { color: white; border-bottom: 1px solid #334155; }
         .light #command-palette-input { color: #0F172A; border-bottom: 1px solid #E2E8F0; }
-        .command-item { padding: 0.75rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: all 0.15s; }
-        .command-item:hover, .command-item.selected { background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; border-left: 3px solid #38bdf8; }
-        #command-palette-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(2px); }
+        .command-item { 
+            padding: 0.75rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: all 0.15s; 
+        }
+        .command-item:hover, .command-item.selected { 
+            background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; border-left: 3px solid #38bdf8; 
+        }
+        #command-palette-overlay { 
+            position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 10000; 
+            opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(2px); 
+        }
         #command-palette-overlay.visible { opacity: 1; pointer-events: all; }
+        kbd { font-family: 'Fira Code', monospace; background: rgba(128,128,128,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: auto; }
 
-        /* Animations */
-        [data-stagger-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        /* --- UI MODULE: ANIMATIONS & COMPONENTS --- */
+        [data-stagger-reveal] { 
+            opacity: 0; transform: translateY(20px); 
+            transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        }
         [data-stagger-reveal].is-revealed { opacity: 1; transform: translateY(0); }
 
-        /* Typography & Components */
-        .nav-link { position: relative; font-weight: 500; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: var(--accent); transition: width 0.3s; }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-        .nav-link.active { color: var(--accent); }
-        
-        .project-card { border: 1px solid transparent; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; border-radius: 0.75rem; overflow: hidden; }
+        .project-card { 
+            border: 1px solid transparent; display: flex; flex-direction: column; 
+            transition: transform 0.3s, box-shadow 0.3s; border-radius: 0.75rem; overflow: hidden; 
+        }
         .dark .project-card { background: linear-gradient(#1E293B, #1E293B) padding-box, linear-gradient(135deg, #38bdf8, #818cf8) border-box; }
         .light .project-card { background: white; border: 1px solid #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .project-card:hover { transform: translateY(-5px); }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3); }
 
-        .timeline-item { position: relative; padding-left: 2rem; padding-bottom: 2.5rem; border-left: 2px solid; }
+        .timeline-item { position: relative; padding-left: 2rem; padding-bottom: 3rem; border-left: 2px solid; }
         .dark .timeline-item { border-color: #334155; }
         .light .timeline-item { border-color: #E2E8F0; }
         .timeline-item:last-child { border-color: transparent; }
-        .timeline-dot { position: absolute; left: -9px; top: 5px; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; border: 4px solid; }
+        .timeline-dot { 
+            position: absolute; left: -9px; top: 5px; width: 16px; height: 16px; 
+            background: var(--accent); border-radius: 50%; border: 4px solid; 
+        }
         .dark .timeline-dot { border-color: #0F172A; }
         .light .timeline-dot { border-color: #F8FAFC; }
 
-        .prose h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent); }
+        /* --- UI MODULE: EDITORIAL TYPOGRAPHY --- */
+        .prose h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent); letter-spacing: -0.025em; }
         .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
-        .prose p { margin-bottom: 1.25rem; line-height: 1.8; }
-        .prose blockquote { border-left: 4px solid var(--accent); padding-left: 1rem; font-style: italic; margin: 1.5rem 0; opacity: 0.8; }
+        .prose p { margin-bottom: 1.25rem; line-height: 1.7; font-size: 1.05rem; }
+        .prose blockquote { 
+            border-left: 4px solid var(--accent); padding-left: 1.5rem; 
+            font-style: italic; margin: 2rem 0; opacity: 0.9; font-size: 1.1rem;
+        }
+        .prose code { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.85em; }
 
+        /* Accessibility: Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
             #bg-canvas, #cursor-dot, #cursor-outline { display: none !important; }
             body { cursor: auto !important; }
         }
@@ -137,6 +198,7 @@
                 <i data-lucide="code-2" class="text-sky-400 transition-transform group-hover:rotate-12"></i>
                 <span class="light:text-slate-900 dark:text-white">Alec <span class="text-sky-400">Borman</span></span>
             </a>
+
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#home" class="nav-link light:text-slate-700 dark:text-slate-300">Home</a>
                 <a href="#about" class="nav-link light:text-slate-700 dark:text-slate-300">About</a>
@@ -144,15 +206,18 @@
                 <a href="#projects" class="nav-link light:text-slate-700 dark:text-slate-300">Projects</a>
                 <a href="#book" class="nav-link light:text-slate-700 dark:text-slate-300">Book</a>
                 <a href="#contact" class="nav-link light:text-slate-700 dark:text-slate-300">Contact</a>
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-sky-500/10 transition-colors" data-magnetic>
+                
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-sky-500/10 transition-colors" data-magnetic aria-label="Toggle Theme">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-sky-400"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
             </div>
+
             <button id="mobile-menu-btn" class="md:hidden p-2 light:text-slate-700 dark:text-white relative z-50">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
+
         <div id="mobile-menu" class="fixed inset-0 bg-slate-100 dark:bg-slate-900 z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
             <a href="#home" class="text-2xl font-bold nav-link-mobile">Home</a>
             <a href="#about" class="text-2xl font-bold nav-link-mobile">About</a>
@@ -160,7 +225,7 @@
             <a href="#projects" class="text-2xl font-bold nav-link-mobile">Projects</a>
             <a href="#book" class="text-2xl font-bold nav-link-mobile">Book</a>
             <a href="#contact" class="text-2xl font-bold nav-link-mobile">Contact</a>
-            <button id="theme-toggle-mobile" class="text-xl font-medium flex items-center gap-2 mt-8">Switch Theme</button>
+            <button id="theme-toggle-mobile" class="text-xl font-medium flex items-center gap-2 mt-8 text-sky-400">Switch Theme</button>
         </div>
     </header>
 
@@ -169,7 +234,7 @@
         <section id="home" class="min-h-screen flex items-center justify-center pt-20">
             <div data-stagger-container class="max-w-4xl w-full">
                 <div data-stagger-reveal class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-bold uppercase tracking-widest mb-6">
-                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse-slow"></span>
                     Available for Contracts
                 </div>
                 <h1 data-stagger-reveal class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 light:text-slate-900 dark:text-white leading-[1.1]">
@@ -179,8 +244,12 @@
                     I translate chaotic business needs into secure, scalable engines. I don't just fix tickets; I apply the <strong>"Black Box"</strong> methodology to build the operational backbone of high-growth companies.
                 </p>
                 <div data-stagger-reveal class="flex flex-col sm:flex-row gap-5">
-                    <a href="#projects" class="px-8 py-4 bg-sky-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-sky-500/40 hover:-translate-y-1 transition-all" data-magnetic>View Projects</a>
-                    <a href="#contact" class="px-8 py-4 font-semibold rounded-lg border light:border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all hover:-translate-y-1" data-magnetic>Get In Touch</a>
+                    <a href="#projects" class="px-8 py-4 bg-sky-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-sky-500/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2" data-magnetic>
+                        <span>View Projects</span>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 font-semibold rounded-lg border light:border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all hover:-translate-y-1 flex items-center justify-center" data-magnetic>
+                        Get In Touch
+                    </a>
                 </div>
             </div>
         </section>
@@ -188,21 +257,28 @@
         <section id="about" class="py-24">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center" data-stagger-container>
                 <div data-stagger-reveal>
-                    <h2 class="text-3xl font-bold mb-8 light:text-slate-900 dark:text-white"><span class="text-sky-400 font-mono text-2xl mr-2">01.</span> About Me</h2>
+                    <h2 class="text-3xl font-bold mb-8 light:text-slate-900 dark:text-white">
+                        <span class="text-sky-400 font-mono text-2xl mr-2">01.</span> About Me
+                    </h2>
                     <div class="space-y-4 text-lg light:text-slate-600 dark:text-slate-400 leading-relaxed">
                         <p>I am a Salesforce Architect and UT Dallas CS graduate. My career evolved from front-line IT to architecting the revenue engines for companies like Hydrolix.</p>
                         <p>I specialize in tuning out "visual noise" to understand the shape of data. This allows me to build systems that don't just work today, but scale for the next decade.</p>
+                        <p>I believe that a system is only as good as the trust the users place in it. My goal is to build that trust through robust automation and intuitive design.</p>
                     </div>
                 </div>
                 <div data-stagger-reveal class="relative group">
                     <div class="absolute inset-0 bg-sky-500/20 rounded-lg transform translate-x-3 translate-y-3 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     <div class="relative bg-slate-800 p-8 rounded-lg border border-slate-700 hover:border-sky-400/50 transition-colors">
-                        <h3 class="text-white font-bold mb-4">Core Stack</h3>
-                        <ul class="grid grid-cols-2 gap-3 font-mono text-sm text-slate-400">
-                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Salesforce Architect</li>
+                        <h3 class="text-white font-bold mb-6 flex items-center gap-2">
+                            <i data-lucide="cpu" class="text-sky-400"></i> Core Stack
+                        </h3>
+                        <ul class="grid grid-cols-2 gap-4 font-mono text-sm text-slate-400">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Salesforce Arch</li>
                             <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Apex & LWC</li>
                             <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Zapier Logic</li>
                             <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Glovia OM / ERP</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>Flow Builder</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>REST APIs</li>
                         </ul>
                     </div>
                 </div>
@@ -210,7 +286,9 @@
         </section>
 
         <section id="experience" class="py-24">
-            <h2 class="text-3xl font-bold mb-16 light:text-slate-900 dark:text-white" data-stagger-reveal><span class="text-sky-400 font-mono text-2xl mr-2">02.</span> Experience</h2>
+            <h2 class="text-3xl font-bold mb-16 light:text-slate-900 dark:text-white" data-stagger-reveal>
+                <span class="text-sky-400 font-mono text-2xl mr-2">02.</span> Experience
+            </h2>
             <div class="max-w-3xl mx-auto" data-stagger-container>
                 
                 <div class="timeline-item" data-stagger-reveal>
@@ -218,7 +296,7 @@
                     <span class="text-sky-400 font-mono text-sm mb-1 block">Oct 2024 – Nov 2025</span>
                     <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Business Systems Architect</h3>
                     <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Hydrolix (Remote)</p>
-                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-2">
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
                         <li><strong>Strategic Pivot:</strong> Owned the Salesforce infrastructure for the "Custom Solutions" division. Following the successful maturation of these processes and the company's strategic pivot toward a pure-play App model, I oversaw the transition and documentation of these systems.</li>
                         <li><strong>Deployment Engine:</strong> Built end-to-end automation handling POC credit approvals, usage quota tracking (TB/month), and automated customer communications.</li>
                         <li><strong>Lead Velocity:</strong> Designed a high-speed ingestion process cutting response time by 40%.</li>
@@ -231,9 +309,10 @@
                     <span class="text-sky-400 font-mono text-sm mb-1 block">Jun 2024 – Aug 2024</span>
                     <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Architect</h3>
                     <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Jaco Aerospace (Contract)</p>
-                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-2">
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
                         <li>Optimized Sales Cloud and Glovia OM ERP integration.</li>
                         <li>Designed custom Apex logic to overcome managed package limitations.</li>
+                        <li>Automated Work Orders and Return Material Authorizations (RMAs).</li>
                     </ul>
                 </div>
 
@@ -242,31 +321,91 @@
                     <span class="text-sky-400 font-mono text-sm mb-1 block">Mar 2022 – Oct 2023</span>
                     <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Developer</h3>
                     <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Fujitsu / Royal Canin</p>
-                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-2">
-                        <li>Lead Developer for the Glovia OM managed package.</li>
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
+                        <li>Lead Developer for the Glovia OM managed package implementation.</li>
                         <li>Resolved complex supply chain logic issues and integrated Order Management features.</li>
                     </ul>
                 </div>
+
+                <div class="timeline-item" data-stagger-reveal>
+                    <div class="timeline-dot"></div>
+                    <span class="text-sky-400 font-mono text-sm mb-1 block">2016 – 2021</span>
+                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">BS Computer Science</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">University of Texas at Dallas</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects" class="py-24">
+             <h2 class="text-3xl font-bold mb-16 light:text-slate-900 dark:text-white" data-stagger-reveal>
+                <span class="text-sky-400 font-mono text-2xl mr-2">03.</span> Select Projects
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-stagger-container>
+                
+                <div class="project-card p-8 group" data-stagger-reveal>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-sky-500/10 rounded-lg text-sky-400">
+                            <i data-lucide="server" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-slate-500 group-hover:text-sky-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 light:text-slate-900 dark:text-white">Deployment Lifecycle Engine</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">
+                        End-to-end automation for Hydrolix involving credit approvals, usage quota tracking, and automated email triggers via Zapier and Apex. Reduced manual ops time by 60%.
+                    </p>
+                    <div class="mt-auto flex gap-3 text-xs font-mono text-sky-400">
+                        <span>Apex</span><span>Flow</span><span>Zapier</span>
+                    </div>
+                </div>
+                
+                 <div class="project-card p-8 group" data-stagger-reveal>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-sky-500/10 rounded-lg text-sky-400">
+                            <i data-lucide="heart-handshake" class="w-8 h-8"></i>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-slate-500 group-hover:text-sky-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 light:text-slate-900 dark:text-white">Veteran Dog Tracker</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">
+                        Implementation for a 501c nonprofit using a managed package to track service dog training progress for disabled veterans. Full lifecycle management from license acquisition to data migration.
+                    </p>
+                    <div class="mt-auto flex gap-3 text-xs font-mono text-sky-400">
+                        <span>NPSP</span><span>Reports</span><span>Data Import</span>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <section id="book" class="py-24">
             <div data-stagger-container>
-                <h2 class="text-3xl font-bold mb-16 light:text-slate-900 dark:text-white" data-stagger-reveal><span class="text-sky-400 font-mono text-2xl mr-2">03.</span> The Black Box</h2>
+                <h2 class="text-3xl font-bold mb-16 light:text-slate-900 dark:text-white" data-stagger-reveal>
+                    <span class="text-sky-400 font-mono text-2xl mr-2">04.</span> The Black Box
+                </h2>
+                
                 <div class="prose max-w-3xl mx-auto light:text-slate-700 dark:text-slate-300" data-stagger-reveal>
-                    <p class="font-mono text-sm text-sky-400 mb-4">Excerpt from Chapter 1</p>
+                    <div class="font-mono text-xs text-sky-400 mb-6 border-b border-sky-500/20 pb-2 uppercase tracking-wide">Excerpt from Chapter 1</div>
+                    
                     <h2>The "Black Box" Mindset</h2>
-                    <p>The meeting request is vague: "Discuss Sales-to-Ops Handoff." The VP of Sales wants a Zap to copy data to a Google Sheet. "It seems simple," he says.</p>
-                    <p>The <strong>Technician</strong> builds the Zap. Five-minute fix. Ticket closed. But they created a "Data Trap"—a fractured process that breaks the moment a deal is updated.</p>
+                    <p>The meeting request is vague: "Discuss Sales-to-Ops Handoff." The VP of Sales wants a Zap to copy data to a Google Sheet. "It seems simple," he says. "Just move the fields."</p>
+
+                    <p>The <strong>Technician</strong> hears this and is already building the Zap in their head. Trigger: <code>Closed Won</code>. Action: <code>Create Row</code>. Five-minute fix. Ticket closed. But they created a "Data Trap"—a fractured process that breaks the moment a deal is updated.</p>
+                    
                     <p>The <strong>Architect</strong> makes a different choice.</p>
+                    
                     <blockquote>"The technician gets to be the hero for a day. The architect has to live with the consequences for a decade."</blockquote>
-                    <h3>Choosing Focus</h3>
-                    <p>The Architect employs the "Black Box" mindset. They tune out the visual noise (Zapier icons, Sheets) and feel for the shape of the data.</p>
+
+                    <h3>Choosing Focus: The Superior Method</h3>
+                    <p>The Architect employs the "Black Box" mindset. They tune out the visual noise (the icons for Zapier, Google Sheets, Slack) and feel for the shape of the data.</p>
+                    
                     <ol>
                         <li><strong>Shape:</strong> Is it a transaction or a state? (It's a state).</li>
                         <li><strong>Weight:</strong> What is the pain? (Blindness, not manual entry).</li>
+                        <li><strong>Texture:</strong> What is the System of Record? (Salesforce).</li>
                     </ol>
-                    <p>The solution is not a Zap. The solution is a shared object inside Salesforce—a "Deployment" record triggered by Flow. One source of truth. Zero data drift.</p>
+                    
+                    <p>The solution is not a Zap. The solution is a shared object inside Salesforce—a "Deployment" record triggered by Flow. One source of truth. Zero data drift. This is how you build for the decade, not the day.</p>
                 </div>
             </div>
         </section>
@@ -274,101 +413,349 @@
         <section id="contact" class="py-24 mb-20">
              <div class="max-w-2xl mx-auto text-center" data-stagger-container>
                 <h2 class="text-3xl font-bold mb-6 light:text-slate-900 dark:text-white" data-stagger-reveal>Get In Touch</h2>
-                <p class="text-lg text-slate-500 dark:text-slate-400 mb-12" data-stagger-reveal>I'm open to discussing new projects, Salesforce architecture, or full-time opportunities.</p>
+                <p class="text-lg text-slate-500 dark:text-slate-400 mb-12" data-stagger-reveal>
+                    I'm open to discussing new projects, Salesforce architecture, or full-time opportunities.
+                </p>
+                
                 <div class="flex flex-col md:flex-row justify-center gap-6" data-stagger-reveal>
-                     <div class="flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:bg-sky-500/10 transition-colors" onclick="navigator.clipboard.writeText('2175087210')">
-                        <i data-lucide="phone" class="text-sky-400"></i>
-                        <div class="text-left"><div class="text-xs uppercase font-bold text-slate-500">Phone</div><div class="font-mono light:text-slate-900 dark:text-white">(217) 508-7210</div></div>
+                     <div class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('2175087210', this)">
+                        <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="phone" class="w-5 h-5"></i></div>
+                        <div class="text-left">
+                            <div class="text-xs uppercase font-bold text-slate-500">Phone</div>
+                            <div class="font-mono text-sm light:text-slate-900 dark:text-white">(217) 508-7210</div>
+                        </div>
+                        <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
                      </div>
-                     <div class="flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:bg-sky-500/10 transition-colors" onclick="navigator.clipboard.writeText('alecborman97@gmail.com')">
-                        <i data-lucide="mail" class="text-sky-400"></i>
-                        <div class="text-left"><div class="text-xs uppercase font-bold text-slate-500">Email</div><div class="font-mono light:text-slate-900 dark:text-white">alecborman97@gmail.com</div></div>
+                     
+                     <div class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('alecborman97@gmail.com', this)">
+                        <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                        <div class="text-left">
+                            <div class="text-xs uppercase font-bold text-slate-500">Email</div>
+                            <div class="font-mono text-sm light:text-slate-900 dark:text-white">alecborman97@gmail.com</div>
+                        </div>
+                        <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
                      </div>
+                </div>
+                
+                <div class="mt-12" data-stagger-reveal>
+                    <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" class="inline-flex items-center gap-2 text-slate-500 hover:text-sky-400 transition-colors">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        <span>Connect on LinkedIn</span>
+                    </a>
                 </div>
              </div>
         </section>
     </main>
 
-    <footer class="py-8 text-center text-sm text-slate-500 relative z-10"><p>&copy; <span id="year"></span> Alec Borman. Built with <span class="text-sky-400">♥</span> and Logic.</p></footer>
+    <footer class="py-8 text-center text-sm text-slate-500 relative z-10 border-t light:border-slate-200 dark:border-slate-800">
+        <p>&copy; <span id="year"></span> Alec Borman. Built with <span class="text-sky-400">♥</span> and Logic.</p>
+    </footer>
 
     <script>
-        // Logic
-        const isTouch = ('ontouchstart' in window);
-        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const lerp = (s, e, t) => (1 - t) * s + t * e;
-
-        // Init
-        window.onload = () => {
-            lucide.createIcons();
-            document.getElementById('year').textContent = new Date().getFullYear();
-            initTheme(); initCursor(); initThree(); initScroll(); initPalette();
+        // --- MODULE: UTILITIES ---
+        const Utils = {
+            lerp: (start, end, t) => (1 - t) * start + t * end,
+            isTouch: () => ('ontouchstart' in window) || (navigator.maxTouchPoints > 0),
+            prefersReducedMotion: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
         };
 
-        // Theme
-        function initTheme() {
-            const toggle = (id) => document.getElementById(id).onclick = () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                document.documentElement.classList.toggle('light');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            };
-            toggle('theme-toggle'); toggle('theme-toggle-mobile');
-            document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('translate-x-full');
-        }
+        // --- MODULE: THEME ENGINE ---
+        const ThemeEngine = {
+            init() {
+                const toggleBtn = document.getElementById('theme-toggle');
+                const mobileBtn = document.getElementById('theme-toggle-mobile');
+                const html = document.documentElement;
 
-        // Cursor
-        function initCursor() {
-            if (isTouch || prefersReduced) return;
-            document.body.classList.add('custom-cursor-active');
-            const dot = document.getElementById('cursor-dot'), out = document.getElementById('cursor-outline');
-            let x = 0, y = 0, tx = 0, ty = 0;
-            window.onmousemove = e => { tx = e.clientX; ty = e.clientY; dot.style.transform = `translate(${tx}px,${ty}px)`; };
-            const loop = () => { x = lerp(x, tx, 0.15); y = lerp(y, ty, 0.15); out.style.transform = `translate(${x}px,${y}px)`; requestAnimationFrame(loop); };
-            loop();
-            document.querySelectorAll('a, button, .project-card').forEach(el => {
-                el.onmouseenter = () => document.body.classList.add('cursor-hover');
-                el.onmouseleave = () => document.body.classList.remove('cursor-hover');
+                // Load saved preference
+                const saved = localStorage.getItem('theme') || 'dark';
+                html.classList.add(saved);
+
+                const switchTheme = () => {
+                    const isDark = html.classList.contains('dark');
+                    html.classList.remove(isDark ? 'dark' : 'light');
+                    html.classList.add(isDark ? 'light' : 'dark');
+                    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+                };
+
+                toggleBtn.addEventListener('click', switchTheme);
+                mobileBtn.addEventListener('click', switchTheme);
+            }
+        };
+
+        // --- MODULE: CURSOR SYSTEM ---
+        const CursorSystem = {
+            init() {
+                if (Utils.isTouch() || Utils.prefersReducedMotion()) return;
+                
+                document.body.classList.add('custom-cursor-active');
+                const dot = document.getElementById('cursor-dot');
+                const outline = document.getElementById('cursor-outline');
+                
+                let dotPos = { x: window.innerWidth/2, y: window.innerHeight/2 };
+                let outPos = { x: window.innerWidth/2, y: window.innerHeight/2 };
+                let targetPos = { x: window.innerWidth/2, y: window.innerHeight/2 };
+
+                window.addEventListener('mousemove', e => {
+                    targetPos.x = e.clientX;
+                    targetPos.y = e.clientY;
+                    // Dot moves instantly
+                    dotPos.x = targetPos.x;
+                    dotPos.y = targetPos.y;
+                    dot.style.transform = `translate(${dotPos.x}px, ${dotPos.y}px)`;
+                });
+
+                const loop = () => {
+                    // Outline follows with lerp
+                    outPos.x = Utils.lerp(outPos.x, targetPos.x, 0.15);
+                    outPos.y = Utils.lerp(outPos.y, targetPos.y, 0.15);
+                    outline.style.transform = `translate(${outPos.x}px, ${outPos.y}px)`;
+                    requestAnimationFrame(loop);
+                };
+                loop();
+
+                // Interactive hovers
+                document.querySelectorAll('a, button, [role="button"], .project-card').forEach(el => {
+                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+                });
+            }
+        };
+
+        // --- MODULE: BACKGROUND ENGINE (Three.js) ---
+        const BgEngine = {
+            init() {
+                if (Utils.prefersReducedMotion() || typeof THREE === 'undefined') return;
+
+                const canvas = document.getElementById('bg-canvas');
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+                camera.position.z = 3;
+
+                // Particle System
+                const count = Utils.isTouch() ? 1000 : 2500;
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(count * 3);
+                
+                for(let i=0; i<count*3; i++) {
+                    positions[i] = (Math.random() - 0.5) * 10;
+                }
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 0.015,
+                    color: 0x38bdf8, // Sky-400
+                    transparent: true,
+                    opacity: 0.5,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const mesh = new THREE.Points(geometry, material);
+                scene.add(mesh);
+
+                // Mouse interaction
+                let mouseX = 0, mouseY = 0;
+                if(!Utils.isTouch()) {
+                    window.addEventListener('mousemove', e => {
+                        mouseX = (e.clientX / window.innerWidth) - 0.5;
+                        mouseY = (e.clientY / window.innerHeight) - 0.5;
+                    });
+                }
+
+                // Animation Loop
+                const animate = () => {
+                    // Optimization: Pause if off screen
+                    if(document.hidden) return;
+
+                    mesh.rotation.y += 0.001;
+                    mesh.rotation.x += 0.0005;
+                    
+                    // Parallax
+                    camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+                    camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+                    camera.lookAt(scene.position);
+
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(animate);
+                };
+                animate();
+
+                // Resize handler
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+        };
+
+        // --- MODULE: UI SYSTEMS ---
+        const UISystems = {
+            initMobileMenu() {
+                const btn = document.getElementById('mobile-menu-btn');
+                const menu = document.getElementById('mobile-menu');
+                const links = document.querySelectorAll('.nav-link-mobile');
+                let isOpen = false;
+
+                const toggle = () => {
+                    isOpen = !isOpen;
+                    menu.classList.toggle('translate-x-full', !isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                };
+
+                btn.addEventListener('click', toggle);
+                // Close menu when a link is clicked
+                links.forEach(l => l.addEventListener('click', toggle));
+            },
+
+            initScroll() {
+                const progressBar = document.getElementById('scroll-progress');
+                const header = document.getElementById('header');
+                const revealElements = document.querySelectorAll('[data-stagger-reveal]');
+                
+                window.addEventListener('scroll', () => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    
+                    // Progress Bar
+                    const progress = (scrollTop / docHeight) * 100;
+                    progressBar.style.width = `${progress}%`;
+
+                    // Header Glass Effect
+                    if(scrollTop > 50) {
+                        header.classList.add('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md');
+                    } else {
+                        header.classList.remove('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md');
+                    }
+                });
+
+                // Intersection Observer for Reveals
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                revealElements.forEach(el => observer.observe(el));
+            },
+
+            initCommandPalette() {
+                const palette = document.getElementById('command-palette');
+                const overlay = document.getElementById('command-palette-overlay');
+                const input = document.getElementById('command-palette-input');
+                const items = document.querySelectorAll('.command-item');
+                let selectedIndex = 0;
+
+                const open = () => {
+                    palette.classList.add('visible');
+                    overlay.classList.add('visible');
+                    input.focus();
+                    input.value = '';
+                    filterItems('');
+                };
+
+                const close = () => {
+                    palette.classList.remove('visible');
+                    overlay.classList.remove('visible');
+                };
+
+                const filterItems = (query) => {
+                    const lowerQuery = query.toLowerCase();
+                    let firstVisible = -1;
+                    items.forEach((item, index) => {
+                        const text = item.textContent.toLowerCase();
+                        const isMatch = text.includes(lowerQuery);
+                        item.style.display = isMatch ? 'flex' : 'none';
+                        item.classList.remove('selected');
+                        if (isMatch && firstVisible === -1) firstVisible = index;
+                    });
+                    selectedIndex = firstVisible;
+                    if (selectedIndex !== -1) items[selectedIndex].classList.add('selected');
+                };
+
+                const updateSelection = () => {
+                    items.forEach((item, index) => {
+                        item.classList.toggle('selected', index === selectedIndex);
+                    });
+                };
+
+                // Event Listeners
+                window.addEventListener('keydown', e => {
+                    if((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                        e.preventDefault();
+                        palette.classList.contains('visible') ? close() : open();
+                    }
+                    if(e.key === 'Escape') close();
+                    
+                    if(palette.classList.contains('visible')) {
+                         const visibleItems = Array.from(items).filter(i => i.style.display !== 'none');
+                         
+                         if(e.key === 'ArrowDown') {
+                             e.preventDefault();
+                             // Logic for arrow navigation needs visible index mapping
+                             // Keeping it simple for the "Crux Point": Focus input
+                         }
+                         if(e.key === 'Enter') {
+                             e.preventDefault();
+                             const selected = document.querySelector('.command-item.selected');
+                             if(selected) selected.click();
+                         }
+                    }
+                });
+
+                input.addEventListener('input', (e) => filterItems(e.target.value));
+                overlay.addEventListener('click', close);
+                items.forEach(item => {
+                    item.addEventListener('click', () => {
+                        close();
+                        const target = document.querySelector(item.getAttribute('href'));
+                        if(target) target.scrollIntoView({behavior: 'smooth'});
+                    });
+                });
+            }
+        };
+
+        // --- GLOBAL HELPER: CLIPBOARD ---
+        window.copyToClipboard = (text, el) => {
+            navigator.clipboard.writeText(text).then(() => {
+                const feedback = el.querySelector('.copy-feedback');
+                feedback.style.opacity = '1';
+                setTimeout(() => feedback.style.opacity = '0', 2000);
             });
-        }
+        };
 
-        // Three.js
-        function initThree() {
-            if (prefersReduced || typeof THREE === 'undefined') return;
-            const canvas = document.getElementById('bg-canvas');
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 100);
-            camera.position.z = 3;
-            const geo = new THREE.BufferGeometry(), count = isTouch ? 1000 : 3000, pos = new Float32Array(count * 3);
-            for(let i=0; i<count*3; i++) pos[i] = (Math.random()-0.5)*10;
-            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-            const mat = new THREE.PointsMaterial({ size: 0.015, color: 0x38bdf8, transparent: true, opacity: 0.6 });
-            const mesh = new THREE.Points(geo, mat); scene.add(mesh);
-            const animate = () => { mesh.rotation.y += 0.001; renderer.render(scene, camera); requestAnimationFrame(animate); };
-            animate();
-            window.onresize = () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
-        }
+        // --- SYSTEM BOOTSTRAP ---
+        window.onload = () => {
+            try { lucide.createIcons(); } catch(e) {}
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            ThemeEngine.init();
+            CursorSystem.init();
+            BgEngine.init();
+            UISystems.initMobileMenu();
+            UISystems.initScroll();
+            UISystems.initCommandPalette();
 
-        // Palette
-        function initPalette() {
-            const p = document.getElementById('command-palette'), o = document.getElementById('command-palette-overlay');
-            const toggle = () => { p.classList.toggle('visible'); o.classList.toggle('visible'); if(p.classList.contains('visible')) document.getElementById('command-palette-input').focus(); };
-            window.onkeydown = e => { if((e.ctrlKey||e.metaKey) && e.key === 'k') { e.preventDefault(); toggle(); } if(e.key==='Escape') { p.classList.remove('visible'); o.classList.remove('visible'); }};
-            o.onclick = toggle;
-            document.querySelectorAll('.command-item').forEach(i => i.onclick = () => { toggle(); });
-        }
-
-        // Scroll
-        function initScroll() {
-            window.onscroll = () => {
-                const h = document.documentElement, b = document.body, st = 'scrollTop', sh = 'scrollHeight';
-                document.getElementById('scroll-progress').style.width = ((h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100) + "%";
-                document.getElementById('header').classList.toggle('backdrop-blur-md', window.scrollY > 50);
-                document.getElementById('header').classList.toggle('bg-white/80', window.scrollY > 50);
-                document.getElementById('header').classList.toggle('dark:bg-slate-900/80', window.scrollY > 50);
-            };
-            const obs = new IntersectionObserver(e => e.forEach(i => { if(i.isIntersecting) i.target.classList.add('is-revealed'); }), {threshold: 0.1});
-            document.querySelectorAll('[data-stagger-reveal]').forEach(el => obs.observe(el));
-        }
+            // Magnetic Button Effect (Added to UISystems logic)
+            if(!Utils.isTouch()) {
+                document.querySelectorAll('[data-magnetic]').forEach(el => {
+                    el.addEventListener('mousemove', e => {
+                        const rect = el.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        el.style.transform = 'translate(0,0)';
+                    });
+                });
+            }
+        };
     </script>
 </body>
 </html>
