@@ -261,7 +261,7 @@
                         <span class="text-sky-400 font-mono text-2xl mr-2">01.</span> About Me
                     </h2>
                     <div class="space-y-4 text-lg light:text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <p>I am a Salesforce Architect and UT Dallas CS graduate. My career evolved from front-line IT to architecting the revenue engines for companies like Hydrolix.</p>
+                        <p>I am a Salesforce Architect and UT Dallas CS graduate. My career evolved from front-line IT and DevOps to architecting the revenue engines for companies like Hydrolix.</p>
                         <p>I specialize in tuning out "visual noise" to understand the shape of data. This allows me to build systems that don't just work today, but scale for the next decade.</p>
                         <p>I believe that a system is only as good as the trust the users place in it. My goal is to build that trust through robust automation and intuitive design.</p>
                     </div>
@@ -300,7 +300,17 @@
                         <li><strong>Strategic Pivot:</strong> Owned the Salesforce infrastructure for the "Custom Solutions" division. Following the successful maturation of these processes and the company's strategic pivot toward a pure-play App model, I oversaw the transition and documentation of these systems.</li>
                         <li><strong>Deployment Engine:</strong> Built end-to-end automation handling POC credit approvals, usage quota tracking (TB/month), and automated customer communications.</li>
                         <li><strong>Lead Velocity:</strong> Designed a high-speed ingestion process cutting response time by 40%.</li>
-                        <li><strong>Technical Bridge:</strong> Acted as the translation layer between Commercial Sales and Engineering.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-stagger-reveal>
+                    <div class="timeline-dot"></div>
+                    <span class="text-sky-400 font-mono text-sm mb-1 block">Sep 2022 – Nov 2025</span>
+                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Consultant / Developer</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">GIVE US PAWS (Contract)</p>
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
+                        <li>Implemented a full Salesforce lifecycle for a 501c nonprofit, migrating them from spreadsheets to a managed "Dog and Client Tracker" package.</li>
+                        <li>Built custom reports and dashboards to track service dog training progress for disabled veterans.</li>
                     </ul>
                 </div>
 
@@ -310,20 +320,42 @@
                     <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Architect</h3>
                     <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Jaco Aerospace (Contract)</p>
                     <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
-                        <li>Optimized Sales Cloud and Glovia OM ERP integration.</li>
-                        <li>Designed custom Apex logic to overcome managed package limitations.</li>
-                        <li>Automated Work Orders and Return Material Authorizations (RMAs).</li>
+                        <li><strong>Surgical Intervention:</strong> Hired specifically to untangle a critical ERP scale-up utilizing Glovia OM.</li>
+                        <li>Designed custom Apex logic to bypass managed package limitations that were bottlenecking the warehouse team.</li>
+                        <li>Configured Work Orders, RMAs, and Reorder Point Planning, effectively stabilizing their Order Management system during a high-growth period.</li>
                     </ul>
                 </div>
 
                 <div class="timeline-item" data-stagger-reveal>
                     <div class="timeline-dot"></div>
                     <span class="text-sky-400 font-mono text-sm mb-1 block">Mar 2022 – Oct 2023</span>
-                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Developer</h3>
+                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">Salesforce Developer & Support Lead</h3>
                     <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Fujitsu / Royal Canin</p>
                     <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
-                        <li>Lead Developer for the Glovia OM managed package implementation.</li>
-                        <li>Resolved complex supply chain logic issues and integrated Order Management features.</li>
+                        <li><strong>Mastery Through Operations:</strong> Co-managed the entire Tier 1 Support department (2-person team) for the Glovia OM managed package. This role provided deep, "under-the-hood" exposure to how enterprise ERPs fail—and how to fix them.</li>
+                        <li>Contracted to Royal Canin to resolve complex supply chain logic issues and integrate Order Management features.</li>
+                        <li>This operational pressure cooker honed my ability to diagnose "Black Box" issues instantly.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-stagger-reveal>
+                    <div class="timeline-dot"></div>
+                    <span class="text-sky-400 font-mono text-sm mb-1 block">May 2019 – Aug 2019</span>
+                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">IT Intern</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Austin Industrial, Inc.</p>
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
+                        <li>Foundational hardware and network diagnostics. Deployed devices and tracked assets via inventory management software.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-stagger-reveal>
+                    <div class="timeline-dot"></div>
+                    <span class="text-sky-400 font-mono text-sm mb-1 block">May 2018 – Aug 2018</span>
+                    <h3 class="text-xl font-bold light:text-slate-900 dark:text-white mb-1">DevOps Intern</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-4 font-medium">Austin Industrial, Inc.</p>
+                    <ul class="list-disc list-outside ml-4 text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
+                        <li><strong>Early Systems Exposure:</strong> Researched and deployed intrinsically safe hardware for RFID site tracking.</li>
+                        <li>Digitized Job Safety Analysis (JSA) audits, transitioning the company from paper to iOS applications.</li>
                     </ul>
                 </div>
 
