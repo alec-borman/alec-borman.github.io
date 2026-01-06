@@ -12,18 +12,17 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0F172A">
 
-    <!-- Social Graph (Open Graph / Twitter) -->
+    <!-- Social Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Alec Borman | The Black Box Architect">
     <meta property="og:description" content="Translating chaotic business needs into secure, scalable engines.">
     <meta property="og:url" content="https://alecborman.com">
-    <meta property="og:image" content="https://alecborman.com/og-image.jpg"> <!-- Placeholder for your actual OG image -->
     <meta property="twitter:card" content="summary_large_image">
 
-    <!-- Favicon (SVG Data URI for performance) -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- External Resources (Version Locked for Security) -->
+    <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/lucide-icons@0.300.0/dist/umd/lucide.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
@@ -44,9 +43,9 @@
                     },
                     colors: {
                         slate: { 
-                            850: '#151e2e', // Deep matte background
+                            850: '#151e2e', 
                             900: '#0F172A',
-                            950: '#020617'  // Void background
+                            950: '#020617' 
                         }
                     },
                     animation: {
@@ -67,7 +66,7 @@
         }
 
         /* --- THEME VARIABLES --- */
-        :root { --accent: #38bdf8; } /* Sky-400 */
+        :root { --accent: #38bdf8; }
         .dark body { background-color: #0F172A; color: #CBD5E1; }
         .light body { background-color: #F8FAFC; color: #1E293B; }
         
@@ -79,7 +78,7 @@
         }
         .light #bg-canvas { opacity: 0.2; }
 
-        /* --- UI MODULE: CURSOR SYSTEM (Desktop Only) --- */
+        /* --- UI MODULE: CURSOR SYSTEM --- */
         body.custom-cursor-active { cursor: none; }
         #cursor-dot, #cursor-outline { 
             position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); 
@@ -171,15 +170,31 @@
         .dark .timeline-dot { border-color: #0F172A; }
         .light .timeline-dot { border-color: #F8FAFC; }
 
-        /* --- UI MODULE: EDITORIAL TYPOGRAPHY --- */
+        /* --- UI MODULE: EDITORIAL TYPOGRAPHY & FIXES --- */
         .prose h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent); letter-spacing: -0.025em; }
+        
+        /* FIX: Explicitly set colors for prose elements to override Tailwind defaults in Dark Mode */
         .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+        .dark .prose h3 { color: #F1F5F9; } /* Slate-100 for Dark Mode */
+        .light .prose h3 { color: #1E293B; } /* Slate-800 for Light Mode */
+
         .prose p { margin-bottom: 1.25rem; line-height: 1.7; font-size: 1.05rem; }
+        
+        .prose strong { font-weight: 700; }
+        .dark .prose strong { color: #F8FAFC; } /* White for Dark Mode */
+        .light .prose strong { color: #0F172A; } /* Black for Light Mode */
+
         .prose blockquote { 
             border-left: 4px solid var(--accent); padding-left: 1.5rem; 
             font-style: italic; margin: 2rem 0; opacity: 0.9; font-size: 1.1rem;
+            color: inherit; /* Forces blockquote to use parent text color */
         }
+        
         .prose code { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.85em; }
+
+        /* Fix Ordered List Markers */
+        .dark .prose ol > li::marker { color: var(--accent); font-weight: 600; }
+        .light .prose ol > li::marker { color: var(--accent); font-weight: 600; }
 
         /* Accessibility: Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
@@ -577,9 +592,9 @@
                 if (Utils.prefersReducedMotion() || typeof THREE === 'undefined') return;
 
                 const canvas = document.getElementById('bg-canvas');
-                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false }); // Antialias off for performance
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false }); 
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap pixel ratio for stability
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); 
 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -615,14 +630,13 @@
                     });
                 }
 
-                // Animation Loop with Stability Check
+                // Animation Loop
                 const animate = () => {
-                    if(document.hidden) return; // Optimization: Pause when tab hidden
+                    if(document.hidden) return; 
 
                     mesh.rotation.y += 0.001;
                     mesh.rotation.x += 0.0005;
                     
-                    // Parallax
                     camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
                     camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
                     camera.lookAt(scene.position);
@@ -653,7 +667,7 @@
                     isOpen = !isOpen;
                     menu.classList.toggle('translate-x-full', !isOpen);
                     document.body.style.overflow = isOpen ? 'hidden' : '';
-                    btn.setAttribute('aria-expanded', isOpen);
+                    if(btn) btn.setAttribute('aria-expanded', isOpen);
                 };
 
                 if(btn) btn.addEventListener('click', toggle);
@@ -665,7 +679,6 @@
                 const header = document.getElementById('header');
                 const revealElements = document.querySelectorAll('[data-stagger-reveal]');
                 
-                // Throttled Scroll Listener (dx/dt Stability)
                 let ticking = false;
                 window.addEventListener('scroll', () => {
                     if (!ticking) {
@@ -689,12 +702,11 @@
                     }
                 });
 
-                // Intersection Observer for Reveals
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if(entry.isIntersecting) {
                             entry.target.classList.add('is-revealed');
-                            observer.unobserve(entry.target); // Efficiency: One-shot observation
+                            observer.unobserve(entry.target);
                         }
                     });
                 }, { threshold: 0.1 });
@@ -742,7 +754,6 @@
                     updateSelection();
                 };
 
-                // Keyboard Logic (Symbolic Completion)
                 window.addEventListener('keydown', e => {
                     if((e.ctrlKey || e.metaKey) && e.key === 'k') {
                         e.preventDefault();
@@ -793,7 +804,6 @@
                     }
                 }).catch(err => console.error('Clipboard failed', err));
             } else {
-                // Fallback for older browsers
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
                 document.body.appendChild(textArea);
@@ -824,7 +834,6 @@
             UISystems.initScroll();
             UISystems.initCommandPalette();
 
-            // Magnetic Button Effect
             if(!Utils.isTouch()) {
                 document.querySelectorAll('[data-magnetic]').forEach(el => {
                     el.addEventListener('mousemove', e => {
