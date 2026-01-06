@@ -5,16 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alec Borman | The Black Box Architect</title>
     
+    <!-- SEO & Metadata -->
     <meta name="description" content="Alec Borman is a Senior Salesforce Architect who builds scalable revenue engines using the 'Black Box' methodology. Expert in Apex, LWC, and Systems Design.">
     <meta name="keywords" content="Alec Borman, Salesforce Architect, Black Box Architect, Apex, LWC, Hydrolix, RevOps, Zapier, Houston, Systems Thinking">
     <meta name="author" content="Alec Borman">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0F172A">
 
+    <!-- Social Graph (Open Graph / Twitter) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Alec Borman | The Black Box Architect">
+    <meta property="og:description" content="Translating chaotic business needs into secure, scalable engines.">
+    <meta property="og:url" content="https://alecborman.com">
+    <meta property="og:image" content="https://alecborman.com/og-image.jpg"> <!-- Placeholder for your actual OG image -->
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- Favicon (SVG Data URI for performance) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide-icons" defer></script>
+    <!-- External Resources (Version Locked for Security) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/lucide-icons@0.300.0/dist/umd/lucide.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -28,6 +45,7 @@
                     colors: {
                         slate: { 
                             850: '#151e2e', // Deep matte background
+                            900: '#0F172A',
                             950: '#020617'  // Void background
                         }
                     },
@@ -39,10 +57,6 @@
         }
     </script>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
     <style>
         /* --- CORE SYSTEM --- */
         body { 
@@ -70,6 +84,7 @@
         #cursor-dot, #cursor-outline { 
             position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); 
             border-radius: 50%; pointer-events: none; z-index: 9999; opacity: 0; 
+            will-change: transform;
         }
         body.custom-cursor-active #cursor-dot, 
         body.custom-cursor-active #cursor-outline { opacity: 1; }
@@ -77,7 +92,7 @@
         #cursor-dot { width: 8px; height: 8px; background-color: var(--accent); transition: opacity 0.3s; }
         #cursor-outline { 
             width: 40px; height: 40px; border: 2px solid var(--accent); opacity: 0.5; 
-            transition: transform 0.1s, width 0.3s, height 0.3s; 
+            transition: width 0.3s, height 0.3s, background-color 0.3s; 
         }
         body.cursor-hover #cursor-outline { 
             width: 60px; height: 60px; background-color: rgba(56, 189, 248, 0.1); border-color: #818cf8; 
@@ -113,12 +128,15 @@
         #command-palette-input { background: transparent; border: none; padding: 1.25rem; width: 100%; outline: none; font-size: 1.1rem; }
         .dark #command-palette-input { color: white; border-bottom: 1px solid #334155; }
         .light #command-palette-input { color: #0F172A; border-bottom: 1px solid #E2E8F0; }
+        
         .command-item { 
             padding: 0.75rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: all 0.15s; 
+            scroll-margin-top: 50px;
         }
         .command-item:hover, .command-item.selected { 
-            background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; border-left: 3px solid #38bdf8; 
+            background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; border-left: 3px solid #38bdf8; padding-left: 1.1rem;
         }
+        
         #command-palette-overlay { 
             position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 10000; 
             opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(2px); 
@@ -130,6 +148,7 @@
         [data-stagger-reveal] { 
             opacity: 0; transform: translateY(20px); 
             transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            will-change: opacity, transform;
         }
         [data-stagger-reveal].is-revealed { opacity: 1; transform: translateY(0); }
 
@@ -170,29 +189,29 @@
         }
     </style>
 </head>
-<body class="antialiased dark">
+<body class="antialiased dark selection:bg-sky-500/30 selection:text-sky-300">
 
     <div id="scroll-progress"></div>
-    <div id="cursor-dot"></div>
-    <div id="cursor-outline"></div>
-    <canvas id="bg-canvas"></canvas>
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-outline" aria-hidden="true"></div>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
     
     <div id="command-palette-overlay" aria-hidden="true"></div>
     <div id="command-palette" role="dialog" aria-modal="true" aria-labelledby="command-palette-input">
         <div class="cmd-palette-content">
             <input type="text" id="command-palette-input" placeholder="Jump to... (Ctrl+K)" autocomplete="off">
-            <div id="command-palette-list">
-                <a href="#home" class="command-item"><i data-lucide="home" class="w-4 h-4"></i>Home<kbd>H</kbd></a>
-                <a href="#about" class="command-item"><i data-lucide="user" class="w-4 h-4"></i>About<kbd>A</kbd></a>
-                <a href="#experience" class="command-item"><i data-lucide="briefcase" class="w-4 h-4"></i>Experience<kbd>E</kbd></a>
-                <a href="#projects" class="command-item"><i data-lucide="layers" class="w-4 h-4"></i>Projects<kbd>P</kbd></a>
-                <a href="#book" class="command-item"><i data-lucide="book" class="w-4 h-4"></i>Book<kbd>B</kbd></a>
-                <a href="#contact" class="command-item"><i data-lucide="mail" class="w-4 h-4"></i>Contact<kbd>C</kbd></a>
+            <div id="command-palette-list" role="listbox">
+                <a href="#home" class="command-item" role="option"><i data-lucide="home" class="w-4 h-4"></i>Home<kbd>H</kbd></a>
+                <a href="#about" class="command-item" role="option"><i data-lucide="user" class="w-4 h-4"></i>About<kbd>A</kbd></a>
+                <a href="#experience" class="command-item" role="option"><i data-lucide="briefcase" class="w-4 h-4"></i>Experience<kbd>E</kbd></a>
+                <a href="#projects" class="command-item" role="option"><i data-lucide="layers" class="w-4 h-4"></i>Projects<kbd>P</kbd></a>
+                <a href="#book" class="command-item" role="option"><i data-lucide="book" class="w-4 h-4"></i>Book<kbd>B</kbd></a>
+                <a href="#contact" class="command-item" role="option"><i data-lucide="mail" class="w-4 h-4"></i>Contact<kbd>C</kbd></a>
             </div>
         </div>
     </div>
 
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#home" class="text-xl font-bold flex items-center gap-2 group" data-magnetic>
                 <i data-lucide="code-2" class="text-sky-400 transition-transform group-hover:rotate-12"></i>
@@ -213,7 +232,7 @@
                 </button>
             </div>
 
-            <button id="mobile-menu-btn" class="md:hidden p-2 light:text-slate-700 dark:text-white relative z-50">
+            <button id="mobile-menu-btn" class="md:hidden p-2 light:text-slate-700 dark:text-white relative z-50" aria-label="Toggle Menu">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
@@ -450,27 +469,27 @@
                 </p>
                 
                 <div class="flex flex-col md:flex-row justify-center gap-6" data-stagger-reveal>
-                     <div class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('2175087210', this)">
+                     <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('2175087210', this)" aria-label="Copy Phone Number">
                         <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="phone" class="w-5 h-5"></i></div>
                         <div class="text-left">
                             <div class="text-xs uppercase font-bold text-slate-500">Phone</div>
                             <div class="font-mono text-sm light:text-slate-900 dark:text-white">(217) 508-7210</div>
                         </div>
                         <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
-                     </div>
+                     </button>
                      
-                     <div class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('alecborman97@gmail.com', this)">
+                     <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('alecborman97@gmail.com', this)" aria-label="Copy Email">
                         <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></div>
                         <div class="text-left">
                             <div class="text-xs uppercase font-bold text-slate-500">Email</div>
                             <div class="font-mono text-sm light:text-slate-900 dark:text-white">alecborman97@gmail.com</div>
                         </div>
                         <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
-                     </div>
+                     </button>
                 </div>
                 
                 <div class="mt-12" data-stagger-reveal>
-                    <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" class="inline-flex items-center gap-2 text-slate-500 hover:text-sky-400 transition-colors">
+                    <a href="https://linkedin.com/in/alec-borman-9680b3160" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-slate-500 hover:text-sky-400 transition-colors">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
                         <span>Connect on LinkedIn</span>
                     </a>
@@ -509,8 +528,8 @@
                     localStorage.setItem('theme', isDark ? 'light' : 'dark');
                 };
 
-                toggleBtn.addEventListener('click', switchTheme);
-                mobileBtn.addEventListener('click', switchTheme);
+                if(toggleBtn) toggleBtn.addEventListener('click', switchTheme);
+                if(mobileBtn) mobileBtn.addEventListener('click', switchTheme);
             }
         };
 
@@ -530,7 +549,6 @@
                 window.addEventListener('mousemove', e => {
                     targetPos.x = e.clientX;
                     targetPos.y = e.clientY;
-                    // Dot moves instantly
                     dotPos.x = targetPos.x;
                     dotPos.y = targetPos.y;
                     dot.style.transform = `translate(${dotPos.x}px, ${dotPos.y}px)`;
@@ -559,16 +577,16 @@
                 if (Utils.prefersReducedMotion() || typeof THREE === 'undefined') return;
 
                 const canvas = document.getElementById('bg-canvas');
-                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false }); // Antialias off for performance
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap pixel ratio for stability
 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
                 camera.position.z = 3;
 
                 // Particle System
-                const count = Utils.isTouch() ? 1000 : 2500;
+                const count = Utils.isTouch() ? 800 : 2000;
                 const geometry = new THREE.BufferGeometry();
                 const positions = new Float32Array(count * 3);
                 
@@ -597,10 +615,9 @@
                     });
                 }
 
-                // Animation Loop
+                // Animation Loop with Stability Check
                 const animate = () => {
-                    // Optimization: Pause if off screen
-                    if(document.hidden) return;
+                    if(document.hidden) return; // Optimization: Pause when tab hidden
 
                     mesh.rotation.y += 0.001;
                     mesh.rotation.x += 0.0005;
@@ -636,10 +653,10 @@
                     isOpen = !isOpen;
                     menu.classList.toggle('translate-x-full', !isOpen);
                     document.body.style.overflow = isOpen ? 'hidden' : '';
+                    btn.setAttribute('aria-expanded', isOpen);
                 };
 
-                btn.addEventListener('click', toggle);
-                // Close menu when a link is clicked
+                if(btn) btn.addEventListener('click', toggle);
                 links.forEach(l => l.addEventListener('click', toggle));
             },
 
@@ -648,19 +665,27 @@
                 const header = document.getElementById('header');
                 const revealElements = document.querySelectorAll('[data-stagger-reveal]');
                 
+                // Throttled Scroll Listener (dx/dt Stability)
+                let ticking = false;
                 window.addEventListener('scroll', () => {
-                    const scrollTop = window.scrollY;
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    
-                    // Progress Bar
-                    const progress = (scrollTop / docHeight) * 100;
-                    progressBar.style.width = `${progress}%`;
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const scrollTop = window.scrollY;
+                            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                            const progress = (scrollTop / docHeight) * 100;
+                            
+                            if(progressBar) progressBar.style.width = `${progress}%`;
 
-                    // Header Glass Effect
-                    if(scrollTop > 50) {
-                        header.classList.add('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md');
-                    } else {
-                        header.classList.remove('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md');
+                            if(scrollTop > 50) {
+                                header.classList.add('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md', 'border-slate-200', 'dark:border-slate-800');
+                                header.classList.remove('border-transparent');
+                            } else {
+                                header.classList.remove('backdrop-blur-md', 'bg-white/80', 'dark:bg-slate-900/80', 'shadow-md', 'border-slate-200', 'dark:border-slate-800');
+                                header.classList.add('border-transparent');
+                            }
+                            ticking = false;
+                        });
+                        ticking = true;
                     }
                 });
 
@@ -669,6 +694,7 @@
                     entries.forEach(entry => {
                         if(entry.isIntersecting) {
                             entry.target.classList.add('is-revealed');
+                            observer.unobserve(entry.target); // Efficiency: One-shot observation
                         }
                     });
                 }, { threshold: 0.1 });
@@ -680,7 +706,8 @@
                 const palette = document.getElementById('command-palette');
                 const overlay = document.getElementById('command-palette-overlay');
                 const input = document.getElementById('command-palette-input');
-                const items = document.querySelectorAll('.command-item');
+                const allItems = Array.from(document.querySelectorAll('.command-item'));
+                let visibleItems = [];
                 let selectedIndex = 0;
 
                 const open = () => {
@@ -696,57 +723,60 @@
                     overlay.classList.remove('visible');
                 };
 
+                const updateSelection = () => {
+                    allItems.forEach(item => item.classList.remove('selected'));
+                    if (visibleItems.length > 0 && visibleItems[selectedIndex]) {
+                        visibleItems[selectedIndex].classList.add('selected');
+                        visibleItems[selectedIndex].scrollIntoView({ block: 'nearest' });
+                    }
+                };
+
                 const filterItems = (query) => {
                     const lowerQuery = query.toLowerCase();
-                    let firstVisible = -1;
-                    items.forEach((item, index) => {
-                        const text = item.textContent.toLowerCase();
-                        const isMatch = text.includes(lowerQuery);
-                        item.style.display = isMatch ? 'flex' : 'none';
-                        item.classList.remove('selected');
-                        if (isMatch && firstVisible === -1) firstVisible = index;
+                    visibleItems = allItems.filter(item => {
+                        const match = item.textContent.toLowerCase().includes(lowerQuery);
+                        item.style.display = match ? 'flex' : 'none';
+                        return match;
                     });
-                    selectedIndex = firstVisible;
-                    if (selectedIndex !== -1) items[selectedIndex].classList.add('selected');
+                    selectedIndex = 0;
+                    updateSelection();
                 };
 
-                const updateSelection = () => {
-                    items.forEach((item, index) => {
-                        item.classList.toggle('selected', index === selectedIndex);
-                    });
-                };
-
-                // Event Listeners
+                // Keyboard Logic (Symbolic Completion)
                 window.addEventListener('keydown', e => {
                     if((e.ctrlKey || e.metaKey) && e.key === 'k') {
                         e.preventDefault();
                         palette.classList.contains('visible') ? close() : open();
                     }
-                    if(e.key === 'Escape') close();
+                    if(e.key === 'Escape' && palette.classList.contains('visible')) close();
                     
                     if(palette.classList.contains('visible')) {
-                         const visibleItems = Array.from(items).filter(i => i.style.display !== 'none');
-                         
-                         if(e.key === 'ArrowDown') {
-                             e.preventDefault();
-                             // Logic for arrow navigation needs visible index mapping
-                             // Keeping it simple for the "Crux Point": Focus input
-                         }
-                         if(e.key === 'Enter') {
-                             e.preventDefault();
-                             const selected = document.querySelector('.command-item.selected');
-                             if(selected) selected.click();
-                         }
+                        if(e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            selectedIndex = (selectedIndex + 1) % visibleItems.length;
+                            updateSelection();
+                        }
+                        if(e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            selectedIndex = (selectedIndex - 1 + visibleItems.length) % visibleItems.length;
+                            updateSelection();
+                        }
+                        if(e.key === 'Enter') {
+                            e.preventDefault();
+                            if(visibleItems[selectedIndex]) {
+                                visibleItems[selectedIndex].click();
+                            }
+                        }
                     }
                 });
 
                 input.addEventListener('input', (e) => filterItems(e.target.value));
                 overlay.addEventListener('click', close);
-                items.forEach(item => {
+                allItems.forEach(item => {
                     item.addEventListener('click', () => {
                         close();
                         const target = document.querySelector(item.getAttribute('href'));
-                        if(target) target.scrollIntoView({behavior: 'smooth'});
+                        if(target) setTimeout(() => target.scrollIntoView({behavior: 'smooth'}), 10);
                     });
                 });
             }
@@ -754,16 +784,37 @@
 
         // --- GLOBAL HELPER: CLIPBOARD ---
         window.copyToClipboard = (text, el) => {
-            navigator.clipboard.writeText(text).then(() => {
-                const feedback = el.querySelector('.copy-feedback');
-                feedback.style.opacity = '1';
-                setTimeout(() => feedback.style.opacity = '0', 2000);
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const feedback = el.querySelector('.copy-feedback');
+                    if(feedback) {
+                        feedback.style.opacity = '1';
+                        setTimeout(() => feedback.style.opacity = '0', 2000);
+                    }
+                }).catch(err => console.error('Clipboard failed', err));
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand("copy");
+                    const feedback = el.querySelector('.copy-feedback');
+                    if(feedback) {
+                        feedback.style.opacity = '1';
+                        setTimeout(() => feedback.style.opacity = '0', 2000);
+                    }
+                } catch (err) {
+                    console.error('Fallback clipboard failed', err);
+                }
+                document.body.removeChild(textArea);
+            }
         };
 
         // --- SYSTEM BOOTSTRAP ---
         window.onload = () => {
-            try { lucide.createIcons(); } catch(e) {}
+            try { lucide.createIcons(); } catch(e) { console.warn('Icons failed to load'); }
             document.getElementById('year').textContent = new Date().getFullYear();
             
             ThemeEngine.init();
@@ -773,7 +824,7 @@
             UISystems.initScroll();
             UISystems.initCommandPalette();
 
-            // Magnetic Button Effect (Added to UISystems logic)
+            // Magnetic Button Effect
             if(!Utils.isTouch()) {
                 document.querySelectorAll('[data-magnetic]').forEach(el => {
                     el.addEventListener('mousemove', e => {
