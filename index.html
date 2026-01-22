@@ -203,6 +203,10 @@
             body { cursor: auto !important; }
         }
     </style>
+    <!-- Fallback for no JS -->
+    <noscript>
+        <style> [data-stagger-reveal] { opacity: 1 !important; transform: none !important; } </style>
+    </noscript>
 </head>
 <body class="antialiased dark selection:bg-sky-500/30 selection:text-sky-300">
 
@@ -484,23 +488,23 @@
                 </p>
                 
                 <div class="flex flex-col md:flex-row justify-center gap-6" data-stagger-reveal>
-                     <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('2175087210', this)" aria-label="Copy Phone Number">
+                      <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('2175087210', this)" aria-label="Copy Phone Number">
                         <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="phone" class="w-5 h-5"></i></div>
                         <div class="text-left">
                             <div class="text-xs uppercase font-bold text-slate-500">Phone</div>
                             <div class="font-mono text-sm light:text-slate-900 dark:text-white">(217) 508-7210</div>
                         </div>
                         <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
-                     </button>
-                     
-                     <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('alecborman97@gmail.com', this)" aria-label="Copy Email">
+                      </button>
+                      
+                      <button class="group flex items-center gap-4 bg-slate-100 dark:bg-slate-800 border light:border-slate-200 dark:border-slate-700 p-4 rounded-lg cursor-pointer w-full hover:border-sky-400/50 transition-all" onclick="copyToClipboard('alecborman97@gmail.com', this)" aria-label="Copy Email">
                         <div class="p-3 bg-white dark:bg-slate-900 rounded-full text-sky-400 group-hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></div>
                         <div class="text-left">
                             <div class="text-xs uppercase font-bold text-slate-500">Email</div>
                             <div class="font-mono text-sm light:text-slate-900 dark:text-white">alecborman97@gmail.com</div>
                         </div>
                         <span class="copy-feedback text-xs text-sky-400 opacity-0 ml-auto transition-opacity">Copied!</span>
-                     </button>
+                      </button>
                 </div>
                 
                 <div class="mt-12" data-stagger-reveal>
@@ -823,18 +827,30 @@
         };
 
         // --- SYSTEM BOOTSTRAP ---
-        window.onload = () => {
-            try { lucide.createIcons(); } catch(e) { console.warn('Icons failed to load'); }
-            document.getElementById('year').textContent = new Date().getFullYear();
-            
-            ThemeEngine.init();
-            CursorSystem.init();
-            BgEngine.init();
-            UISystems.initMobileMenu();
-            UISystems.initScroll();
-            UISystems.initCommandPalette();
+        // Force reveal fallback
+        setTimeout(() => {
+            document.querySelectorAll('[data-stagger-reveal]:not(.is-revealed)').forEach(el => {
+                el.classList.add('is-revealed');
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+        }, 2000);
 
-            if(!Utils.isTouch()) {
+        const initCritical = () => {
+             try { lucide.createIcons(); } catch(e) { console.warn('Icons failed to load'); }
+             document.getElementById('year').textContent = new Date().getFullYear();
+             
+             ThemeEngine.init();
+             UISystems.initMobileMenu();
+             UISystems.initScroll();
+             UISystems.initCommandPalette();
+        };
+
+        const initEnhancements = () => {
+             CursorSystem.init();
+             BgEngine.init();
+             
+             if(!Utils.isTouch()) {
                 document.querySelectorAll('[data-magnetic]').forEach(el => {
                     el.addEventListener('mousemove', e => {
                         const rect = el.getBoundingClientRect();
@@ -848,6 +864,14 @@
                 });
             }
         };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCritical);
+        } else {
+            initCritical();
+        }
+        
+        window.addEventListener('load', initEnhancements);
     </script>
 </body>
 </html>
