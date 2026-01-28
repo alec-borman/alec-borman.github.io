@@ -5,29 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alec Borman | The Black Box Architect</title>
     
-    <!-- SEO & Metadata -->
     <meta name="description" content="Alec Borman is a Senior Salesforce Architect who builds scalable revenue engines using the 'Black Box' methodology. Expert in Apex, LWC, and Systems Design.">
-    <meta name="keywords" content="Alec Borman, Salesforce Architect, Black Box Architect, Apex, LWC, Hydrolix, RevOps, Zapier, Houston, Systems Thinking">
+    <meta name="keywords" content="Alec Borman, Salesforce Architect, Black Box Architect, Apex, LWC, TypeScript, Compiler Design, Hydrolix, RevOps, Zapier, Houston, Systems Thinking">
     <meta name="author" content="Alec Borman">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0F172A">
 
-    <!-- Social Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Alec Borman | The Black Box Architect">
     <meta property="og:description" content="Translating chaotic business needs into secure, scalable engines.">
     <meta property="og:url" content="https://alecborman.com">
     <meta property="twitter:card" content="summary_large_image">
 
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/lucide-icons@0.300.0/dist/umd/lucide.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
-    <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -173,26 +168,24 @@
         /* --- UI MODULE: EDITORIAL TYPOGRAPHY & FIXES --- */
         .prose h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent); letter-spacing: -0.025em; }
         
-        /* FIX: Explicitly set colors for prose elements to override Tailwind defaults in Dark Mode */
         .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
-        .dark .prose h3 { color: #F1F5F9; } /* Slate-100 for Dark Mode */
-        .light .prose h3 { color: #1E293B; } /* Slate-800 for Light Mode */
+        .dark .prose h3 { color: #F1F5F9; }
+        .light .prose h3 { color: #1E293B; }
 
         .prose p { margin-bottom: 1.25rem; line-height: 1.7; font-size: 1.05rem; }
         
         .prose strong { font-weight: 700; }
-        .dark .prose strong { color: #F8FAFC; } /* White for Dark Mode */
-        .light .prose strong { color: #0F172A; } /* Black for Light Mode */
+        .dark .prose strong { color: #F8FAFC; }
+        .light .prose strong { color: #0F172A; }
 
         .prose blockquote { 
             border-left: 4px solid var(--accent); padding-left: 1.5rem; 
             font-style: italic; margin: 2rem 0; opacity: 0.9; font-size: 1.1rem;
-            color: inherit; /* Forces blockquote to use parent text color */
+            color: inherit;
         }
         
         .prose code { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.85em; }
 
-        /* Fix Ordered List Markers */
         .dark .prose ol > li::marker { color: var(--accent); font-weight: 600; }
         .light .prose ol > li::marker { color: var(--accent); font-weight: 600; }
 
@@ -203,7 +196,6 @@
             body { cursor: auto !important; }
         }
     </style>
-    <!-- Fallback for no JS -->
     <noscript>
         <style> [data-stagger-reveal] { opacity: 1 !important; transform: none !important; } </style>
     </noscript>
@@ -413,6 +405,56 @@
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-stagger-container>
                 
+                <div class="project-card p-8 group md:col-span-2 relative overflow-hidden border-t-4 border-t-sky-400" data-stagger-reveal>
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="p-3 bg-indigo-500/10 rounded-lg text-indigo-400">
+                                    <i data-lucide="music" class="w-8 h-8"></i>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-400/10 rounded-full border border-sky-400/20">Passion Project</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-2xl font-bold mb-3 light:text-slate-900 dark:text-white">OmniScore Studio</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">
+                                A custom <strong>Domain-Specific Language (DSL)</strong> and browser-based IDE designed to solve the "version control" problem for orchestras. 
+                                <br><br>
+                                I engineered a hand-written <strong>Recursive Descent Parser</strong> that compiles text-based music logic into an Abstract Syntax Tree (AST). This AST drives a real-time Web Audio synthesizer and an SVG rendering engine simultaneously, treating music scores as resilient, mergeable code repositories rather than fragile binary files.
+                            </p>
+
+                            <div class="flex flex-wrap gap-3 text-xs font-mono text-sky-400">
+                                <span class="bg-slate-800 px-2 py-1 rounded border border-slate-700">TypeScript</span>
+                                <span class="bg-slate-800 px-2 py-1 rounded border border-slate-700">Compiler Theory (AST)</span>
+                                <span class="bg-slate-800 px-2 py-1 rounded border border-slate-700">Web Audio API</span>
+                                <span class="bg-slate-800 px-2 py-1 rounded border border-slate-700">Operational Transformation</span>
+                            </div>
+                        </div>
+
+                        <div class="md:w-1/3 bg-slate-900 rounded-lg border border-slate-800 p-4 font-mono text-xs overflow-hidden opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="flex gap-2 mb-3 border-b border-slate-800 pb-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-slate-500">// The Physics</div>
+                            <div class="text-purple-400">def</div> <span class="text-white">vln</span> <span class="text-green-400">"Violin I"</span> <span class="text-sky-400">style=standard</span>
+                            <br>
+                            <div class="text-slate-500 mt-2">// The Logic</div>
+                            <div class="text-purple-400">measure</div> <span class="text-orange-400">1</span>
+                            <div class="pl-4">
+                                <span class="text-white">vln:</span> <span class="text-yellow-300">$MainTheme</span> <span class="text-slate-500">|</span>
+                            </div>
+                            <div class="pl-4">
+                                <span class="text-white">vln:</span> <span class="text-white">c5:4.ff</span> <span class="text-white">e5</span> <span class="text-white">g5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="project-card p-8 group" data-stagger-reveal>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-sky-500/10 rounded-lg text-sky-400">
@@ -429,7 +471,7 @@
                     </div>
                 </div>
                 
-                 <div class="project-card p-8 group" data-stagger-reveal>
+                <div class="project-card p-8 group" data-stagger-reveal>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-sky-500/10 rounded-lg text-sky-400">
                             <i data-lucide="heart-handshake" class="w-8 h-8"></i>
